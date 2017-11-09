@@ -16,3 +16,10 @@ var ui = new Vue({
     }
   }
 })
+
+
+var titleImage = new Vue({
+  data: {
+    template: ""
+  }
+})

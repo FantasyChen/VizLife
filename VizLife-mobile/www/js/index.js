@@ -81,7 +81,7 @@ function readLabels() {
       ui.loading = true;
       readFile(files[files.length-1], function(result) {
         ui.predictions = JSON.parse(result);
-        ui.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a"); 
+        ui.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
         ui.loading = false;
       })
     });
@@ -148,5 +148,6 @@ var errorHandler = function (fileName, e) {
 
     console.log('Error (' + fileName + '): ' + msg);
 }
+
 
 app.initialize();

@@ -9,11 +9,6 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
-<<<<<<< HEAD
-    }
-  },
-  "dependent_plugins": {}
-=======
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
@@ -27,5 +22,4 @@
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   }
->>>>>>> 807ac56d6a93dfb24261975e099e72c293d267f6
 }

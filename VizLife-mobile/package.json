@@ -10,27 +10,18 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-<<<<<<< HEAD
-    "cordova-android": "^6.3.0",
-    "cordova-browser": "^5.0.1",
-=======
     "cordova-android": "^6.2.3",
     "cordova-browser": "^5.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-file": "^4.3.3",
->>>>>>> 807ac56d6a93dfb24261975e099e72c293d267f6
     "cordova-plugin-whitelist": "^1.3.2"
   },
   "cordova": {
     "plugins": {
-<<<<<<< HEAD
-      "cordova-plugin-whitelist": {}
-=======
       "cordova-plugin-whitelist": {},
       "cordova-plugin-file": {},
       "cordova-plugin-android-permissions": {}
->>>>>>> 807ac56d6a93dfb24261975e099e72c293d267f6
     },
     "platforms": [
       "android",

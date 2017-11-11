@@ -12,24 +12,33 @@ const settingsPage = {
   template: '#settings'
 };
 
-const goalPage = {
-  template: '#goals'
+const goalCreationPage = {
+  key: 'goalCreationPage',
+  template: '#goalCreationPage'
 };
 
-const page2 = {
-  key: 'page2',
-  template: '#page2'
-};
-
-const page1 = {
-  key: 'page1',
-  template: '#page1',
+const goalListPage = {
+  key: 'goalListPage',
+  template: '#goalListPage',
   methods: {
     push() {
-      this.$emit('push-page', page2);
+      this.$emit('push-page', goalCreationPage);
     }
   }
 };
+
+const dashBoardPage = {
+  template: '#dashBoardPage',
+  methods: {
+    pushGoalListPage(){
+      this.$emit('push-page', goalListPage)
+    },
+    pushDailyVisualPage(){
+      
+    }
+  }
+};
+
 
 // var login = new Vue({
 //   el: '#login',
@@ -59,7 +68,7 @@ var vm = new Vue({
           page: homePage,
           props: {
             myProp: 'This is a page prop!',
-            pageStack: [page1]
+            pageStack: [dashBoardPage]
           },
           key: "homePage"
         },

@@ -7,9 +7,7 @@ regarding copyright ownership.  The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
-
 http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -33,61 +31,176 @@ under the License.
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 <link rel="stylesheet" type="text/css" href="css/index.css">
-<!-- Bootstrap -->
-<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/onsenui.css">
+<link rel="stylesheet" href="css/onsen-css-components.css">
+
 <script src="js/vue.js"></script>
-<link href="css/index.css" rel="stylesheet">
+<script src="js/onsenui.js"></script>
+<script src="js/vue-onsenui.js"></script>
 <title>VizLife</title>
-
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="#">Visualize your daily</a>
-  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Settings</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Help</a>
-      </li>
-    </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
 </head>
-<body>
-  <div class="title-text">
-    <center>
-      <img src="res/title.png" />
-    </center>
-  </div>
-  <form class="form-signin">
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  </form>
 
+<body>
+  <!-- <v-ons-page id="login">
+  <v-ons-toolbar>
+  <div class="center">{{title}}</div>
+</v-ons-toolbar>
+<v-ons-list>
+<v-ons-list-header style="padding-top: 70px;">
+</v-ons-list-header>
+<v-ons-list-item>
+<div>
+<v-ons-input type="email" placeholder="email" float v-model="email">
 </div>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+</v-ons-list-item>
+<v-ons-list-item>
+<div class="center">
+<v-ons-input placeholder="password" type="password" float v-model="password">
+</div>
+</v-ons-list-item>
+</v-ons-list>
+<section style="margin: 16px">
+<v-ons-row>
+<v-ons-col style="margin-right: 10px;">
+<v-ons-button @click="login" modifier="large" style="margin: 6px 0">Login</v-ons-button>
+</v-ons-col>
+<v-ons-col>
+<v-ons-button modifier="large outline" style="margin: 6px 0">Sign Up</v-ons-button>
+</v-ons-col>
+</v-ons-row>
+</section>
+</v-ons-page> -->
+
+<!-- <div id="ui">
+<h1><span>VizLife</span> <button @click="reload()" style="float: right; width: 100px; height: 30px; font-size: 22px;">reload</button></h1>
+<ol v-if="permission" >
+<div v-if="!loading">
+<h3 style="margin-bottom: 0px;">
+{{predictions.time}}
+</h3>
+<li v-for="(value, index) in predictions.label_names">
+{{ value }} - {{predictions.label_probs[index]}}
+</li>
+</div>
+<h3 v-else>
+loading...
+</h3>
+</ol>
+<p v-else>
+no read permission
+</p>
+</div> -->
+
+<div id="app"></div>
 </body>
+
+<!-- Homepage and Dashboard begins here -->
+<template id="main">
+  <v-ons-page>
+    <v-ons-tabbar swipeable position="auto" :tabs="tabs" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+  </v-ons-page>
+</template>
+
+<template id="home">
+  <v-ons-navigator :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
+</template>
+
+<template id="dashBoardPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="center">Dashboard</div>
+    </v-ons-toolbar>
+    <v-ons-card @click="pushGoalListPage">
+      <img src="res/goals.jpg" style="margin:0 auto;display:block;width:60%;"/>
+      <div class="title">
+        Your Goals
+      </div>
+      <div class="content">
+        <v-ons-list>
+          <v-ons-list-header>Goal List</v-ons-list-header>
+          <v-ons-list-item>Exercising</v-ons-list-item>
+          <v-ons-list-item>Work</v-ons-list-item>
+          <v-ons-list-item>Sleep</v-ons-list-item>
+        </v-ons-list>
+      </div>
+    </v-ons-card>
+
+    <v-ons-card @click="pushDailyVisualPage">
+      <img src="res/report.png" style="margin:0 auto;display:block;width:60%;"/>
+      <div class="title">
+        Your Daily Report
+      </div>
+      <div class="content">
+        <v-ons-list>
+          <v-ons-list-header>Calendar</v-ons-list-header>
+          <v-ons-list-item>Today</v-ons-list-item>
+          <v-ons-list-item>Yesterday</v-ons-list-item>
+        </v-ons-list>
+      </div>
+    </v-ons-card>
+
+    <v-ons-card>
+      <div class="title">
+        Reflection And Motivation
+      </div>
+      <div class="content">
+        <v-ons-list>
+          <v-ons-list-header>Improvements</v-ons-list-header>
+        </v-ons-list>
+      </div>
+    </v-ons-card>
+
+  </v-ons-page>
+</template>
+
+<!-- Dashboard subpages begins here-->
+
+<!-- Goal page-->
+<template id="goalListPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="left">
+        <v-ons-back-button>Dashboard</v-ons-back-button>
+      </div>
+      <div class="center">VizLife</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">
+      Click here to add a new goal
+      <v-ons-button @click="push">Create</v-ons-button>
+    </p>
+  </v-ons-page>
+</template>
+
+<template id="goalCreationPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="left">
+        <v-ons-back-button>My Goals</v-ons-back-button>
+      </div>
+      <div class="center">Create Goal</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">Create goal stuff goes here</p>
+  </v-ons-page>
+</template>
+
+
+
+<!-- Settings page-->
+<template id="settings">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="center">Settings</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">
+      Change the settings.
+    </p>
+  </v-ons-page>
+</template>
+
+
+<script type="text/javascript" src="js/ui.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
 </html>

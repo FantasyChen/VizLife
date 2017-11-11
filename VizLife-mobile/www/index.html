@@ -113,7 +113,7 @@ no read permission
     <v-ons-card @click="pushGoalListPage">
       <img src="res/goals.jpg" style="margin:0 auto;display:block;width:60%;"/>
       <div class="title">
-        Your Goals
+        My Goals
       </div>
       <div class="content">
         <v-ons-list>
@@ -125,10 +125,10 @@ no read permission
       </div>
     </v-ons-card>
 
-    <v-ons-card @click="pushDailyVisualPage">
+    <v-ons-card @click="pushDailyReportPage">
       <img src="res/report.png" style="margin:0 auto;display:block;width:60%;"/>
       <div class="title">
-        Your Daily Report
+        My Daily Report
       </div>
       <div class="content">
         <v-ons-list>
@@ -139,7 +139,7 @@ no read permission
       </div>
     </v-ons-card>
 
-    <v-ons-card>
+    <v-ons-card @click="pushReflectionPage">
       <div class="title">
         Reflection And Motivation
       </div>
@@ -162,7 +162,7 @@ no read permission
       <div class="left">
         <v-ons-back-button>Dashboard</v-ons-back-button>
       </div>
-      <div class="center">VizLife</div>
+      <div class="center">My goals</div>
     </v-ons-toolbar>
     <p style="text-align: center">
       Click here to add a new goal
@@ -180,6 +180,32 @@ no read permission
       <div class="center">Create Goal</div>
     </v-ons-toolbar>
     <p style="text-align: center">Create goal stuff goes here</p>
+  </v-ons-page>
+</template>
+
+<!-- Daily Report Page -->
+<template id="dailyReportPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="left">
+        <v-ons-back-button>Dashboard</v-ons-back-button>
+      </div>
+      <div class="center">My Daily Report</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">Report stuff goes here</p>
+  </v-ons-page>
+</template>
+
+<!-- Reflection Page -->
+<template id="reflectionPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="left">
+        <v-ons-back-button>Dashboard</v-ons-back-button>
+      </div>
+      <div class="center">Reflection</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">Reflection stuff goes here</p>
   </v-ons-page>
 </template>
 

@@ -12,6 +12,14 @@ const settingsPage = {
   template: '#settings'
 };
 
+const dailyReportPage = {
+  template: '#dailyReportPage'
+}
+
+const reflectionPage = {
+  template: '#reflectionPage'
+}
+
 const goalCreationPage = {
   key: 'goalCreationPage',
   template: '#goalCreationPage'
@@ -33,10 +41,17 @@ const dashBoardPage = {
     pushGoalListPage(){
       this.$emit('push-page', goalListPage)
     },
-    pushDailyVisualPage(){
-      
+    pushDailyReportPage(){
+      this.$emit('push-page', dailyReportPage)
+    },
+    pushReflectionPage(){
+      this.$emit('push-page', reflectionPage)
     }
   }
+};
+
+const loginPage = {
+  template: '#loginPage'
 };
 
 

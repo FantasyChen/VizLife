@@ -16,8 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-body {
-<<<<<<< HEAD
+body {  
   padding-top: 40px;
   padding-bottom: 40px;
   background-color:  #d1d1e0;
@@ -127,11 +126,9 @@ h1 {
 .h2, h2 {
     font-size: 2rem;
     color: #ad8282;
-=======
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     font-size: 14px;
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
->>>>>>> 807ac56d6a93dfb24261975e099e72c293d267f6
 }

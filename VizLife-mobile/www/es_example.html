@@ -31,32 +31,126 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <script type="text/javascript" src="js/vue.js"></script>
+        <link rel="stylesheet" href="css/onsenui.css">
+        <link rel="stylesheet" href="css/onsen-css-components.css">
+
+        <script src="js/vue.js"></script>
+        <script src="js/onsenui.js"></script>
+        <script src="js/vue-onsenui.js"></script>
         <title>VizLife</title>
     </head>
+
     <body>
-        <div id="ui">
-            <h1><span>VizLife</span> <button @click="reload()" style="float: right; width: 100px; height: 30px; font-size: 22px;">reload</button></h1>
-            <ol v-if="permission" >
-              <div v-if="!loading">
-                <h3 style="margin-bottom: 0px;">
-                  {{predictions.time}}
-                </h3>
-                <li v-for="(value, index) in predictions.label_names">
-                  {{ value }} - {{predictions.label_probs[index]}}
-                </li>
-              </div>
-              <h3 v-else>
-                loading...
-              </h3>
-            </ol>
-            <p v-else>
-              no read permission
-            </p>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/moment.min.js"></script>
-        <script type="text/javascript" src="js/ui.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+      <!-- <v-ons-page id="login">
+        <v-ons-toolbar>
+          <div class="center">{{title}}</div>
+        </v-ons-toolbar>
+        <v-ons-list>
+          <v-ons-list-header style="padding-top: 70px;">
+          </v-ons-list-header>
+          <v-ons-list-item>
+            <div>
+              <v-ons-input type="email" placeholder="email" float v-model="email">
+            </div>
+          </v-ons-list-item>
+          <v-ons-list-item>
+            <div class="center">
+              <v-ons-input placeholder="password" type="password" float v-model="password">
+            </div>
+          </v-ons-list-item>
+        </v-ons-list>
+        <section style="margin: 16px">
+          <v-ons-row>
+            <v-ons-col style="margin-right: 10px;">
+              <v-ons-button @click="login" modifier="large" style="margin: 6px 0">Login</v-ons-button>
+            </v-ons-col>
+            <v-ons-col>
+              <v-ons-button modifier="large outline" style="margin: 6px 0">Sign Up</v-ons-button>
+            </v-ons-col>
+          </v-ons-row>
+        </section>
+      </v-ons-page> -->
+
+      <!-- <div id="ui">
+        <h1><span>VizLife</span> <button @click="reload()" style="float: right; width: 100px; height: 30px; font-size: 22px;">reload</button></h1>
+        <ol v-if="permission" >
+          <div v-if="!loading">
+            <h3 style="margin-bottom: 0px;">
+              {{predictions.time}}
+            </h3>
+            <li v-for="(value, index) in predictions.label_names">
+              {{ value }} - {{predictions.label_probs[index]}}
+            </li>
+          </div>
+          <h3 v-else>
+            loading...
+          </h3>
+        </ol>
+        <p v-else>
+          no read permission
+        </p>
+      </div> -->
+
+      <div id="app"></div>
     </body>
+
+    <template id="main">
+      <v-ons-page>
+        <!-- <v-ons-navigator swipeable :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator> -->
+        <v-ons-tabbar swipeable position="auto" :tabs="tabs" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+      </v-ons-page>
+    </template>
+
+    <template id="home">
+      <v-ons-navigator :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
+    </template>
+
+    <template id="page1">
+      <v-ons-page>
+        <v-ons-toolbar>
+          <div class="center">My Goals</div>
+        </v-ons-toolbar>
+        <p style="text-align: center">
+          Click here to add a new goal
+          <v-ons-button @click="push">Create</v-ons-button>
+        </p>
+      </v-ons-page>
+    </template>
+
+    <template id="page2">
+      <v-ons-page>
+        <v-ons-toolbar>
+          <div class="left">
+            <v-ons-back-button>My Goals</v-ons-back-button>
+          </div>
+          <div class="center">Create Goal</div>
+        </v-ons-toolbar>
+        <p style="text-align: center">Create goal stuff goes here</p>
+      </v-ons-page>
+    </template>
+
+    <template id="settings">
+      <v-ons-page>
+        <v-ons-toolbar>
+          <div class="center">Settings</div>
+        </v-ons-toolbar>
+        <p style="text-align: center">
+          Change the settings.
+        </p>
+      </v-ons-page>
+    </template>
+
+    <template id="goals">
+      <v-ons-page>
+        <p style="text-align: center">
+          Add a goal
+        </p>
+      </v-ons-page>
+    </template>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
 </html>

@@ -27,5 +27,9 @@
       "android",
       "browser"
     ]
+  },
+  "devDependencies": {
+    "onsenui": "^2.7.1",
+    "vue-onsenui": "^2.3.0"
   }
 }

@@ -1,0 +1,3 @@
+[submodule "VizLife-server"]
+	path = VizLife-server
+	url = https://git.heroku.com/vizlife.git

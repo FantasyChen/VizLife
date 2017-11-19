@@ -101,15 +101,18 @@ no read permission
   </v-ons-page>
 </template>
 
-<template id="home">
+
+<template id="navigatorTemplate">
   <v-ons-navigator :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
 </template>
 
-<template id="dashBoardPage">
+
+<template id="goalsDashboard">
   <v-ons-page>
     <v-ons-toolbar>
-      <div class="center">Dashboard</div>
+      <div class="center">Goals</div>
     </v-ons-toolbar>
+
     <v-ons-card @click="pushGoalListPage">
       <img src="res/goals.jpg" style="margin:0 auto;display:block;width:60%;"/>
       <div class="title">
@@ -125,19 +128,14 @@ no read permission
       </div>
     </v-ons-card>
 
-    <v-ons-card @click="pushDailyReportPage">
-      <img src="res/report.png" style="margin:0 auto;display:block;width:60%;"/>
-      <div class="title">
-        My Daily Report
-      </div>
-      <div class="content">
-        <v-ons-list>
-          <v-ons-list-header>Calendar</v-ons-list-header>
-          <v-ons-list-item>Today</v-ons-list-item>
-          <v-ons-list-item>Yesterday</v-ons-list-item>
-        </v-ons-list>
-      </div>
-    </v-ons-card>
+  </v-ons-page>
+</template>
+
+<template id="reflectionDashboard">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="center">Reflection/Motivation</div>
+    </v-ons-toolbar>
 
     <v-ons-card @click="pushReflectionPage">
       <div class="title">
@@ -153,46 +151,64 @@ no read permission
   </v-ons-page>
 </template>
 
+
+<template id="dailyDashboard">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="center">Daily Report</div>
+    </v-ons-toolbar>
+
+    <v-ons-card @click="pushDailyReportPage">
+      <img src="res/report.png" style="margin:0 auto;display:block;width:50%;"/>
+      <div class="title">
+        My Daily Report
+      </div>
+      <div class="content">
+        <v-ons-list>
+          <v-ons-list-header>Calendar</v-ons-list-header>
+          <v-ons-list-item>Today</v-ons-list-item>
+          <v-ons-list-item>Yesterday</v-ons-list-item>
+        </v-ons-list>
+      </div>
+    </v-ons-card>
+
+  </v-ons-page>
+</template>
+
+
+
 <!-- Dashboard subpages begins here-->
 
-<!-- Goal page-->
+<!-- Manage Goals page-->
 <template id="goalListPage">
   <v-ons-page>
     <v-ons-toolbar>
       <div class="left">
-        <v-ons-back-button>Dashboard</v-ons-back-button>
+        <v-ons-back-button>Goals</v-ons-back-button>
       </div>
-      <div class="center">My goals</div>
+      <div class="center">Edit Goals</div>
     </v-ons-toolbar>
     <p style="text-align: center">
       Click here to add a new goal
       <v-ons-button @click="push">Create</v-ons-button>
     </p>
+    <p style="text-align: center">
+      Click here to edit/delete an existing goal
+      <v-ons-button @click="">Edit/Delete</v-ons-button>
+    </p>
   </v-ons-page>
 </template>
 
+<!-- add a new goal page -->
 <template id="goalCreationPage">
   <v-ons-page>
     <v-ons-toolbar>
       <div class="left">
-        <v-ons-back-button>My Goals</v-ons-back-button>
+        <v-ons-back-button>Edit Goals</v-ons-back-button>
       </div>
       <div class="center">Create Goal</div>
     </v-ons-toolbar>
     <p style="text-align: center">Create goal stuff goes here</p>
-  </v-ons-page>
-</template>
-
-<!-- Daily Report Page -->
-<template id="dailyReportPage">
-  <v-ons-page>
-    <v-ons-toolbar>
-      <div class="left">
-        <v-ons-back-button>Dashboard</v-ons-back-button>
-      </div>
-      <div class="center">My Daily Report</div>
-    </v-ons-toolbar>
-    <p style="text-align: center">Report stuff goes here</p>
   </v-ons-page>
 </template>
 
@@ -201,11 +217,25 @@ no read permission
   <v-ons-page>
     <v-ons-toolbar>
       <div class="left">
-        <v-ons-back-button>Dashboard</v-ons-back-button>
+        <v-ons-back-button>Reflection/Motivation</v-ons-back-button>
       </div>
       <div class="center">Reflection</div>
     </v-ons-toolbar>
     <p style="text-align: center">Reflection stuff goes here</p>
+  </v-ons-page>
+</template>
+
+
+<!-- Daily Report Page -->
+<template id="dailyReportPage">
+  <v-ons-page>
+    <v-ons-toolbar>
+      <div class="left">
+        <v-ons-back-button>Daily Report</v-ons-back-button>
+      </div>
+      <div class="center">My Daily Report</div>
+    </v-ons-toolbar>
+    <p style="text-align: center">Report stuff goes here</p>
   </v-ons-page>
 </template>
 

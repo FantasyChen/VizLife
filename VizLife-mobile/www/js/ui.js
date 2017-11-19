@@ -1,9 +1,25 @@
 Vue.use(VueOnsen);
 
-const homePage = {
-  template: '#home',
+const goalsNavigator = {
+  template: '#navigatorTemplate',
   props: {
-    myProp : String,
+    // myProp : String,
+    pageStack : Array
+  }
+};
+
+const reflectionNavigator = {
+  template: '#navigatorTemplate',
+  props: {
+    // myProp : String,
+    pageStack : Array
+  }
+};
+
+const homeNavigator = {
+  template: '#navigatorTemplate',
+  props: {
+    // myProp : String,
     pageStack : Array
   }
 };
@@ -14,10 +30,6 @@ const settingsPage = {
 
 const dailyReportPage = {
   template: '#dailyReportPage'
-}
-
-const reflectionPage = {
-  template: '#reflectionPage'
 }
 
 const goalCreationPage = {
@@ -35,18 +47,36 @@ const goalListPage = {
   }
 };
 
-const dashBoardPage = {
-  template: '#dashBoardPage',
+const reflectionDashboard = {
+  template: '#reflectionDashboard',
+  methods: {
+    pushReflectionPage(){
+      this.$emit('push-page', {template: '#reflectionPage'})
+    }
+  }
+};
+
+const goalsDashboard = {
+  template: '#goalsDashboard',
   methods: {
     pushGoalListPage(){
       this.$emit('push-page', goalListPage)
-    },
+    }
+  }
+};
+
+const dailyDashboard = {
+  template: '#dailyDashboard',
+  methods: {
+    // pushGoalListPage(){
+    //   this.$emit('push-page', goalListPage)
+    // },
     pushDailyReportPage(){
       this.$emit('push-page', dailyReportPage)
     },
-    pushReflectionPage(){
-      this.$emit('push-page', reflectionPage)
-    }
+    // pushReflectionPage(){
+    //   this.$emit('push-page', reflectionPage)
+    // }
   }
 };
 
@@ -75,17 +105,34 @@ var vm = new Vue({
   data() {
     return {
       loggedIn: false,
-      activeIndex: 0,
+      activeIndex: 2,
       tabs: [
+        {
+          icon: this.md() ? null : 'ion-ios-paper-outline',
+          label: 'Goals',
+          page: goalsNavigator,
+          props: {
+            pageStack: [goalsDashboard]
+          },
+          key: "goalsPage"
+        },
+        {
+          icon: this.md() ? null : 'ion-pie-graph',
+          label: 'Reflection',
+          page: reflectionNavigator,
+          props: {
+            pageStack: [reflectionDashboard]
+          },
+          key: "reflectionNavigator"
+        },
         {
           icon: this.md() ? null : 'ion-home',
           label: 'Home',
-          page: homePage,
+          page: homeNavigator,
           props: {
-            myProp: 'This is a page prop!',
-            pageStack: [dashBoardPage]
+            pageStack: [dailyDashboard]
           },
-          key: "homePage"
+          key: "homeNavigator"
         },
         {
           icon: this.md() ? null : 'ion-ios-settings',

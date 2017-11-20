@@ -1,5 +1,7 @@
 Vue.use(VueOnsen);
 
+const API_URL = "https://vizlife.herokuapp.com/";
+
 const goalsNavigator = {
   template: '#navigatorTemplate',
   props: {
@@ -68,43 +70,23 @@ const goalsDashboard = {
 const dailyDashboard = {
   template: '#dailyDashboard',
   methods: {
-    // pushGoalListPage(){
-    //   this.$emit('push-page', goalListPage)
-    // },
     pushDailyReportPage(){
       this.$emit('push-page', dailyReportPage)
-    },
-    // pushReflectionPage(){
-    //   this.$emit('push-page', reflectionPage)
-    // }
+    }
   }
 };
-
-const loginPage = {
-  template: '#loginPage'
-};
-
-
-// var login = new Vue({
-//   el: '#login',
-//   data: {
-//     email: '',
-//     password: '',
-//     title: 'Login'
-//   },
-//   methods: {
-//     login() {
-//
-//     }
-//   }
-// })
 
 var vm = new Vue({
   el: '#app',
   template: '#main',
   data() {
     return {
-      loggedIn: false,
+      loggedIn: localStorage.getItem("loggedIn"),
+      email: '',
+      password: '',
+      confirm: '',
+      authMessage: "Login",
+      authType: 0,
       activeIndex: 2,
       tabs: [
         {
@@ -146,15 +128,78 @@ var vm = new Vue({
   methods: {
     md() {
       return this.$ons.platform.isAndroid();
+    },
+    submit() {
+      //check signup or login then post
+      var url = API_URL;
+      if (this.authType == 0) { // login
+        url += "login";
+        // check validation TODO
+      } else if (this.authType == 1) { // signup
+        url += "signup";
+        // check validation TODO
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if(xhr.readyState == XMLHttpRequest.DONE) {
+          // Request finished. Do processing here.
+          if (xhr.status != 200) {
+            alert(xhr.responseText);
+          } else {
+            localStorage.setItem("sid", xhr.responseText)
+            localStorage.setItem("loggedIn", "true")
+            vm.loggedIn = "true";
+          }
+        }
+      }
+
+      var payload = {
+        email: this.email,
+        password: this.password,
+        confirm: this.confirm
+      }
+
+      this.email = '';
+      this.password = '';
+      this.confirm = '';
+
+      // xhr.withCredentials = true;
+      xhr.send(JSON.stringify(payload));
+    },
+    signout() {
+      localStorage.setItem("loggedIn", "false")
+      vm.loggedIn = "false";
+    },
+    profile() {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", API_URL+"profile?sid="+localStorage.getItem("sid"), true);
+
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if(xhr.readyState == XMLHttpRequest.DONE) {
+          // Request finished. Do processing here.
+          console.log(xhr.responseText)
+        }
+      }
+
+      xhr.send();
+    }
+  },
+  watch: {
+    authType: function (type) {
+      if (type == 0) {
+        this.authMessage = "Login";
+      } else if (type == 1) {
+        this.authMessage = "Sign up";
+      }
     }
   },
   computed: {
-    // title() {
-    //   return this.tabs[this.activeIndex].label;
-    // },
-    // pageStack() {
-    //   return this.tabs[0].props["pageStack"]
-    // }
   }
 });
 

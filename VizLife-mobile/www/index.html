@@ -26,7 +26,7 @@ under the License.
   * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
   * Enable inline JS: add 'unsafe-inline' to default-src
 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -41,35 +41,6 @@ under the License.
 </head>
 
 <body>
-  <!-- <v-ons-page id="login">
-  <v-ons-toolbar>
-  <div class="center">{{title}}</div>
-</v-ons-toolbar>
-<v-ons-list>
-<v-ons-list-header style="padding-top: 70px;">
-</v-ons-list-header>
-<v-ons-list-item>
-<div>
-<v-ons-input type="email" placeholder="email" float v-model="email">
-</div>
-</v-ons-list-item>
-<v-ons-list-item>
-<div class="center">
-<v-ons-input placeholder="password" type="password" float v-model="password">
-</div>
-</v-ons-list-item>
-</v-ons-list>
-<section style="margin: 16px">
-<v-ons-row>
-<v-ons-col style="margin-right: 10px;">
-<v-ons-button @click="login" modifier="large" style="margin: 6px 0">Login</v-ons-button>
-</v-ons-col>
-<v-ons-col>
-<v-ons-button modifier="large outline" style="margin: 6px 0">Sign Up</v-ons-button>
-</v-ons-col>
-</v-ons-row>
-</section>
-</v-ons-page> -->
 
 <!-- <div id="ui">
 <h1><span>VizLife</span> <button @click="reload()" style="float: right; width: 100px; height: 30px; font-size: 22px;">reload</button></h1>
@@ -97,7 +68,49 @@ no read permission
 <!-- Homepage and Dashboard begins here -->
 <template id="main">
   <v-ons-page>
-    <v-ons-tabbar swipeable position="auto" :tabs="tabs" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+
+    <div :style="{visibility: (loggedIn == 'true' ? 'hidden' : '')}">
+      <v-ons-toolbar>
+        <div class="center">VizLife</div>
+      </v-ons-toolbar>
+      <v-ons-list>
+
+        <v-ons-list-header style="padding-top: 70px;">
+          {{authMessage}}
+        </v-ons-list-header>
+
+        <v-ons-list-item>
+          <div>
+            <v-ons-input type="email" placeholder="email" autofocus="" float v-model="email">
+          </div>
+        </v-ons-list-item>
+        <v-ons-list-item>
+          <div class="center">
+            <v-ons-input placeholder="password" type="password" float v-model="password">
+          </div>
+        </v-ons-list-item>
+        <v-ons-list-item :style="{display: (authType == 1 ? '' : 'none')}">
+          <div class="center">
+            <v-ons-input placeholder="confirm password" type="password" float v-model="confirm">
+          </div>
+        </v-ons-list-item>
+
+      </v-ons-list>
+
+      <section align="center" style="margin: 16px">
+        <v-ons-segment :index.sync="authType" style="width: 75%">
+          <button class="button-margin">Login</button>
+          <button class="button-margin">Signup</button>
+        </v-ons-segment>
+      </section>
+      <section align="center" style="margin: 16px">
+        <v-ons-button @click="submit">Submit</v-ons-button>
+      </section>
+
+
+    </div>
+
+    <v-ons-tabbar :style="{visibility: (loggedIn == 'true' ? '' : 'hidden')}" swipeable position="auto" :tabs="tabs" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
   </v-ons-page>
 </template>
 

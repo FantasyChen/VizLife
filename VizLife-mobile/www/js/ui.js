@@ -55,6 +55,18 @@ const reflectionDashboard = {
     pushReflectionPage(){
       this.$emit('push-page', {template: '#reflectionPage'})
     }
+  },
+  data() {
+    return {
+      spdVisible: true,
+      spdOpen: true,
+      shareItems: {
+        'Twitter': 'md-twitter',
+        'Google+': 'md-google-plus',
+        'Facebook': 'md-facebook'
+      }
+    }
+
   }
 };
 
@@ -88,6 +100,10 @@ var vm = new Vue({
       authMessage: "Login",
       authType: 0,
       activeIndex: 2,
+
+      notification: true,
+      location: true,
+
       tabs: [
         {
           icon: this.md() ? null : 'ion-ios-paper-outline',

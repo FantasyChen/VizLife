@@ -161,6 +161,22 @@ no read permission
       </div>
     </v-ons-card>
 
+    <v-ons-speed-dial position="bottom right" direction="up"
+      :visible="spdVisible"
+      :open.sync="spdOpen"
+    >
+      <v-ons-fab>
+        <v-ons-icon icon="md-face"></v-ons-icon>
+      </v-ons-fab>
+
+      <v-ons-speed-dial-item v-for="(icon, name) in shareItems"
+        @click="$ons.notification.confirm(`Share on ${name}?`)"
+      >
+        <v-ons-icon :icon="icon"></v-ons-icon>
+      </v-ons-speed-dial-item>
+
+    </v-ons-speed-dial>
+
   </v-ons-page>
 </template>
 
@@ -260,9 +276,82 @@ no read permission
     <v-ons-toolbar>
       <div class="center">Settings</div>
     </v-ons-toolbar>
-    <p style="text-align: center">
-      Change the settings.
-    </p>
+    <v-ons-list>
+      <v-ons-list-header>Account</v-ons-list-header>
+
+      <v-ons-list-item
+        tappable
+        @click="$ons.notification.prompt('Reset your password!')"
+        >
+        <div class="center">
+          Password
+        </div>
+      </v-ons-list-item>
+
+      <v-ons-list-item
+        tappable
+        @click="$ons.notification.prompt('Reset your username')"
+        >
+        <div class="center">
+          Username
+        </div>
+      </v-ons-list-item>
+
+      <v-ons-list-header>General</v-ons-list-header>
+<!--
+      <v-ons-list-item tappable
+        @click="dialogVisible = true"
+      >
+        <div class="center">
+          Notifications
+        </div>
+      </v-ons-list-item>
+-->
+      <ons-list-item>
+        <label class="center" for="switch1">
+          Notifications
+        </label>
+        <div class="right">
+          <v-ons-switch input-id="switch1"
+            v-model="notification"
+          >
+          </v-ons-switch>
+        </div>
+      </ons-list-item>
+
+      <ons-list-item>
+        <label class="center" for="switch2">
+          Location
+        </label>
+        <div class="right">
+          <v-ons-switch input-id="switch2"
+            v-model="location"
+          >
+          </v-ons-switch>
+        </div>
+      </ons-list-item>
+
+      <v-ons-list-item tappable
+        @click="$ons.notification.prompt('We want your feedback :)')"
+      >
+        <div class="center">
+          Help & Feedback
+        </div>
+      </v-ons-list-item>
+
+      <v-ons-list-item tappable
+        @click="$ons.notification.alert('Our app aims to ...')"
+      >
+        <div class="center">
+          About
+        </div>
+      </v-ons-list-item>
+
+    </v-ons-list>
+
+    <v-ons-button modifier="large" style="position: absolute; bottom: 30%; margin: 6px 0">Log Out</v-ons-button>
+
+
   </v-ons-page>
 </template>
 

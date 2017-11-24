@@ -1,6 +1,7 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
+const MAX_METRICS = 3;
 
 const goalsNavigator = {
   template: '#navigatorTemplate',
@@ -74,7 +75,48 @@ const goalsDashboard = {
   template: '#goalsDashboard',
   methods: {
     pushGoalListPage(){
-      this.$emit('push-page', goalListPage)
+      this.$emit('push-page',
+      {
+        extends: goalCreationPage,
+        data() {
+          return {
+            goalname: 'sample goal',
+            goaldescription: 'This is some goal description',
+            labels : ["labels", "go", "here"],
+            metrics: [
+              // {
+              //   selectedItem : "choose a label",
+              //   scoreSlider: 50
+              // }
+            ]
+          }
+        },
+        methods: {
+          addMetric() {
+            this.metrics.push({
+              selectedItem : "choose a label",
+              scoreSlider: 50
+            })
+          },
+          createGoal() {
+            var goal = {
+              name: this.goalName,
+              description: this.goaldescription,
+              metrics: this.metrics
+            }
+            console.log(goal)
+            // TODO send goal and pop page
+          }
+        },
+        computed: {
+          maxMetrics() {
+            return (this.metrics.length == MAX_METRICS)
+          },
+          hasMetrics() {
+            return (this.metrics.length > 0)
+          }
+        }
+      })
     }
   }
 };

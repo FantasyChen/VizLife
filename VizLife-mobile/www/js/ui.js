@@ -3,30 +3,6 @@ Vue.use(VueOnsen);
 const API_URL = "https://vizlife.herokuapp.com/";
 const MAX_METRICS = 3;
 
-const goalsNavigator = {
-  template: '#navigatorTemplate',
-  props: {
-    // myProp : String,
-    pageStack : Array
-  }
-};
-
-const reflectionNavigator = {
-  template: '#navigatorTemplate',
-  props: {
-    // myProp : String,
-    pageStack : Array
-  }
-};
-
-const homeNavigator = {
-  template: '#navigatorTemplate',
-  props: {
-    // myProp : String,
-    pageStack : Array
-  }
-};
-
 const settingsPage = {
   template: '#settings'
 };
@@ -71,6 +47,109 @@ const reflectionDashboard = {
   }
 };
 
+const loginPage = {
+  template: '#loginPage',
+  data() {
+    return {
+      email: '',
+      password: '',
+      confirm: '',
+      authMessage: "Login",
+      authType: 0,
+    }
+  },
+  methods: {
+    submit() {
+      //check signup or login then post
+      var url = API_URL;
+      if (this.authType == 0) { // login
+        url += "login";
+        // check validation TODO
+      } else if (this.authType == 1) { // signup
+        url += "signup";
+        // check validation TODO
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if(xhr.readyState == XMLHttpRequest.DONE) {
+          // Request finished. Do processing here.
+          if (xhr.status != 200) {
+            alert(xhr.responseText);
+          } else {
+            localStorage.setItem("sid", xhr.responseText)
+            localStorage.setItem("loggedIn", "true")
+            vm.loggedIn = "true";
+            // get profile information from server TODO
+            vm.pageStack.pop();
+          }
+        }
+      }
+
+      var payload = {
+        email: this.email,
+        password: this.password,
+        confirm: this.confirm
+      }
+
+      this.email = '';
+      this.password = '';
+      this.confirm = '';
+
+      // xhr.withCredentials = true;
+      xhr.send(JSON.stringify(payload));
+    },
+    signout() {
+      localStorage.setItem("loggedIn", "false")
+      vm.loggedIn = "false";
+    },
+  }
+};
+
+const tabsDashboard = {
+  template: '#tabsTemplate',
+  methods: {
+    push(page) {
+      this.$emit('push-page', page);
+    },
+    md() {
+      return this.$ons.platform.isAndroid();
+    }
+  },
+  data() {
+    return {
+      activeIndex: 2,
+      tabs: [
+        {
+          icon: this.md() ? null : 'ion-ios-paper-outline',
+          label: 'Goals',
+          page: goalsDashboard
+        },
+        {
+          icon: this.md() ? null : 'ion-pie-graph',
+          label: 'Reflection',
+          page: reflectionDashboard
+        },
+        {
+          icon: this.md() ? null : 'ion-home',
+          label: 'Home',
+          page: dailyDashboard
+        },
+        {
+          icon: this.md() ? null : 'ion-ios-settings',
+          label: 'Settings',
+          page: settingsPage
+        }
+      ]
+    }
+  }
+};
+
 const goalsDashboard = {
   template: '#goalsDashboard',
   methods: {
@@ -83,12 +162,7 @@ const goalsDashboard = {
             goalname: 'sample goal',
             goaldescription: 'This is some goal description',
             labels : ["labels", "go", "here"],
-            metrics: [
-              // {
-              //   selectedItem : "choose a label",
-              //   scoreSlider: 50
-              // }
-            ]
+            metrics: []
           }
         },
         methods: {
@@ -125,7 +199,7 @@ const dailyDashboard = {
   template: '#dailyDashboard',
   methods: {
     pushDailyReportPage(){
-      this.$emit('push-page', dailyReportPage)
+      this.$emit('push-page', dailyReportPage);
     }
   }
 };
@@ -136,104 +210,12 @@ var vm = new Vue({
   data() {
     return {
       loggedIn: localStorage.getItem("loggedIn"),
-      email: '',
-      password: '',
-      confirm: '',
-      authMessage: "Login",
-      authType: 0,
-      activeIndex: 2,
-
       notification: true,
       location: true,
-
-      tabs: [
-        {
-          icon: this.md() ? null : 'ion-ios-paper-outline',
-          label: 'Goals',
-          page: goalsNavigator,
-          props: {
-            pageStack: [goalsDashboard]
-          },
-          key: "goalsPage"
-        },
-        {
-          icon: this.md() ? null : 'ion-pie-graph',
-          label: 'Reflection',
-          page: reflectionNavigator,
-          props: {
-            pageStack: [reflectionDashboard]
-          },
-          key: "reflectionNavigator"
-        },
-        {
-          icon: this.md() ? null : 'ion-home',
-          label: 'Home',
-          page: homeNavigator,
-          props: {
-            pageStack: [dailyDashboard]
-          },
-          key: "homeNavigator"
-        },
-        {
-          icon: this.md() ? null : 'ion-ios-settings',
-          label: 'Settings',
-          page: settingsPage,
-          key: "settingsPage"
-        }
-      ]
+      pageStack: localStorage.getItem("loggedIn") == "true" ? [tabsDashboard] : [tabsDashboard, loginPage]
     };
   },
   methods: {
-    md() {
-      return this.$ons.platform.isAndroid();
-    },
-    submit() {
-      //check signup or login then post
-      var url = API_URL;
-      if (this.authType == 0) { // login
-        url += "login";
-        // check validation TODO
-      } else if (this.authType == 1) { // signup
-        url += "signup";
-        // check validation TODO
-      }
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", url, true);
-
-      //Send the proper header information along with the request
-      xhr.setRequestHeader("Content-Type", "application/json");
-
-      xhr.onreadystatechange = function() {//Call a function when the state changes.
-        if(xhr.readyState == XMLHttpRequest.DONE) {
-          // Request finished. Do processing here.
-          if (xhr.status != 200) {
-            alert(xhr.responseText);
-          } else {
-            localStorage.setItem("sid", xhr.responseText)
-            localStorage.setItem("loggedIn", "true")
-            vm.loggedIn = "true";
-          }
-        }
-      }
-
-      var payload = {
-        email: this.email,
-        password: this.password,
-        confirm: this.confirm
-      }
-
-      this.email = '';
-      this.password = '';
-      this.confirm = '';
-
-      // xhr.withCredentials = true;
-      xhr.send(JSON.stringify(payload));
-    },
-    signout() {
-      localStorage.setItem("loggedIn", "false")
-      vm.loggedIn = "false";
-    },
     profile() {
       var xhr = new XMLHttpRequest();
       xhr.open("GET", API_URL+"profile?sid="+localStorage.getItem("sid"), true);

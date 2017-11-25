@@ -68,57 +68,60 @@ no read permission
 <!-- Homepage and Dashboard begins here -->
 <template id="main">
   <v-ons-page>
-
-    <div :style="{visibility: (loggedIn == 'true' ? 'hidden' : '')}">
-      <v-ons-toolbar>
-        <div class="center">VizLife</div>
-      </v-ons-toolbar>
-      <v-ons-list>
-
-        <v-ons-list-header style="padding-top: 70px;">
-          {{authMessage}}
-        </v-ons-list-header>
-
-        <v-ons-list-item>
-          <div>
-            <v-ons-input type="email" placeholder="email" autofocus="" float v-model="email">
-          </div>
-        </v-ons-list-item>
-        <v-ons-list-item>
-          <div class="center">
-            <v-ons-input placeholder="password" type="password" float v-model="password">
-          </div>
-        </v-ons-list-item>
-        <v-ons-list-item :style="{display: (authType == 1 ? '' : 'none')}">
-          <div class="center">
-            <v-ons-input placeholder="confirm password" type="password" float v-model="confirm">
-          </div>
-        </v-ons-list-item>
-
-      </v-ons-list>
-
-      <section align="center" style="margin: 16px">
-        <v-ons-segment :index.sync="authType" style="width: 75%">
-          <button class="button-margin">Login</button>
-          <button class="button-margin">Signup</button>
-        </v-ons-segment>
-      </section>
-      <section align="center" style="margin: 16px">
-        <v-ons-button @click="submit">Submit</v-ons-button>
-      </section>
-
-
-    </div>
-
-    <v-ons-tabbar :style="{visibility: (loggedIn == 'true' ? '' : 'hidden')}" swipeable position="auto" :tabs="tabs" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+    <v-ons-navigator :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
   </v-ons-page>
 </template>
 
-
-<template id="navigatorTemplate">
-  <v-ons-navigator :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
+<template id="tabsTemplate">
+  <v-ons-page>
+    <v-ons-tabbar swipeable position="auto" :tabs="tabs" @push-page="push($event)" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+  </v-ons-page>
 </template>
 
+<template id="loginPage">
+  <v-ons-page>
+
+    <v-ons-toolbar>
+      <div class="center">VizLife</div>
+    </v-ons-toolbar>
+
+    <v-ons-list>
+
+      <v-ons-list-header>
+        {{authMessage}}
+      </v-ons-list-header>
+
+      <v-ons-list-item>
+        <div>
+          <v-ons-input type="email" placeholder="email" autofocus="" float v-model="email">
+        </div>
+      </v-ons-list-item>
+      <v-ons-list-item>
+        <div class="center">
+          <v-ons-input placeholder="password" type="password" float v-model="password">
+        </div>
+      </v-ons-list-item>
+      <v-ons-list-item :style="{display: (authType == 1 ? '' : 'none')}">
+        <div class="center">
+          <v-ons-input placeholder="confirm password" type="password" float v-model="confirm">
+        </div>
+      </v-ons-list-item>
+
+    </v-ons-list>
+
+    <section align="center" style="margin: 16px">
+      <v-ons-segment :index.sync="authType" style="width: 75%">
+        <button class="button-margin">Login</button>
+        <button class="button-margin">Signup</button>
+      </v-ons-segment>
+    </section>
+    <section align="center" style="margin: 16px">
+      <v-ons-button @click="submit">Submit</v-ons-button>
+    </section>
+
+  </v-ons-page>
+
+</template>
 
 <template id="goalsDashboard">
   <v-ons-page>
@@ -261,7 +264,7 @@ no read permission
         </v-ons-list-header>
         <v-ons-list-item>
           <div class="left" style="width: 40%">
-            <v-ons-select style="width: 40%"  v-model="metric.selectedItem">
+            <v-ons-select style="width: 100%"  v-model="metric.selectedItem">
               <option v-for="label in labels" :value="metric.selectedItem">
                 {{ label }}
               </option>
@@ -274,6 +277,7 @@ no read permission
         </v-ons-list-item>
 
       </div>
+
       <v-ons-list-header>
       </v-ons-list-header>
       <div class="center" style="text-align: center;">

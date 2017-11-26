@@ -179,6 +179,7 @@ const goalsDashboard = {
               metrics: this.metrics
             }
             console.log(goal)
+
             // TODO send goal and pop page
           }
         },
@@ -217,17 +218,9 @@ var vm = new Vue({
   },
   methods: {
     profile() {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", API_URL+"profile?sid="+localStorage.getItem("sid"), true);
-
-      xhr.onreadystatechange = function() {//Call a function when the state changes.
-        if(xhr.readyState == XMLHttpRequest.DONE) {
-          // Request finished. Do processing here.
-          console.log(xhr.responseText)
-        }
-      }
-
-      xhr.send();
+      ajax("GET", "profile", null, function(res) {
+        console.log(res)
+      });
     }
   },
   watch: {
@@ -268,3 +261,28 @@ var titleImage = new Vue({
     template: ""
   }
 })
+
+function ajax(method, endpoint, payload, callback) {
+  var xhr = new XMLHttpRequest();
+  var url = API_URL+endpoint;
+
+  xhr.onreadystatechange = function() {//Call a function when the state changes.
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      // Request finished. Do processing here.
+      if (xhr.status != 200) {
+        alert(xhr.responseText);
+      } else {
+        callback(xhr.responseText);
+      }
+    }
+  }
+
+  if (method == 'GET') {
+    xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
+    xhr.send();
+  } else if (method == 'POST') {
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(payload));
+  }
+}

@@ -4,7 +4,14 @@ const API_URL = "https://vizlife.herokuapp.com/";
 const MAX_METRICS = 3;
 
 const settingsPage = {
-  template: '#settings'
+  template: '#settings',
+  methods: {
+    pushLoginPage(){
+          localStorage.setItem("loggedIn", "false")
+          vm.loggedIn = "false";
+          this.$emit('push-page', loginPage);
+    },
+  }
 };
 
 const dailyReportPage = {

@@ -1,6 +1,7 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
+// const API_URL = "http://localhost:5000/";   // Test backend
 const MAX_METRICS = 3;
 
 const settingsPage = {
@@ -272,7 +273,7 @@ var titleImage = new Vue({
 function ajax(method, endpoint, payload, callback) {
   var xhr = new XMLHttpRequest();
   var url = API_URL+endpoint;
-
+  console.log(url);
   xhr.onreadystatechange = function() {//Call a function when the state changes.
     if(xhr.readyState == XMLHttpRequest.DONE) {
       // Request finished. Do processing here.
@@ -283,12 +284,11 @@ function ajax(method, endpoint, payload, callback) {
       }
     }
   }
-
   if (method == 'GET') {
     xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.send();
   } else if (method == 'POST') {
-    xhr.open("POST", url, true);
+    xhr.open("POST", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));
   }

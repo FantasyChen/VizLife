@@ -368,8 +368,6 @@ var vm = new Vue({
   }
 });
 
-<<<<<<< HEAD
-=======
 function success() {
 
 }
@@ -385,7 +383,6 @@ function uploadFiles(files) {
   }
 
   vm.unsynced_files = files.length;
->>>>>>> a85acc238ca79140eb6c728569e22e4e742b664e
 
   if (files.length == 0) {
     console.log("no extrasensory files")

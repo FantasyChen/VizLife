@@ -4,17 +4,17 @@ var dashboard1 = (function () {
     var chart1,
         chart2;
     /* json files */
-    var requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
-    var request = new XMLHttpRequest();
-    var superHeroes;
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function() {
-      superHeroes = request.response;
-      populateHeader(superHeroes);
-      showHeroes(superHeroes);
-    }
+//    var requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+//    var request = new XMLHttpRequest();
+//    var superHeroes;
+//    request.open('GET', requestURL);
+//    request.responseType = 'json';
+//    request.send();
+//    request.onload = function() {
+//      superHeroes = request.response;
+//      populateHeader(superHeroes);
+//      showHeroes(superHeroes);
+//    }
 
 //    var data_json = [{
 //                        "name": "Harry",

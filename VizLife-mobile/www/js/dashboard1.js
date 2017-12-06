@@ -33,7 +33,7 @@ var dashboard1 = (function () {
                     'rgba(59,144,107,1)',
                     'rgba(206,187,110,1)'
                     ];
-    /* create two charts*/
+    /* create metricIdx-th chart*/
     function createChart(metricIdx) {
        var ctx = document.getElementById("myChart" + metricIdx.toString());
        var metricName = Object.keys(activity)[metricIdx];//string
@@ -47,8 +47,8 @@ var dashboard1 = (function () {
        }
 
        var chartOfMetric = new Chart(ctx, {
-                                               type: 'doughnut',
-                                               data: {
+                                     type: 'doughnut',
+                                     data: {
                                                    datasets: [{
                                                        data,
                                                        backgroundColor
@@ -87,8 +87,8 @@ var dashboard1 = (function () {
         }
         return html;
     }
-    /* Render the dashboard */
 
+    /* Render the dashboard */
     function render() {
         var html = generateHtml();
         $("#content").html(html);

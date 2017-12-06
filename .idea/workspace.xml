@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73f5b91f-4c87-4756-b681-1af4d0a7dc32" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/index.html" afterPath="$PROJECT_DIR$/VizLife-mobile/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +18,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
-              <caret line="495" column="24" lean-forward="true" selection-start-line="495" selection-start-column="24" selection-end-line="495" selection-end-column="24" />
+            <state relative-caret-position="121">
+              <caret line="285" column="1" lean-forward="false" selection-start-line="285" selection-start-column="1" selection-end-line="285" selection-end-column="1" />
               <folding>
                 <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
@@ -36,7 +34,6 @@
                 <element signature="n#style#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#header#0;n#div#0;n#v-ons-page#0;n#template#7;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#1;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
@@ -58,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard1.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard1.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
+            <state relative-caret-position="-152">
               <caret line="51" column="51" lean-forward="true" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
               <folding />
             </state>
@@ -545,10 +542,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="51" column="51" lean-forward="true" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="495" column="24" lean-forward="true" selection-start-line="495" selection-start-column="24" selection-end-line="495" selection-end-column="24" />
+        <state relative-caret-position="121">
+          <caret line="285" column="1" lean-forward="false" selection-start-line="285" selection-start-column="1" selection-end-line="285" selection-end-column="1" />
           <folding>
             <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
@@ -560,7 +565,6 @@
             <element signature="n#style#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#header#0;n#div#0;n#v-ons-page#0;n#template#7;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#1;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
@@ -568,14 +572,6 @@
             <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#11;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#v-ons-button#0;n#v-ons-page#0;n#template#12;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="51" lean-forward="true" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>

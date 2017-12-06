@@ -27,7 +27,11 @@ under the License.
   * Enable inline JS: add 'unsafe-inline' to default-src
 -->
 <meta charset="utf-8">
+<<<<<<< HEAD
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:5000/ https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+=======
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; media-src *"> -->
+>>>>>>> b7047cfa54e675a67f7cce367b00060d235a477e
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="viewport" content="initial-scale=1, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -37,7 +41,10 @@ under the License.
 <!-- <link rel="stylesheet" href="css/ionic.css"> -->
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/xcharts.css">
+<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 
+<script src="js/jquery.js"></script>
+<script src="js/semantic.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/onsenui.js"></script>
 <script src="js/vue-onsenui.js"></script>
@@ -78,65 +85,205 @@ under the License.
       <v-ons-list-item>
         <div>
           <v-ons-input type="email" placeholder="email" autofocus="" float v-model="email">
+          </div>
+        </v-ons-list-item>
+        <v-ons-list-item>
+          <div class="center">
+            <v-ons-input placeholder="password" type="password" float v-model="password">
+            </div>
+          </v-ons-list-item>
+          <v-ons-list-item :style="{display: (authType == 1 ? '' : 'none')}">
+            <div class="center">
+              <v-ons-input placeholder="confirm password" type="password" float v-model="confirm">
+              </div>
+            </v-ons-list-item>
+
+          </v-ons-list>
+
+          <section align="center" style="margin: 16px">
+            <v-ons-segment :index.sync="authType" style="width: 75%">
+              <button class="button-margin">Login</button>
+              <button class="button-margin">Signup</button>
+            </v-ons-segment>
+          </section>
+          <section align="center" style="margin: 16px">
+            <v-ons-button @click="submit">Submit</v-ons-button>
+          </section>
+
+        </v-ons-page>
+
+      </template>
+
+      <template id="goalsDashboard">
+        <v-ons-page>
+          <v-ons-toolbar>
+            <div class="center">Goals</div>
+          </v-ons-toolbar>
+
+          <v-ons-card>
+            <img src="res/goals.jpg" style="margin:0 auto;display:block;width:60%;"/>
+
+            <div class="ui cards">
+              <div class="card" tappable @click = "pushAddGoalPage">
+                <div class="ui vertical animated button" tabindex="0">
+                  <div class="hidden content">Add</div>
+                  <div class="visible content">
+                    <i class="plus icon"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" v-for="(goal, $index) in goalList">
+                <div class="content">
+                  <div class="header">{{goal.goalName}}</div>
+                  <div class="description">
+                    {{goal.activitySet}}
+                    {{goal.goalValue}}
+                  </div>
+
+                </div>
+                <div class="ui bottom attached button" tappable @click = "pushEditGoalPage(goal.goalName, goal.activitySetName, $event)">
+                  <i class="add icon"></i>
+                  Edit this goal
+                </div>
+                <div class="ui bottom attached button" tappable @click = "deleteGoal(goal.goalName, $event)">
+                  <i class="add icon"></i>
+                  Delete this goal
+                </div>
+              </div>
+            </div>
+          </v-ons-card>
+        </v-ons-page>
+      </template>
+
+      <!-- goal Create page -->
+      <template id="goalCreatePage">
+        <v-ons-page>
+          <v-ons-toolbar>
+            <div class="left">
+              <v-ons-back-button> Back </v-ons-back-button>
+            </div>
+            <div class="center">Add a Goal</div>
+          </v-ons-toolbar>
+          <v-ons-card>
+            <div class="content">
+              <div class="ui large middle aligned selection list">
+                <div class="item" v-for="(activitySet, index) in activitySetList" :key="activitySet.activitySetName" tappable>
+                  <div class="right floated content">
+                    <div class="ui button" @click="pushGoalDetailPage(activitySet.activitySetName, $event)">Add</div>
+                  </div>
+
+                  <div class="content">
+                    <a class="header">{{activitySet.activitySetName}}</a>
+                    <div class="description"> description
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-ons-card>
+
+        </v-ons-page>
+      </template>
+
+      <!-- goal detail page -->
+      <template id="goalDetailPage">
+        <v-ons-page>
+          <v-ons-toolbar>
+            <div class="left">
+              <v-ons-back-button> Back </v-ons-back-button>
+            </div>
+            <div class="center">{{goalCategory}}</div>
+          </v-ons-toolbar>
+
+          <div class="content">
+            <v-ons-list-item>
+              <div class="center">
+                <v-ons-input placeholder="Input the goal name" float v-model="goalName">
+                </v-ons-input>
+              </div>
+            </v-ons-list-item>
+            <v-ons-list-item v-for="(activity, index) in activitySet" :key="activity" tappable>
+              <label class="left">
+                <v-ons-checkbox
+                :input-id="'checkbox-' + index"
+                :value="activity"
+                v-model="selectedSet">
+              </v-ons-checkbox>
+            </label>
+            <label class="center" :for="'checkbox-' + index">
+              {{ activity }}
+            </label>
+          </v-ons-list-item>
+          <v-ons-list-item>
+            <div class="center" style="width: 60%">
+              Value: {{ goalValue }}
+              <v-ons-range v-model="goalValue" style="width: 100%;"></v-ons-range>
+            </div>
+          </v-ons-list-item>
+          <v-ons-list-item>
+            <div class="ui big buttons" style="margin-left: 20%">
+              <button class="ui button" @click="getBack">Cancel</button>
+              <div class="or"></div>
+              <button class="ui positive button" @click="createGoal">Save</button>
+            </div>
+          </v-ons-list-item>
+
         </div>
-      </v-ons-list-item>
-      <v-ons-list-item>
-        <div class="center">
-          <v-ons-input placeholder="password" type="password" float v-model="password">
+      </v-ons-page>
+      </template>
+
+      <!-- goal edit page -->
+      <template id="goalEditPage">
+        <v-ons-page>
+          <v-ons-toolbar>
+            <div class="left">
+              <v-ons-back-button> Back </v-ons-back-button>
+            </div>
+            <div class="center">{{goalName}}</div>
+          </v-ons-toolbar>
+
+          <div class="content">
+            <v-ons-list-item v-for="(activity, index) in activitySet" :key="activity" tappable>
+              <label class="left">
+                <v-ons-checkbox
+                :input-id="'checkbox-' + index"
+                :value="activity"
+                v-model="goal.activitySet">
+              </v-ons-checkbox>
+            </label>
+            <label class="center" :for="'checkbox-' + index">
+              {{ activity }}
+            </label>
+          </v-ons-list-item>
+          <v-ons-list-item>
+            <div class="center" style="width: 60%">
+              Value: {{ goal.value }}
+              <v-ons-range v-model="goal.value" style="width: 100%;"></v-ons-range>
+            </div>
+          </v-ons-list-item>
+
+          <v-ons-list-item>
+            <div class="ui big buttons" style="margin-left: 20%">
+              <button class="ui button" @click="getBack">Cancel</button>
+              <div class="or"></div>
+              <button class="ui positive button" @click="createGoal">Save</button>
+            </div>
+          </v-ons-list-item>
+
         </div>
-      </v-ons-list-item>
-      <v-ons-list-item :style="{display: (authType == 1 ? '' : 'none')}">
-        <div class="center">
-          <v-ons-input placeholder="confirm password" type="password" float v-model="confirm">
-        </div>
-      </v-ons-list-item>
+      </v-ons-page>
+    </template>
 
-    </v-ons-list>
 
-    <section align="center" style="margin: 16px">
-      <v-ons-segment :index.sync="authType" style="width: 75%">
-        <button class="button-margin">Login</button>
-        <button class="button-margin">Signup</button>
-      </v-ons-segment>
-    </section>
-    <section align="center" style="margin: 16px">
-      <v-ons-button @click="submit">Submit</v-ons-button>
-    </section>
 
-  </v-ons-page>
-
-</template>
-
-<template id="goalsDashboard">
-  <v-ons-page>
-    <v-ons-toolbar>
-      <div class="center">Goals</div>
-    </v-ons-toolbar>
-
-    <v-ons-card @click="pushGoalListPage">
-      <img src="res/goals.jpg" style="margin:0 auto;display:block;width:60%;"/>
-      <div class="title">
-        My Goals
-      </div>
-      <div class="content">
-        <v-ons-list>
-          <v-ons-list-header>Goal List</v-ons-list-header>
-          <v-ons-list-item>Exercising</v-ons-list-item>
-          <v-ons-list-item>Work</v-ons-list-item>
-          <v-ons-list-item>Sleep</v-ons-list-item>
-        </v-ons-list>
-      </div>
-    </v-ons-card>
-
-  </v-ons-page>
-</template>
-
-<template id="reflectionDashboard">
-  <v-ons-page>
-    <!--
-    <v-ons-toolbar>
-      <div class="center">Reflection/Motivation</div>
-    </v-ons-toolbar>
+    <template id="reflectionDashboard">
+      <v-ons-page>
+        <!--
+        <v-ons-toolbar>
+        <div class="center">Reflection/Motivation</div>
+      </v-ons-toolbar>
     -->
     <div id="container" class="transition">
       <header class="bar bar-header nav-bar bar-stable">
@@ -147,33 +294,33 @@ under the License.
     </div>
     <!--
     <v-ons-card @click="pushReflectionPage">
-      <div class="title">
-        Reflection And Motivation
-      </div>
-      <div class="content">
-        <v-ons-list>
-          <v-ons-list-header>Improvements</v-ons-list-header>
-        </v-ons-list>
-      </div>
-    </v-ons-card>
-    -->
-    <v-ons-speed-dial position="bottom right" direction="up"
-      :visible="spdVisible"
-      :open.sync="spdOpen"
-    >
-      <v-ons-fab>
-        <v-ons-icon icon="md-face"></v-ons-icon>
-      </v-ons-fab>
+    <div class="title">
+    Reflection And Motivation
+  </div>
+  <div class="content">
+  <v-ons-list>
+  <v-ons-list-header>Improvements</v-ons-list-header>
+</v-ons-list>
+</div>
+</v-ons-card>
+-->
+<v-ons-speed-dial position="bottom right" direction="up"
+:visible="spdVisible"
+:open.sync="spdOpen"
+>
+<v-ons-fab>
+  <v-ons-icon icon="md-face"></v-ons-icon>
+</v-ons-fab>
 
-      <v-ons-speed-dial-item v-for="(icon, name) in shareItems"
-        @click="$ons.notification.confirm(`Share on ${name}?`)"
-      >
-        <v-ons-icon :icon="icon"></v-ons-icon>
-      </v-ons-speed-dial-item>
+<v-ons-speed-dial-item v-for="(icon, name) in shareItems"
+@click="$ons.notification.confirm(`Share on ${name}?`)"
+>
+<v-ons-icon :icon="icon"></v-ons-icon>
+</v-ons-speed-dial-item>
 
-    </v-ons-speed-dial>
+</v-ons-speed-dial>
 
-  </v-ons-page>
+</v-ons-page>
 </template>
 
 
@@ -224,63 +371,7 @@ under the License.
   </v-ons-page>
 </template>
 
-<!-- add a new goal page -->
-<template id="goalCreationPage">
-  <v-ons-page>
-    <v-ons-toolbar>
-      <div class="left">
-        <v-ons-back-button>Edit Goals</v-ons-back-button>
-      </div>
-      <div class="center">Create Goal</div>
-    </v-ons-toolbar>
-    <v-ons-list>
 
-      <v-ons-list-header>
-        Goal Name
-      </v-ons-list-header>
-      <v-ons-list-item>
-        <v-ons-input placeholder="goal name" autofocus="" float v-model="goalname">
-      </v-ons-list-item>
-
-      <v-ons-list-header>
-        Goal Description
-      </v-ons-list-header>
-      <v-ons-list-item>
-        <v-ons-input placeholder="goal description" autofocus="" float v-model="goaldescription">
-      </v-ons-list-item>
-
-
-      <div v-for="(metric, index) in metrics">
-
-        <v-ons-list-header>
-          metric{{index+1}}
-        </v-ons-list-header>
-        <v-ons-list-item>
-          <div class="left" style="width: 40%">
-            <v-ons-select style="width: 100%"  v-model="metric.selectedItem">
-              <option v-for="label in labels" :value="metric.selectedItem">
-                {{ label }}
-              </option>
-            </v-ons-select>
-          </div>
-          <div class="center" style="width: 60%">
-            Desired Score: {{ metric.scoreSlider }}
-            <v-ons-range v-model="metric.scoreSlider" style="width: 100%;"></v-ons-range>
-          </div>
-        </v-ons-list-item>
-
-      </div>
-
-      <v-ons-list-header>
-      </v-ons-list-header>
-      <div class="center" style="text-align: center;">
-        <v-ons-button @click="addMetric" :disabled="maxMetrics">Add another metric</v-ons-button>
-        <v-ons-button style="margin-left: 40px;" :disabled="!hasMetrics" @click="createGoal">Create Goal</v-ons-button>
-      </div>
-
-    </v-ons-list>
-  </v-ons-page>
-</template>
 
 <!-- Reflection Page -->
 <template id="reflectionPage">
@@ -321,78 +412,69 @@ under the License.
       <v-ons-list-header>Account</v-ons-list-header>
 
       <v-ons-list-item
-        tappable
-        @click="$ons.notification.prompt('Reset your password!')"
-        >
-        <div class="center">
-          Password
-        </div>
-      </v-ons-list-item>
-
-      <v-ons-list-item
-        tappable
-        @click="$ons.notification.prompt('Reset your username')"
-        >
-        <div class="center">
-          Username
-        </div>
-      </v-ons-list-item>
-
-      <v-ons-list-header>General</v-ons-list-header>
-<!--
-      <v-ons-list-item tappable
-        @click="dialogVisible = true"
+      tappable
+      @click="$ons.notification.prompt('Reset your password!')"
       >
-        <div class="center">
-          Notifications
-        </div>
-      </v-ons-list-item>
--->
-      <ons-list-item>
-        <label class="center" for="switch1">
-          Notifications
-        </label>
-        <div class="right">
-          <v-ons-switch input-id="switch1"
-            v-model="notification"
-          >
-          </v-ons-switch>
-        </div>
-      </ons-list-item>
+      <div class="center">
+        Password
+      </div>
+    </v-ons-list-item>
 
-      <ons-list-item>
-        <label class="center" for="switch2">
-          Location
-        </label>
-        <div class="right">
-          <v-ons-switch input-id="switch2"
-            v-model="location"
-          >
-          </v-ons-switch>
-        </div>
-      </ons-list-item>
+    <v-ons-list-item
+    tappable
+    @click="$ons.notification.prompt('Reset your username')"
+    >
+    <div class="center">
+      Username
+    </div>
+  </v-ons-list-item>
 
-      <v-ons-list-item tappable
-        @click="$ons.notification.prompt('We want your feedback :)')"
+  <v-ons-list-header>General</v-ons-list-header>
+  <ons-list-item>
+    <label class="center" for="switch1">
+      Notifications
+    </label>
+    <div class="right">
+      <v-ons-switch input-id="switch1"
+      v-model="notification"
       >
-        <div class="center">
-          Help & Feedback
-        </div>
-      </v-ons-list-item>
+    </v-ons-switch>
+  </div>
+</ons-list-item>
 
-      <v-ons-list-item tappable
-        @click="$ons.notification.alert('Our app aims to ...')"
-      >
-        <div class="center">
-          About
-        </div>
-      </v-ons-list-item>
+<ons-list-item>
+  <label class="center" for="switch2">
+    Location
+  </label>
+  <div class="right">
+    <v-ons-switch input-id="switch2"
+    v-model="location"
+    >
+  </v-ons-switch>
+</div>
+</ons-list-item>
 
-    </v-ons-list>
+<v-ons-list-item tappable
+@click="$ons.notification.prompt('We want your feedback :)')"
+>
+<div class="center">
+  Help & Feedback
+</div>
+</v-ons-list-item>
 
-    <v-ons-button @click="pushLoginPage" modifier="large" style="position: absolute; bottom: 30%; margin: 6px 0">Log Out</v-ons-button>
+<v-ons-list-item tappable
+@click="$ons.notification.alert('Our app aims to ...')"
+>
+<div class="center">
+  About
+</div>
+</v-ons-list-item>
 
-  </v-ons-page>
+</v-ons-list>
+
+<v-ons-button @click="pushLoginPage" modifier="large" style="position: absolute; bottom: 30%; margin: 6px 0">Log Out</v-ons-button>
+
+</v-ons-page>
 </template>
 
 

@@ -1,7 +1,7 @@
 Vue.use(VueOnsen);
 
-const API_URL = "https://vizlife.herokuapp.com/";
-// const API_URL = "http://localhost:5000/";   // Test backend
+// const API_URL = "https://vizlife.herokuapp.com/";
+const API_URL = "http://localhost:5000/";   // Test backend
 const MAX_METRICS = 3;
 
 const settingsPage = {
@@ -325,4 +325,55 @@ function ajax(method, endpoint, payload, callback) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));
   }
+}
+
+
+// goals ajax
+function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+  var payload = {
+    name: goalName,
+    act: selectedAct,
+    compareAct: compareAct,
+    categoryName: categoryName,
+    action: "add"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+  var payload = {
+    name: goalName,
+    act: selectedAct,
+    compareAct: compareAct,
+    categoryName: categoryName,
+    action: "update"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function removeGoal(goalName, catagoryName) {
+  var payload = {
+    name: goalName,
+    act: [],
+    compareAct: [],
+    catagoryName: "",
+    action: "remove"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function getGoalCategories(){
+  ajax("POST", "getGoalCategories", {}, function(res){
+    console.log(res);
+  });
+}
+
+function knexArrayToList(array){
+  return array.slice(1, -1).split(",");
 }

@@ -1,15 +1,14 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
-// const API_URL = "http://localhost:5000/";   // Test backend
 const MAX_METRICS = 3;
 
 const settingsPage = {
   template: '#settings',
   methods: {
     pushLoginPage(){
-          localStorage.setItem("loggedIn", "false")
-          vm.loggedIn = "false";
+          localStorage.setItem("loggedIn", false)
+          vm.loggedIn = false;
           this.$emit('push-page', loginPage);
     },
   },
@@ -100,8 +99,8 @@ const loginPage = {
             alert(xhr.responseText);
           } else {
             localStorage.setItem("sid", xhr.responseText)
-            localStorage.setItem("loggedIn", "true")
-            vm.loggedIn = "true";
+            localStorage.setItem("loggedIn", true)
+            vm.loggedIn = true;
             // get profile information from server TODO
             vm.pageStack.pop();
           }
@@ -122,8 +121,8 @@ const loginPage = {
       xhr.send(JSON.stringify(payload));
     },
     signout() {
-      localStorage.setItem("loggedIn", "false")
-      vm.loggedIn = "false";
+      localStorage.setItem("loggedIn", false)
+      vm.loggedIn = false;
     },
   }
 };
@@ -168,6 +167,7 @@ const tabsDashboard = {
 };
 
 const sharedData = {
+  /*
   activitySetList: [
     {
       "activitySetName": "Physical State",
@@ -179,7 +179,7 @@ const sharedData = {
       "activitySet": ["Working", "Watching TV"],
       "comparisonSet": ["At school"],
     }
-  ],
+  ], */
 
   goalList: [
     {
@@ -202,8 +202,8 @@ const goalCreatePage = {
   template: '#goalCreatePage',
   data() {
     return {
-      activitySetList: sharedData.activitySetList,
-      goalList: sharedData.goalList
+      // activitySetList: sharedData.activitySetList,
+      // goalList: sharedData.goalList
     }
   },
   methods: {
@@ -215,7 +215,7 @@ const goalCreatePage = {
           return {
             goalName: null,
             goalCategory : category,
-            activitySetList: sharedData.activitySetList,
+            // activitySetList: sharedData.activitySetList,
             // "comparisonSet": ["Sitting", "Sleep"],
             selectedSet: null,
             goalValue: 100
@@ -227,12 +227,20 @@ const goalCreatePage = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          editAndCreateGoal(){
-
+          createGoal(goalName, categoryName, selectedAct, desiredValue, event){
+            addGoal(goalName, categoryName, selectedAct, desiredValue);
           }
         },
 
         computed: {
+          activitySetList(){
+            getGoalCategories(function(res){
+              this.render(res);
+            });
+          },
+          goalList(){
+            return getGoal();
+          },
           activitySet() {
             console.log("goalCategory: "+ this.goalCategory);
             for(var i = 0; i < this.activitySetList.length; i ++) {
@@ -244,6 +252,14 @@ const goalCreatePage = {
         }
       });
     }
+  },
+  computed: {
+    activitySetList(){
+      return getGoalCategories();
+    },
+    goalList(){
+      return getGoal();
+    },
   }
 };
 
@@ -251,14 +267,38 @@ const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
     return {
-      activitySetList: sharedData.activitySetList,
-      goalList: sharedData.goalList
+      activitySetList: null,
+      goalList: null
+      // activitySetList: sharedData.activitySetList,
+      // goalList: sharedData.goalList
     }
   },
-
+  created: function(){
+    console.log("created");
+		this.init();
+	},
   methods: {
-    deleteGoal(name, event){
-      console.log("delete successful");
+    init(){
+      this.getData();
+      return;
+    },
+    getData(){
+      getGoalCategories(function(res){
+        this.activitySetList = res;
+      });
+      getGoal(function(res){
+        this.goalList = res;
+        console.log("GoalCategories: " + this.activitySetList
+            + "  goalList: " + this.goalList
+        );
+      });
+
+      return;
+    },
+    deleteGoal(goalName, event){
+      removeGoal(goalName);
+      console.log("deleted");
+      //TODO refresh
     },
     pushAddGoalPage() {
       console.log("add a new goal");
@@ -273,8 +313,9 @@ const goalsDashboard = {
           return {
             goalName: name,
             activitySetName: setName,
-            activitySetList: sharedData.activitySetList,
-            goalList: sharedData.goalList,
+
+            // activitySetList: sharedData.activitySetList,
+            // goalList: sharedData.goalList,
             /*
             metrics: sharedData.metrics,
             selectedMetrics: sharedData.selectedMetrics
@@ -286,15 +327,25 @@ const goalsDashboard = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          createGoal() {
-            console.log("the number of activities: " + this.goal.activitySet.length);
-            console.log("activities: " + this.goal.activitySet);
-            console.log("value: " + this.goal.value);
+          editGoal(goalName, categoryName, selectedAct, desiredValue, event) {
+            console.log("the number of activities: "
+            + this.goal.activitySet.length
+            + "activities: " + this.goal.activitySet
+            + "value: " + this.goal.value
+            );
+            updateGoal(goalName, categoryName, selectedAct, desiredValue);
             // TODO send the goal to the server
 
           }
         },
-        computed: {
+
+        computed:{
+          activitySetList(){
+            return getGoalCategories();
+          },
+          goalList(){
+            return getGoal();
+          },
           goal() {
             console.log("goalName: "+ this.goalName);
             for(var i = 0; i < this.goalList.length; i ++) {
@@ -318,7 +369,17 @@ const goalsDashboard = {
         }
       })
     }
+  },
+  /*
+  computed: {
+    activitySetList(){
+      return getGoalCategories();
+    },
+    goalList(){
+      return getGoal();
+    },
   }
+  */
 };
 
 const dailyDashboard = {
@@ -337,7 +398,7 @@ var vm = new Vue({
     return {
       unsynced_files: 0,
       permission: false,
-      loggedIn: localStorage.getItem("loggedIn"),
+      loggedIn: JSON.parse(localStorage.getItem("loggedIn")),
       notification: true,
       location: true,
       pageStack: localStorage.getItem("loggedIn") == "true" ? [tabsDashboard] : [tabsDashboard, loginPage]
@@ -361,10 +422,19 @@ var vm = new Vue({
           }
         });
       }
-
     }
   },
-  computed: {
+  watch: {
+    loggedIn: function(val) {
+      if (val) {
+        app.checkPermission((hasPermission)=>{
+          vm.permission = hasPermission;
+          if (hasPermission) {
+            readLabels((files) => {console.log(files.length)})
+          }
+        });
+      }
+    }
   }
 });
 
@@ -376,54 +446,67 @@ function fail(err) {
 
 }
 
+var predictionsArray;
+var preds = [];
+
 function uploadFiles(files) {
-
-  if (!files) {
-    return;
-  }
-
-  vm.unsynced_files = files.length;
 
   if (files.length == 0) {
     console.log("no extrasensory files")
     return;
   }
 
-  for (let i = 0; i < 5/*files.length*/; i++) {
+  var labels = {};
+  var num_to_finish = files.length;
+
+  for (let i = 0; i < files.length; i++) {
     let fileName = files[i].name;
     //console.log(fileName);
     let timestamp = fileName.substring(0, fileName.indexOf('.'));
     readFile(files[i], function(result) {
       let pred = JSON.parse(result);
+      preds.push(pred);
       if (!pred.label_names || pred.label_names.length == 0) {
-        //console.log("i="+i+" null json detected. deleting " + files[i].name);
-        files[i].remove(function() {
-          //console.log("i="+i+" deleted file: " + fileName)
-          vm.unsynced_files--;
-        }, function(error) {
-          //console.log("i="+i+" error deleting file: " + fileName)
-        });
+        num_to_finish--;
+        if (num_to_finish == 0) {
+          finishedReading(labels, files);
+        }
         return;
       }
-      pred.time = timestamp;
-      ajax("POST", "es", pred, function() {
-        files[i].remove(function() {
-          //console.log("i="+i+" deleted file: " + fileName)
-          vm.unsynced_files--;
-        }, function(error) {
-          //console.log("i="+i+" error deleting file: " + fileName)
-        });
-      })
-      //vm.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
+      let date = moment(parseInt(timestamp)*1000).tz('America/Los_Angeles').format("YYYY-MM-DD");
+      if (!labels[date]) {
+        labels[date] = new Labels(date);
+      }
+      labels[date].addProbabilities(pred.label_probs);
+
+      num_to_finish--;
+      if (num_to_finish == 0) {
+        finishedReading(labels, files);
+      }
     })
   }
+}
 
+function finishedReading(labels, files) {
+  //console.log(labels)
+  ajax("POST", "es", {labels: labels}, function() {
+    for (let i = 0; i < files.length; i++) {
+      /* delete the contents of the directory */
+
+      // files[i].remove(function() {
+      //   vm.unsynced_files--;
+      // }, function(error) {
+      //   console.log("error deleting file: " + files[i].name)
+      // });
+    }
+    console.log("done syncing")
+  })
 }
 
 function ajax(method, endpoint, payload, callback) {
   var xhr = new XMLHttpRequest();
   var url = API_URL+endpoint;
-  console.log(url);
+  //console.log(url);
   xhr.onreadystatechange = function() {//Call a function when the state changes.
     if(xhr.readyState == XMLHttpRequest.DONE) {
       // Request finished. Do processing here.
@@ -434,10 +517,11 @@ function ajax(method, endpoint, payload, callback) {
       }
     }
   }
-  if (method == 'GET') {
+  //console.log(method)
+  if (method == "GET") {
     xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.send();
-  } else if (method == 'POST') {
+  } else if (method == "POST") {
     xhr.open("POST", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));
@@ -446,49 +530,57 @@ function ajax(method, endpoint, payload, callback) {
 
 
 // goals ajax
-function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+function addGoal(goalName, categoryName, selectedAct, desiredValue, compareAct=[]) {
   var payload = {
     name: goalName,
     act: selectedAct,
     compareAct: compareAct,
     categoryName: categoryName,
+    value: desiredValue,
     action: "add"
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
+    vm.pageStack.pop();
+    vm.pageStack.pop();
   });
 }
 
-function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+function updateGoal(goalName, categoryName, selectedAct, desiredValue, compareAct=[]) {
   var payload = {
     name: goalName,
     act: selectedAct,
     compareAct: compareAct,
     categoryName: categoryName,
+    value: desiredValue,
     action: "update"
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
+    vm.pageStack.pop();
   });
 }
 
-function removeGoal(goalName, catagoryName) {
+function removeGoal(goalName) {
   var payload = {
     name: goalName,
     act: [],
     compareAct: [],
     catagoryName: "",
-    action: "remove"
+    action: "remove",
+    value: 0
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
   });
 }
 
-function getGoalCategories(){
-  ajax("POST", "getGoalCategories", {}, function(res){
-    console.log(res);
-  });
+function getGoalCategories(callback){
+  ajax("POST", "getGoalCategories", {}, callback);
+}
+
+function getGoal(callback) {
+  ajax("POST", "getGoal", {}, callback);
 }
 
 function knexArrayToList(array){

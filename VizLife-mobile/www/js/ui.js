@@ -12,6 +12,13 @@ const settingsPage = {
           vm.loggedIn = "false";
           this.$emit('push-page', loginPage);
     },
+  },
+  data() {
+    return {
+      notification: true,
+      location: true,
+
+    }
   }
 };
 
@@ -19,9 +26,11 @@ const dailyReportPage = {
   template: '#dailyReportPage'
 }
 
-const goalCreationPage = {
-  key: 'goalCreationPage',
-  template: '#goalCreationPage'
+
+const goalEditPage = {
+  key: 'goalEditPage',
+  template: '#goalEditPage',
+  //props: ['metrics']
 };
 
 const goalListPage = {
@@ -29,7 +38,7 @@ const goalListPage = {
   template: '#goalListPage',
   methods: {
     push() {
-      this.$emit('push-page', goalCreationPage);
+      this.$emit('push-page', goalEditPage);
     }
   }
 };
@@ -158,45 +167,153 @@ const tabsDashboard = {
   }
 };
 
+const sharedData = {
+  activitySetList: [
+    {
+      "activitySetName": "Physical State",
+      "activitySet": ["Walking","Running", "Bicycling"],
+      "comparisonSet": ["Lying down","Sitting"],
+    },
+    {
+      "activitySetName": "Work-life balance",
+      "activitySet": ["Working", "Watching TV"],
+      "comparisonSet": ["At school"],
+    }
+  ],
+
+  goalList: [
+    {
+      "goalName" : "My Creative Goal",
+      "activitySetName" : "Physical State",
+      "activitySet": ["Walking", "Running"],
+      "comparisonSet": ["Sitting", "Sleep"],
+      "value": 100
+    }
+  ]
+}
+
+const goalDetailPage = {
+  key: 'goalDetailPage',
+  template: '#goalDetailPage',
+}
+
+const goalCreatePage = {
+  key: 'goalCreatePage',
+  template: '#goalCreatePage',
+  data() {
+    return {
+      activitySetList: sharedData.activitySetList,
+      goalList: sharedData.goalList
+    }
+  },
+  methods: {
+    pushGoalDetailPage(category, event) {
+      console.log("add a new goal detail: " + category);
+      this.$emit('push-page',{
+        extends: goalDetailPage,
+        data(){
+          return {
+            goalName: null,
+            goalCategory : category,
+            activitySetList: sharedData.activitySetList,
+            // "comparisonSet": ["Sitting", "Sleep"],
+            selectedSet: null,
+            goalValue: 100
+          }
+
+        },
+        methods: {
+          getBack() {
+            console.log("goalName: "+ this.goalName);
+            vm.pageStack.pop();
+          },
+          editAndCreateGoal(){
+
+          }
+        },
+
+        computed: {
+          activitySet() {
+            console.log("goalCategory: "+ this.goalCategory);
+            for(var i = 0; i < this.activitySetList.length; i ++) {
+              if(this.activitySetList[i].activitySetName == this.goalCategory){
+                return this.activitySetList[i].activitySet;
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+};
+
 const goalsDashboard = {
   template: '#goalsDashboard',
+  data() {
+    return {
+      activitySetList: sharedData.activitySetList,
+      goalList: sharedData.goalList
+    }
+  },
+
   methods: {
-    pushGoalListPage(){
+    deleteGoal(name, event){
+      console.log("delete successful");
+    },
+    pushAddGoalPage() {
+      console.log("add a new goal");
+      this.$emit('push-page', goalCreatePage);
+    },
+    pushEditGoalPage(name, setName, event){
+      console.log("edit the goal " + name + " " + setName);
       this.$emit('push-page',
       {
-        extends: goalCreationPage,
+        extends: goalEditPage,
         data() {
           return {
-            goalname: 'sample goal',
-            goaldescription: 'This is some goal description',
-            labels : ["labels", "go", "here"],
-            metrics: []
+            goalName: name,
+            activitySetName: setName,
+            activitySetList: sharedData.activitySetList,
+            goalList: sharedData.goalList,
+            /*
+            metrics: sharedData.metrics,
+            selectedMetrics: sharedData.selectedMetrics
+            */
           }
         },
         methods: {
-          addMetric() {
-            this.metrics.push({
-              selectedItem : "choose a label",
-              scoreSlider: 50
-            })
+          getBack() {
+            console.log("goalName: "+ this.goalName);
+            vm.pageStack.pop();
           },
           createGoal() {
-            var goal = {
-              name: this.goalName,
-              description: this.goaldescription,
-              metrics: this.metrics
-            }
-            console.log(goal)
+            console.log("the number of activities: " + this.goal.activitySet.length);
+            console.log("activities: " + this.goal.activitySet);
+            console.log("value: " + this.goal.value);
+            // TODO send the goal to the server
 
-            // TODO send goal and pop page
           }
         },
         computed: {
-          maxMetrics() {
-            return (this.metrics.length == MAX_METRICS)
+          goal() {
+            console.log("goalName: "+ this.goalName);
+            for(var i = 0; i < this.goalList.length; i ++) {
+              if(this.goalList[i].goalName == this.goalName){
+                return this.goalList[i];
+              }
+            }
           },
-          hasMetrics() {
-            return (this.metrics.length > 0)
+          activitySet() {
+            console.log("goalList: "+ this.goalList);
+            for(var i = 0; i < this.activitySetList.length; i ++) {
+              if(this.activitySetList[i].activitySetName == this.activitySetName){
+                return this.activitySetList[i].activitySet;
+              }
+            }
+          },
+          hasActivity() {
+            console.log("size: " + this.activitySet.length);
+            return (this.activitySet.length > 0);
           }
         }
       })
@@ -218,6 +335,8 @@ var vm = new Vue({
   template: '#main',
   data() {
     return {
+      unsynced_files: 0,
+      permission: false,
       loggedIn: localStorage.getItem("loggedIn"),
       notification: true,
       location: true,
@@ -229,46 +348,80 @@ var vm = new Vue({
       ajax("GET", "profile", null, function(res) {
         console.log(res)
       });
-    }
-  },
-  watch: {
-    authType: function (type) {
-      if (type == 0) {
-        this.authMessage = "Login";
-      } else if (type == 1) {
-        this.authMessage = "Sign up";
+    },
+    sync() {
+      if (this.permission) {
+        readLabels(uploadFiles);
+      } else {
+        app.checkPermission((success) => {
+          if (success) {
+            readLabels(uploadFiles);
+          } else {
+            console.log("no read permission granted");
+          }
+        });
       }
+
     }
   },
   computed: {
   }
 });
 
-// var ui = new Vue({
-//   data: {
-//     loading: false,
-//     permission: false,
-//     predictions: {
-//     	"label_names": [],
-//     	"label_probs": [],
-//     	"location_lat_long": [],
-//       "time": ''
-//     }
-//   },
-//   el: "#ui",
-//   methods: {
-//     reload: function() {
-//       readLabels();
-//     }
-//   }
-// })
+<<<<<<< HEAD
+=======
+function success() {
 
+}
 
-var titleImage = new Vue({
-  data: {
-    template: ""
+function fail(err) {
+
+}
+
+function uploadFiles(files) {
+
+  if (!files) {
+    return;
   }
-})
+
+  vm.unsynced_files = files.length;
+>>>>>>> a85acc238ca79140eb6c728569e22e4e742b664e
+
+  if (files.length == 0) {
+    console.log("no extrasensory files")
+    return;
+  }
+
+  for (let i = 0; i < 5/*files.length*/; i++) {
+    let fileName = files[i].name;
+    //console.log(fileName);
+    let timestamp = fileName.substring(0, fileName.indexOf('.'));
+    readFile(files[i], function(result) {
+      let pred = JSON.parse(result);
+      if (!pred.label_names || pred.label_names.length == 0) {
+        //console.log("i="+i+" null json detected. deleting " + files[i].name);
+        files[i].remove(function() {
+          //console.log("i="+i+" deleted file: " + fileName)
+          vm.unsynced_files--;
+        }, function(error) {
+          //console.log("i="+i+" error deleting file: " + fileName)
+        });
+        return;
+      }
+      pred.time = timestamp;
+      ajax("POST", "es", pred, function() {
+        files[i].remove(function() {
+          //console.log("i="+i+" deleted file: " + fileName)
+          vm.unsynced_files--;
+        }, function(error) {
+          //console.log("i="+i+" error deleting file: " + fileName)
+        });
+      })
+      //vm.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
+    })
+  }
+
+}
 
 function ajax(method, endpoint, payload, callback) {
   var xhr = new XMLHttpRequest();
@@ -278,8 +431,8 @@ function ajax(method, endpoint, payload, callback) {
     if(xhr.readyState == XMLHttpRequest.DONE) {
       // Request finished. Do processing here.
       if (xhr.status != 200) {
-        alert(xhr.responseText);
-      } else {
+        console.log(xhr.responseText);
+      } else { // only invoke callback when 200 statuscode
         callback(xhr.responseText);
       }
     }

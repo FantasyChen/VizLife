@@ -446,12 +446,13 @@ function ajax(method, endpoint, payload, callback) {
 
 
 // goals ajax
-function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+function addGoal(goalName, categoryName, selectedAct, desiredValue, compareAct=[]) {
   var payload = {
     name: goalName,
     act: selectedAct,
     compareAct: compareAct,
     categoryName: categoryName,
+    value: desiredValue,
     action: "add"
   };
   ajax("POST", "updateGoal", payload, function() {
@@ -459,12 +460,13 @@ function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
   });
 }
 
-function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+function updateGoal(goalName, categoryName, selectedAct, desiredValue, compareAct=[]) {
   var payload = {
     name: goalName,
     act: selectedAct,
     compareAct: compareAct,
     categoryName: categoryName,
+    value: desiredValue,
     action: "update"
   };
   ajax("POST", "updateGoal", payload, function() {
@@ -472,13 +474,14 @@ function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
   });
 }
 
-function removeGoal(goalName, catagoryName) {
+function removeGoal(goalName) {
   var payload = {
     name: goalName,
     act: [],
     compareAct: [],
     catagoryName: "",
-    action: "remove"
+    action: "remove",
+    value: 0
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
@@ -487,6 +490,12 @@ function removeGoal(goalName, catagoryName) {
 
 function getGoalCategories(){
   ajax("POST", "getGoalCategories", {}, function(res){
+    console.log(res);
+  });
+}
+
+function getGoal() {
+  ajax("POST", "getGoal", {}, function(res) {
     console.log(res);
   });
 }

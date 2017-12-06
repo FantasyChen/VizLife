@@ -1,6 +1,7 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
+// const API_URL = "http://localhost:5000/";   // Test backend
 const MAX_METRICS = 3;
 
 const settingsPage = {
@@ -334,6 +335,8 @@ var vm = new Vue({
   template: '#main',
   data() {
     return {
+      unsynced_files: 0,
+      permission: false,
       loggedIn: localStorage.getItem("loggedIn"),
       notification: true,
       location: true,
@@ -345,49 +348,100 @@ var vm = new Vue({
       ajax("GET", "profile", null, function(res) {
         console.log(res)
       });
-    }
-  },
-  watch: {
-    authType: function (type) {
-      if (type == 0) {
-        this.authMessage = "Login";
-      } else if (type == 1) {
-        this.authMessage = "Sign up";
+    },
+    sync() {
+      if (this.permission) {
+        readLabels(uploadFiles);
+      } else {
+        app.checkPermission((success) => {
+          if (success) {
+            readLabels(uploadFiles);
+          } else {
+            console.log("no read permission granted");
+          }
+        });
       }
+
     }
   },
   computed: {
   }
 });
 
+<<<<<<< HEAD
+=======
+function success() {
 
+}
 
-var titleImage = new Vue({
-  data: {
-    template: ""
+function fail(err) {
+
+}
+
+function uploadFiles(files) {
+
+  if (!files) {
+    return;
   }
-})
+
+  vm.unsynced_files = files.length;
+>>>>>>> a85acc238ca79140eb6c728569e22e4e742b664e
+
+  if (files.length == 0) {
+    console.log("no extrasensory files")
+    return;
+  }
+
+  for (let i = 0; i < 5/*files.length*/; i++) {
+    let fileName = files[i].name;
+    //console.log(fileName);
+    let timestamp = fileName.substring(0, fileName.indexOf('.'));
+    readFile(files[i], function(result) {
+      let pred = JSON.parse(result);
+      if (!pred.label_names || pred.label_names.length == 0) {
+        //console.log("i="+i+" null json detected. deleting " + files[i].name);
+        files[i].remove(function() {
+          //console.log("i="+i+" deleted file: " + fileName)
+          vm.unsynced_files--;
+        }, function(error) {
+          //console.log("i="+i+" error deleting file: " + fileName)
+        });
+        return;
+      }
+      pred.time = timestamp;
+      ajax("POST", "es", pred, function() {
+        files[i].remove(function() {
+          //console.log("i="+i+" deleted file: " + fileName)
+          vm.unsynced_files--;
+        }, function(error) {
+          //console.log("i="+i+" error deleting file: " + fileName)
+        });
+      })
+      //vm.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
+    })
+  }
+
+}
 
 function ajax(method, endpoint, payload, callback) {
   var xhr = new XMLHttpRequest();
   var url = API_URL+endpoint;
-
+  console.log(url);
   xhr.onreadystatechange = function() {//Call a function when the state changes.
     if(xhr.readyState == XMLHttpRequest.DONE) {
       // Request finished. Do processing here.
       if (xhr.status != 200) {
-        alert(xhr.responseText);
-      } else {
+        console.log(xhr.responseText);
+      } else { // only invoke callback when 200 statuscode
         callback(xhr.responseText);
       }
     }
   }
-
   if (method == 'GET') {
     xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.send();
   } else if (method == 'POST') {
-    xhr.open("POST", url, true);
+    xhr.open("POST", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));
   }

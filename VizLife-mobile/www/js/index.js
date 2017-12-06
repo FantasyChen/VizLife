@@ -28,62 +28,60 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
       this.receivedEvent('deviceready');
-      var permissions = cordova.plugins.permissions;
-
-      permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, (success) => {
-        if (success.hasPermission) {
-          ui.permission = true;
-          readLabels();
-        }
-        else {
-          ui.permission = false;
-          permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, (success) => {
-            ui.permission = true;
-            readLabels();
-          }, () => {
-            ui.permission = false;
+      this.checkPermission((hasPermission)=>{
+        if (hasPermission) {
+          readLabels((files) => {
+            if (files) {
+              vm.unsynced_files = files.length;
+            }
           })
         }
-      }, () => {
-        ui.permission = false;
-        console.log("error checking permission")
-       }
-      );
+      });
     },
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        // var parentElement = document.getElementById(id);
-        // var listeningElement = parentElement.querySelector('.listening');
-        // var receivedElement = parentElement.querySelector('.received');
-        //
-        // listeningElement.setAttribute('style', 'display:none;');
-        // receivedElement.setAttribute('style', 'display:block;');
-        console.log('Received Event: ' + id);
+      console.log('Received Event: ' + id);
+    },
+
+    // check external storage read permission
+    checkPermission: function(cb) {
+      var permissions = cordova.plugins.permissions;
+
+      permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, (success) => {
+        if (success.hasPermission) {
+          vm.permission = true;
+          cb(true);
+        }
+        else {
+          vm.permission = false;
+          permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, (success) => {
+            vm.permission = true;
+            cb(true);
+          }, () => {
+            vm.permission = false;
+            cb(false);
+          })
+        }
+      }, () => {
+        vm.permission = false;
+        cb(false)
+        console.log("error checking permission")
+       }
+      );
     }
 };
 
-function readLabels() {
+function readLabels(cb) {
   var path = cordova.file.externalRootDirectory + "Android/data/edu.ucsd.calab.extrasensory/files/documents/";
   getEntry(path, (entries) => {
     if (entries.length == 0)
-      return;
+      return cb(null);
 
     console.log(entries[0].name);
     path += entries[0].name;
     getEntry(path, (files) => {
-      if (files.length == 0)
-        return;
-      var fileName = files[files.length-1].name;
-      console.log(fileName);
-      var timestamp = fileName.substring(0, fileName.indexOf('.'));
-      var timestamp = parseInt(timestamp + "000");
-      ui.loading = true;
-      readFile(files[files.length-1], function(result) {
-        ui.predictions = JSON.parse(result);
-        ui.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
-        ui.loading = false;
-      })
+      return cb(files);
     });
   });
 }

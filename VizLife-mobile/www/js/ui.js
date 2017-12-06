@@ -443,3 +443,54 @@ function ajax(method, endpoint, payload, callback) {
     xhr.send(JSON.stringify(payload));
   }
 }
+
+
+// goals ajax
+function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+  var payload = {
+    name: goalName,
+    act: selectedAct,
+    compareAct: compareAct,
+    categoryName: categoryName,
+    action: "add"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
+  var payload = {
+    name: goalName,
+    act: selectedAct,
+    compareAct: compareAct,
+    categoryName: categoryName,
+    action: "update"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function removeGoal(goalName, catagoryName) {
+  var payload = {
+    name: goalName,
+    act: [],
+    compareAct: [],
+    catagoryName: "",
+    action: "remove"
+  };
+  ajax("POST", "updateGoal", payload, function() {
+    // return to the main page;
+  });
+}
+
+function getGoalCategories(){
+  ajax("POST", "getGoalCategories", {}, function(res){
+    console.log(res);
+  });
+}
+
+function knexArrayToList(array){
+  return array.slice(1, -1).split(",");
+}

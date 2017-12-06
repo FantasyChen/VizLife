@@ -282,10 +282,13 @@ under the License.
         </v-ons-toolbar>
 
     <div id="container" class="transition">
+<<<<<<< HEAD
+=======
       <header class="bar bar-header nav-bar bar-stable">
         <button id="btn-menu" class="button button-icon" style="font-size: 22px;"><i class="ion-navicon-round"></i></button>
         <h1 class="title">Reflection/Motivation</h1>
       </header>
+>>>>>>> b9049ef7087edd5cd3c8c3ff2b62de175e6f2ad7
       <div id="content"></div>
     </div>
     <!--

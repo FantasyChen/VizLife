@@ -168,6 +168,7 @@ const tabsDashboard = {
 };
 
 const sharedData = {
+  /*
   activitySetList: [
     {
       "activitySetName": "Physical State",
@@ -179,7 +180,7 @@ const sharedData = {
       "activitySet": ["Working", "Watching TV"],
       "comparisonSet": ["At school"],
     }
-  ],
+  ], */
 
   goalList: [
     {
@@ -202,7 +203,7 @@ const goalCreatePage = {
   template: '#goalCreatePage',
   data() {
     return {
-      activitySetList: sharedData.activitySetList,
+      // activitySetList: sharedData.activitySetList,
       goalList: sharedData.goalList
     }
   },
@@ -227,12 +228,15 @@ const goalCreatePage = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          editAndCreateGoal(){
-
+          createGoal(goalName, categoryName, selectedAct, event){
+            addGoal(goalName, categoryName, selectedAct);
           }
         },
 
         computed: {
+          activitySetList(){
+            return getGoalCategories();
+          },
           activitySet() {
             console.log("goalCategory: "+ this.goalCategory);
             for(var i = 0; i < this.activitySetList.length; i ++) {
@@ -251,14 +255,15 @@ const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
     return {
-      activitySetList: sharedData.activitySetList,
+      // activitySetList: sharedData.activitySetList,
       goalList: sharedData.goalList
     }
   },
 
   methods: {
-    deleteGoal(name, event){
-      console.log("delete successful");
+    deleteGoal(goalName, event){
+      removeGoal(goalName);
+      console.log("deleted");
     },
     pushAddGoalPage() {
       console.log("add a new goal");
@@ -273,7 +278,8 @@ const goalsDashboard = {
           return {
             goalName: name,
             activitySetName: setName,
-            activitySetList: sharedData.activitySetList,
+
+            // activitySetList: sharedData.activitySetList,
             goalList: sharedData.goalList,
             /*
             metrics: sharedData.metrics,
@@ -286,15 +292,19 @@ const goalsDashboard = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          createGoal() {
-            console.log("the number of activities: " + this.goal.activitySet.length);
-            console.log("activities: " + this.goal.activitySet);
-            console.log("value: " + this.goal.value);
+          editGoal(goalName, categoryName, selectedAct, event) {
+            console.log("the number of activities: "
+            + this.goal.activitySet.length
+            + "activities: " + this.goal.activitySet
+            + "value: " + this.goal.value
+            );
+            updateGoal(goalName, categoryName, selectedAct);
             // TODO send the goal to the server
 
           }
         },
-        computed: {
+
+
           goal() {
             console.log("goalName: "+ this.goalName);
             for(var i = 0; i < this.goalList.length; i ++) {
@@ -318,6 +328,11 @@ const goalsDashboard = {
         }
       })
     }
+  },
+  computed: {
+    activitySetList(){
+      return getGoalCategories();
+    },
   }
 };
 
@@ -456,6 +471,8 @@ function addGoal(goalName, categoryName, selectedAct, compareAct=[]) {
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
+    vm.pageStack.pop();
+    vm.pageStack.pop();
   });
 }
 
@@ -469,6 +486,7 @@ function updateGoal(goalName, categoryName, selectedAct, compareAct=[]) {
   };
   ajax("POST", "updateGoal", payload, function() {
     // return to the main page;
+    vm.pageStack.pop();
   });
 }
 

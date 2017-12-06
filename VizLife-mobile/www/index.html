@@ -39,7 +39,6 @@ under the License.
 <link rel="stylesheet" href="css/xcharts.css">
 <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 
-  <script src="js/Chart.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/semantic.min.js"></script>
 <script src="js/vue.js"></script>
@@ -223,7 +222,7 @@ under the License.
             <div class="ui big buttons" style="margin-left: 20%">
               <button class="ui button" @click="getBack">Cancel</button>
               <div class="or"></div>
-              <button class="ui positive button" @click="createGoal">Save</button>
+              <button class="ui positive button" @click="createGoal(goalName, goalCategory, selectedSet, goalValue)">Save</button>
             </div>
           </v-ons-list-item>
 
@@ -265,7 +264,7 @@ under the License.
             <div class="ui big buttons" style="margin-left: 20%">
               <button class="ui button" @click="getBack">Cancel</button>
               <div class="or"></div>
-              <button class="ui positive button" @click="createGoal">Save</button>
+              <button class="ui positive button" @click="editGoal(goalName, activitySetName, goal.activitySet)">Save</button>
             </div>
           </v-ons-list-item>
 
@@ -277,14 +276,18 @@ under the License.
 
     <template id="reflectionDashboard">
       <v-ons-page>
-
+        <!--
         <v-ons-toolbar>
-          <div class="center">Reflection/Motivation</div>
-        </v-ons-toolbar>
-
-    <!--<div id="container" class="transition">-->
+        <div class="center">Reflection/Motivation</div>
+      </v-ons-toolbar>
+    -->
+    <div id="container" class="transition">
+      <header class="bar bar-header nav-bar bar-stable">
+        <button id="btn-menu" class="button button-icon" style="font-size: 22px;"><i class="ion-navicon-round"></i></button>
+        <h1 class="title">Reflection/Motivation</h1>
+      </header>
       <div id="content"></div>
-    <!--</div>
+    </div>
     <!--
     <v-ons-card @click="pushReflectionPage">
     <div class="title">
@@ -338,6 +341,7 @@ under the License.
     </v-ons-card>
 
   </v-ons-page>
+
 </template>
 
 
@@ -480,11 +484,11 @@ under the License.
 <!-- <script src="js/fastclick.js"></script> -->
 <script src="js/d3.v3.min.js"></script>
 <script src="js/xcharts.js"></script>
-<!--<script src="data.js"></script>-->
+<script src="data.js"></script>
 <script src="summary.js"></script>
 
 <script src="js/dashboard1.js"></script>
 <script src="js/dashboard2.js"></script>
 <script src="js/dashboard3.js"></script>
-<script src="js/app.js"></script>
+<!-- <script src="js/app.js"></script> -->
 </html>

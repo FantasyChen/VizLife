@@ -499,13 +499,14 @@ function finishedReading(labels, files) {
       //   console.log("error deleting file: " + files[i].name)
       // });
     }
+    console.log("done syncing")
   })
 }
 
 function ajax(method, endpoint, payload, callback) {
   var xhr = new XMLHttpRequest();
   var url = API_URL+endpoint;
-  console.log(url);
+  //console.log(url);
   xhr.onreadystatechange = function() {//Call a function when the state changes.
     if(xhr.readyState == XMLHttpRequest.DONE) {
       // Request finished. Do processing here.
@@ -516,13 +517,11 @@ function ajax(method, endpoint, payload, callback) {
       }
     }
   }
-  console.log(method)
+  //console.log(method)
   if (method == "GET") {
-    console.log("inside get")
     xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.send();
   } else if (method == "POST") {
-    console.log("inside post")
     xhr.open("POST", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));

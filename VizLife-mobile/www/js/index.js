@@ -28,15 +28,6 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
       this.receivedEvent('deviceready');
-      this.checkPermission((hasPermission)=>{
-        if (hasPermission) {
-          readLabels((files) => {
-            if (files) {
-              vm.unsynced_files = files.length;
-            }
-          })
-        }
-      });
     },
 
     // Update DOM on a Received Event
@@ -75,12 +66,15 @@ var app = {
 function readLabels(cb) {
   var path = cordova.file.externalRootDirectory + "Android/data/edu.ucsd.calab.extrasensory/files/documents/";
   getEntry(path, (entries) => {
-    if (entries.length == 0)
-      return cb(null);
+    if (entries.length == 0) {// no extrasensory ID directory
+      vm.unsynced_files = 0;
+      return cb([]);
+    }
 
-    console.log(entries[0].name);
+    //console.log(entries[0].name);
     path += entries[0].name;
     getEntry(path, (files) => {
+      vm.unsynced_files = files.length;
       return cb(files);
     });
   });
@@ -88,7 +82,7 @@ function readLabels(cb) {
 
 function getEntry(path, cb) {
   window.resolveLocalFileSystemURL(path, function (entry) {
-      console.log(entry);
+      //console.log(entry);
       // check here if fileEntry is null or if there was an errorHandler
       if (entry.isDirectory) {
         var reader = entry.createReader();

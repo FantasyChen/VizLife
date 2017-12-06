@@ -1,15 +1,14 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
-// const API_URL = "http://localhost:5000/";   // Test backend
 const MAX_METRICS = 3;
 
 const settingsPage = {
   template: '#settings',
   methods: {
     pushLoginPage(){
-          localStorage.setItem("loggedIn", "false")
-          vm.loggedIn = "false";
+          localStorage.setItem("loggedIn", false)
+          vm.loggedIn = false;
           this.$emit('push-page', loginPage);
     },
   }
@@ -91,8 +90,8 @@ const loginPage = {
             alert(xhr.responseText);
           } else {
             localStorage.setItem("sid", xhr.responseText)
-            localStorage.setItem("loggedIn", "true")
-            vm.loggedIn = "true";
+            localStorage.setItem("loggedIn", true)
+            vm.loggedIn = true;
             // get profile information from server TODO
             vm.pageStack.pop();
           }
@@ -113,8 +112,8 @@ const loginPage = {
       xhr.send(JSON.stringify(payload));
     },
     signout() {
-      localStorage.setItem("loggedIn", "false")
-      vm.loggedIn = "false";
+      localStorage.setItem("loggedIn", false)
+      vm.loggedIn = false;
     },
   }
 };
@@ -220,7 +219,7 @@ var vm = new Vue({
     return {
       unsynced_files: 0,
       permission: false,
-      loggedIn: localStorage.getItem("loggedIn"),
+      loggedIn: JSON.parse(localStorage.getItem("loggedIn")),
       notification: true,
       location: true,
       pageStack: localStorage.getItem("loggedIn") == "true" ? [tabsDashboard] : [tabsDashboard, loginPage]
@@ -244,10 +243,19 @@ var vm = new Vue({
           }
         });
       }
-
     }
   },
-  computed: {
+  watch: {
+    loggedIn: function(val) {
+      if (val) {
+        app.checkPermission((hasPermission)=>{
+          vm.permission = hasPermission;
+          if (hasPermission) {
+            readLabels((files) => {console.log(files.length)})
+          }
+        });
+      }
+    }
   }
 });
 
@@ -259,48 +267,60 @@ function fail(err) {
 
 }
 
+var predictionsArray;
+var preds = [];
+
 function uploadFiles(files) {
-
-  if (!files) {
-    return;
-  }
-
-  vm.unsynced_files = files.length;
 
   if (files.length == 0) {
     console.log("no extrasensory files")
     return;
   }
 
-  for (let i = 0; i < 5/*files.length*/; i++) {
+  var labels = {};
+  var num_to_finish = files.length;
+
+  for (let i = 0; i < files.length; i++) {
     let fileName = files[i].name;
     //console.log(fileName);
     let timestamp = fileName.substring(0, fileName.indexOf('.'));
     readFile(files[i], function(result) {
       let pred = JSON.parse(result);
+      preds.push(pred);
       if (!pred.label_names || pred.label_names.length == 0) {
-        //console.log("i="+i+" null json detected. deleting " + files[i].name);
-        files[i].remove(function() {
-          //console.log("i="+i+" deleted file: " + fileName)
-          vm.unsynced_files--;
-        }, function(error) {
-          //console.log("i="+i+" error deleting file: " + fileName)
-        });
+        num_to_finish--;
+        if (num_to_finish == 0) {
+          finishedReading(labels, files);
+        }
         return;
       }
-      pred.time = timestamp;
-      ajax("POST", "es", pred, function() {
-        files[i].remove(function() {
-          //console.log("i="+i+" deleted file: " + fileName)
-          vm.unsynced_files--;
-        }, function(error) {
-          //console.log("i="+i+" error deleting file: " + fileName)
-        });
-      })
-      //vm.predictions.time = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
+      let date = moment(parseInt(timestamp)*1000).tz('America/Los_Angeles').format("YYYY-MM-DD");
+      if (!labels[date]) {
+        labels[date] = new Labels(date);
+      }
+      labels[date].addProbabilities(pred.label_probs);
+
+      num_to_finish--;
+      if (num_to_finish == 0) {
+        finishedReading(labels, files);
+      }
     })
   }
+}
 
+function finishedReading(labels, files) {
+  //console.log(labels)
+  ajax("POST", "es", {labels: labels}, function() {
+    for (let i = 0; i < files.length; i++) {
+      /* delete the contents of the directory */
+
+      // files[i].remove(function() {
+      //   vm.unsynced_files--;
+      // }, function(error) {
+      //   console.log("error deleting file: " + files[i].name)
+      // });
+    }
+  })
 }
 
 function ajax(method, endpoint, payload, callback) {
@@ -317,10 +337,13 @@ function ajax(method, endpoint, payload, callback) {
       }
     }
   }
-  if (method == 'GET') {
+  console.log(method)
+  if (method == "GET") {
+    console.log("inside get")
     xhr.open("GET", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.send();
-  } else if (method == 'POST') {
+  } else if (method == "POST") {
+    console.log("inside post")
     xhr.open("POST", url += "?sid="+localStorage.getItem("sid"), true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(payload));

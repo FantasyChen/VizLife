@@ -1,131 +1,156 @@
 var dashboard1 = (function () {
 
     "use strict";
-
-    // Currently selected dashboard values
     var chart1,
-        chart2,
-        selectedday = 1611;
+        chart2;
+    /* json files */
+//    var requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+//    var request = new XMLHttpRequest();
+//    var superHeroes;
+//    request.open('GET', requestURL);
+//    request.responseType = 'json';
+//    request.send();
+//    request.onload = function() {
+//      superHeroes = request.response;
+//      populateHeader(superHeroes);
+//      showHeroes(superHeroes);
+//    }
 
-    /* Functions to create the individual charts involved in the dashboard */
+//    var data_json = [{
+//                        "name": "Harry",
+//                        "age": "32"
+//                    }];
+      //var data_json = $.getJSON("data.json");
+      //console.log(data_json);
 
-    function createSummaryChart(selector, dataset) {
+//    function loadJSON(callback) {
+//        var xobj = new XMLHttpRequest();
+//            xobj.overrideMimeType("application/json");
+//            xobj.open('GET', 'data.json', true); // Replace 'my_data' with the path to your file
+//            xobj.onreadystatechange = function () {
+//              if (xobj.readyState == 4 && xobj.status == "200") {
+//                // Required use of an anonymous callback as
+//                // .open will NOT return a value but simply returns undefined in asynchronous mode
+//                callback(xobj.responseText);
+//              }
+//        };
+//        xobj.send(null);
+//     }
 
-        var data = {
-                "xScale": "ordinal",
-                "yScale": "linear",
-                "main": dataset
-            },
+//     function init() {
+//      loadJSON(function(response) {
+//       // Parse JSON string into object
+//         data_json = JSON.parse(response);
+//      });
+//     }
 
-            options = {
-                "axisPaddingLeft": 0,
-                "paddingLeft": 20,
-                "paddingRight": 0,
-                "axisPaddingRight": 0,
-                "axisPaddingTop": 5,
-                "yMin": 9,
-                "yMax": 40,
-                "interpolation": "linear",
-                "click": daySelectionHandler
-            },
+//     init();
 
-            legend = d3.select(selector).append("svg")
-                .attr("class", "legend")
-                .selectAll("g")
-                .data(dataset)
-                .enter()
-                .append("g")
-                .attr("transform", function (d, i) {
-                    return "translate(" + (64 + (i * 84)) + ", 0)";
-                });
+    /* colors */
+    var colorSet = ['rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(103,80,85, 1)',
+                    'rgba(59,144,107,1)',
+                    'rgba(206,187,110,1)'
+                    ];
+    /* create two charts*/
+    function createChart1() {
+        var ctx = document.getElementById("myChart1");
+        var data = [10, 20, 30, 40, 50, 60, 10, 20, 30];
+        var labels = ['running', 'sitting', 'sleeping'];
+        var backgroundColor = [
+                                colorSet[0],
+                                colorSet[1],
+                                colorSet[2],
+                                colorSet[3],
+                                colorSet[4],
+                                colorSet[5],
+                                colorSet[6],
+                                colorSet[7],
+                                colorSet[8]
+                                ];
 
-        legend.append("rect")
-            .attr("width", 18)
-            .attr("height", 18)
-            .attr("class", function (d, i) {
-                return 'color' + i;
+         var myChart1 = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data,
+                            backgroundColor
+                        }],
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        labels,
+
+                    },
+                    options: {}
+
             });
-
-        legend.append("text")
-            .attr("x", 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .text(function (d, i) {
-                return dataset[i].Goal;
-            });
-
-        return new xChart('line-dotted', data, selector + " .graph", options);
+            return myChart1;
     }
 
-    function createGoalBreakdownChart(selector, dataset) {
-
-        var data = {
-                "xScale": "ordinal",
-                "yScale": "linear",
-                "type": "bar",
-                "main": dataset
-            },
-
-            options = {
-                "axisPaddingLeft": 0,
-                "axisPaddingTop": 5,
-                "paddingLeft": 20,
-                "yMin": 8,
-                "yMax": 40
-            };
-
-        return new xChart('bar', data, selector + " .graph", options);
-
+    function createChart2() {
+        var ctx = document.getElementById("myChart2");
+                        var myChart1 = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: [12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255,99,132,1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                               scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }],
+                        }
+                    }
+                    });
+                    return myChart2;
     }
 
-    /* Data selection handlers */
-
-    function daySelectionHandler(d, i) {
-        selectedday = d.x;
-        var data = {
-            "xScale": "ordinal",
-            "yScale": "linear",
-            "type": "bar",
-            "main": getGoalBreakdownForday(selectedday)
-        };
-        $('#chart2>.title').html('Total Medals by Goal in ' + selectedday);
-        chart2.setData(data);
-    }
-
-    /* Functions to transform/format the data as required by specific charts */
-
-    function getGoalBreakdownForday(day) {
-        var result = [];
-        for (var i = 0; i < results[day].length; i++) {
-            result.push({x: results[day][i].Goal, y: results[day][i].Total});
-        }
-        return [
-            {
-                "className": ".medals",
-                "data": result
-            }
-        ]
-    }
 
     /* Render the dashboard */
 
     function render() {
 
         var html =
-            '<div id="chart1" class="chart chart2">' +
+                '<div id="chart1" class="chart chart2">' +
                 '<div class="title">Peformance by Goal</div>' +
-                '<div class="graph"></div>' +
                 '</div>' +
+                '<canvas id="myChart1" width="300" height="300"></canvas>'+
 
                 '<div id="chart2" class="chart chart2">' +
                 '<div class="title">Total Metrics by Goal Today</div>' +
-                '<div class="graph"></div>' +
-                '</div>';
+                '</div>'+
+                '<canvas id="myChart2" width="300" height="300"></canvas>';
 
         $("#content").html(html);
-
-        chart1 = createSummaryChart('#chart1', summary);
-        chart2 = createGoalBreakdownChart('#chart2', getGoalBreakdownForday(selectedday));
+        chart1 = createChart1();
+        chart2 = createChart2();
     }
 
     return {

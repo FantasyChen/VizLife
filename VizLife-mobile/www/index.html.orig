@@ -27,26 +27,28 @@ under the License.
   * Enable inline JS: add 'unsafe-inline' to default-src
 -->
 <meta charset="utf-8">
-<<<<<<< HEAD
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:5000/ https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-=======
 <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; media-src *"> -->
->>>>>>> b7047cfa54e675a67f7cce367b00060d235a477e
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="viewport" content="initial-scale=1, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <link rel="stylesheet" href="css/onsenui.css">
 <link rel="stylesheet" href="css/onsen-css-components.css">
+<<<<<<< HEAD
+<!--<link rel="stylesheet" href="css/ionic.css">-->
+=======
 <!-- <link rel="stylesheet" href="css/ionic.css"> -->
+>>>>>>> fde88a6748d160fbdef24eec5bd195c2b23e179b
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/xcharts.css">
 <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 
-<script src="js/Chart.js"></script>
-
+<<<<<<< HEAD
+  <script src="js/Chart.js"></script>
+=======
 <script src="js/jquery.js"></script>
 <script src="js/semantic.min.js"></script>
+>>>>>>> fde88a6748d160fbdef24eec5bd195c2b23e179b
 <script src="js/vue.js"></script>
 <script src="js/onsenui.js"></script>
 <script src="js/vue-onsenui.js"></script>
@@ -55,6 +57,29 @@ under the License.
 
 <body>
 
+<<<<<<< HEAD
+  <!-- <div id="ui">
+  <h1><span>VizLife</span> <button @click="reload()" style="float: right; width: 100px; height: 30px; font-size: 22px;">reload</button></h1>
+  <ol v-if="permission" >
+  <div v-if="!loading">
+  <h3 style="margin-bottom: 0px;">
+  {{predictions.time}}
+</h3>
+<li v-for="(value, index) in predictions.label_names">
+{{ value }} - {{predictions.label_probs[index]}}
+</li>
+</div>
+<h3 v-else>
+loading...
+</h3>
+</ol>
+<p v-else>
+no read permission
+</p>
+</div> -->
+
+=======
+>>>>>>> a85acc238ca79140eb6c728569e22e4e742b664e
 <div id="app"></div>
 </body>
 
@@ -280,6 +305,11 @@ under the License.
 
 
 
+<<<<<<< HEAD
+<template id="reflectionDashboard">
+  <v-ons-page>
+    <!--<div id="left-nav">
+=======
     <template id="reflectionDashboard">
       <v-ons-page>
         <!--
@@ -287,6 +317,28 @@ under the License.
         <div class="center">Reflection/Motivation</div>
       </v-ons-toolbar>
     -->
+<<<<<<< HEAD
+    <div id="left-nav">
+>>>>>>> fde88a6748d160fbdef24eec5bd195c2b23e179b
+      <div class="welcome">Welcome, User</div>
+      <div class="title">Menu</div>
+      <ul class="list">
+        <li class="list-item">
+          <a class="item-content" href="#dashboard/1">
+            <i class="ion-stats-bars"></i>
+            <h3>Dashboard 1</h3>
+            <p>Metrics by Goal</p>
+
+          </a>
+        </li>
+      </ul>
+<<<<<<< HEAD
+    </div>-->
+=======
+    </div>
+=======
+>>>>>>> a85acc238ca79140eb6c728569e22e4e742b664e
+>>>>>>> fde88a6748d160fbdef24eec5bd195c2b23e179b
     <div id="container" class="transition">
       <header class="bar bar-header nav-bar bar-stable">
         <!--<button id="btn-menu" class="button button-icon" style="font-size: 22px;"><i class="ion-navicon-round"></i></button>-->

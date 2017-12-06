@@ -74,7 +74,7 @@
     position: absolute;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    top: 44px;
+    top: 8px;
     right: 0px;
     bottom: 0px;
     left: 0px;
@@ -129,9 +129,9 @@
 
 .chart2 {
     width: 460px;
-    height: 680px;
+    height: 100px;
     float: left;
-    padding: 10px;
+    padding: 0px;
 }
 
 .color0 {

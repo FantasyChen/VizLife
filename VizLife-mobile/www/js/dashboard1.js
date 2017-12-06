@@ -88,6 +88,7 @@ var dashboard1 = (function () {
                     options: {}
 
             });
+            console.log(myChart1);
             return myChart1;
     }
 
@@ -151,6 +152,7 @@ var dashboard1 = (function () {
         $("#content").html(html);
         chart1 = createChart1();
         chart2 = createChart2();
+        console.log(chart1);
     }
 
     return {

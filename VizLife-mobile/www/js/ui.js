@@ -204,7 +204,7 @@ const goalCreatePage = {
   data() {
     return {
       // activitySetList: sharedData.activitySetList,
-      goalList: sharedData.goalList
+      // goalList: sharedData.goalList
     }
   },
   methods: {
@@ -216,7 +216,7 @@ const goalCreatePage = {
           return {
             goalName: null,
             goalCategory : category,
-            activitySetList: sharedData.activitySetList,
+            // activitySetList: sharedData.activitySetList,
             // "comparisonSet": ["Sitting", "Sleep"],
             selectedSet: null,
             goalValue: 100
@@ -228,14 +228,19 @@ const goalCreatePage = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          createGoal(goalName, categoryName, selectedAct, event){
-            addGoal(goalName, categoryName, selectedAct);
+          createGoal(goalName, categoryName, selectedAct, desiredValue, event){
+            addGoal(goalName, categoryName, selectedAct, desiredValue);
           }
         },
 
         computed: {
           activitySetList(){
-            return getGoalCategories();
+            getGoalCategories(function(res){
+              this.render(res);
+            });
+          },
+          goalList(){
+            return getGoal();
           },
           activitySet() {
             console.log("goalCategory: "+ this.goalCategory);
@@ -248,6 +253,14 @@ const goalCreatePage = {
         }
       });
     }
+  },
+  computed: {
+    activitySetList(){
+      return getGoalCategories();
+    },
+    goalList(){
+      return getGoal();
+    },
   }
 };
 
@@ -255,15 +268,38 @@ const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
     return {
+      activitySetList: null,
+      goalList: null
       // activitySetList: sharedData.activitySetList,
-      goalList: sharedData.goalList
+      // goalList: sharedData.goalList
     }
   },
-
+  created: function(){
+    console.log("created");
+		this.init();
+	},
   methods: {
+    init(){
+      this.getData();
+      return;
+    },
+    getData(){
+      getGoalCategories(function(res){
+        this.activitySetList = res;
+      });
+      getGoal(function(res){
+        this.goalList = res;
+        console.log("GoalCategories: " + this.activitySetList
+            + "  goalList: " + this.goalList
+        );
+      });
+
+      return;
+    },
     deleteGoal(goalName, event){
       removeGoal(goalName);
       console.log("deleted");
+      //TODO refresh
     },
     pushAddGoalPage() {
       console.log("add a new goal");
@@ -280,7 +316,7 @@ const goalsDashboard = {
             activitySetName: setName,
 
             // activitySetList: sharedData.activitySetList,
-            goalList: sharedData.goalList,
+            // goalList: sharedData.goalList,
             /*
             metrics: sharedData.metrics,
             selectedMetrics: sharedData.selectedMetrics
@@ -292,19 +328,25 @@ const goalsDashboard = {
             console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
-          editGoal(goalName, categoryName, selectedAct, event) {
+          editGoal(goalName, categoryName, selectedAct, desiredValue, event) {
             console.log("the number of activities: "
             + this.goal.activitySet.length
             + "activities: " + this.goal.activitySet
             + "value: " + this.goal.value
             );
-            updateGoal(goalName, categoryName, selectedAct);
+            updateGoal(goalName, categoryName, selectedAct, desiredValue);
             // TODO send the goal to the server
 
           }
         },
 
-
+        computed:{
+          activitySetList(){
+            return getGoalCategories();
+          },
+          goalList(){
+            return getGoal();
+          },
           goal() {
             console.log("goalName: "+ this.goalName);
             for(var i = 0; i < this.goalList.length; i ++) {
@@ -329,11 +371,16 @@ const goalsDashboard = {
       })
     }
   },
+  /*
   computed: {
     activitySetList(){
       return getGoalCategories();
     },
+    goalList(){
+      return getGoal();
+    },
   }
+  */
 };
 
 const dailyDashboard = {
@@ -506,16 +553,12 @@ function removeGoal(goalName) {
   });
 }
 
-function getGoalCategories(){
-  ajax("POST", "getGoalCategories", {}, function(res){
-    console.log(res);
-  });
+function getGoalCategories(callback){
+  ajax("POST", "getGoalCategories", {}, callback);
 }
 
-function getGoal() {
-  ajax("POST", "getGoal", {}, function(res) {
-    console.log(res);
-  });
+function getGoal(callback) {
+  ajax("POST", "getGoal", {}, callback);
 }
 
 function knexArrayToList(array){

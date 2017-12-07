@@ -12,43 +12,27 @@ var dashboard1 = (function () {
         chart7,
         chart8,
         chart9;
-
-    /* json files/obj goes here */
-    var activity = {
-                     "working out": {
-                       "running": 200,
-                       "sitting": 500,
-                       "sleeping": 800,
-                       "reading": 240
-                     },
-                     "dining habit": {
-                        "green tea": 200,
-                        "brown rice": 500,
-                        "fruit": 800,
-                        "whole weat bread": 700,
-                        "beef": 300,
-                        "chicken": 500,
-                        "sea food": 430
-                     },
-                     "whatever": {
-                         "showing": 10,
-                         "drink": 20
-                      }
-                   };
-    var chartNums = Object.keys(activity).length;
-
     /* colors:  hardcode, assuming there are at most 10 colors/labels in a chart*/
     var colorSet = ['rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(103,80,85, 1)',
-                    'rgba(59,144,107,1)',
-                    'rgba(206,187,110,1)',
-                    'rgba(161,159,151)'
-                    ];
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(103,80,85, 1)',
+                        'rgba(59,144,107,1)',
+                        'rgba(206,187,110,1)',
+                        'rgba(161,159,151)'
+                        ];
+    /* json files/obj goes here */
+    var activity;
+    var chartNums;
+
+    /* read in json files and gross process*/
+    function init(inputData) {
+        activity = inputData;
+        chartNums = Object.keys(activity).length;
+    }
 
     /* create metricIdx-th chart*/
     function createChart(metricIdx) {
@@ -107,11 +91,12 @@ var dashboard1 = (function () {
     }
 
     /* Render the dashboard */
-    function render() {
+    function render(inputData) {
+        init(inputData);
+
         var html = generateHtml();
         $("#content").html(html);
 
-        /* end loop for charts*/
         chart0 = createChart(0);
         chart1 = createChart(1);
         chart2 = createChart(2);

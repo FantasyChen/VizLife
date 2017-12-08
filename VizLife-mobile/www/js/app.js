@@ -74,12 +74,23 @@
     function route() {
         var hash = window.location.hash;
         if (hash === "#dashboard/1") {
-            dashboard1.render(inputData);
+            dashboard1.render(inputDataActual);
         } else if (hash === "#dashboard/2") {
             dashboard2.render(inputData);
         } else if (hash === "#dashboard/3") {
             dashboard3.render(inputData);
         }
+    }
+
+    document.getElementById('tab1').onclick = function() {
+       dashboard1.render(inputDataActual);
+    }
+    document.getElementById('reflectionTab').onclick = function() {
+           dashboard1.render(inputDataActual);
+           dashboard2.render(inputDataGoal, inputDataActual);
+    }
+    document.getElementById('tab2').onclick = function() {
+           dashboard2.render(inputDataGoal, inputDataActual);
     }
     dashboard1.render(inputDataActual);
     dashboard2.render(inputDataGoal, inputDataActual);

@@ -147,6 +147,7 @@ const tabsDashboard = {
           page: goalsDashboard
         },
         {
+          id: 'reflectionTab',
           icon: this.md() ? null : 'ion-pie-graph',
           label: 'Reflection',
           page: reflectionDashboard

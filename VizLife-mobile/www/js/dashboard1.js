@@ -61,7 +61,12 @@ var dashboard1 = (function () {
                                                    labels,
 
                                                },
-                                               options: {}
+                                               options: {
+                                                   animation: {
+                                                     duration: 2000,
+                                                     animateRotate: true
+                                                   }
+                                               }
 
                                        });
 

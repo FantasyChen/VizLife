@@ -277,30 +277,40 @@ under the License.
 
 
   <template id="reflectionDashboard">
-    <v-ons-page>
+      <v-ons-page>
 
-      <v-ons-toolbar>
-      <div class="center">Reflection/Motivation</div>
-    </v-ons-toolbar>
-      <div id="content"></div>
+        <v-ons-toolbar>
+          <div class="center">Reflection/Motivation</div>
+        </v-ons-toolbar>
+        <!--<div id="content"></div>-->
+        <div class="ui tabular menu">
+          <div class="active item  customerTab" data-tab="tab1">Reflection</div>
+          <div class="item  customerTab" data-tab="tab2">Motivation</div>
+        </div>
+        <div id="content"></div>
+        <div class="ui tab" data-tab="tab1">
+        </div>
+        <div class="ui tab" data-tab="tab2">
+            <div id="content2"></div>
+        </div>
 
-<v-ons-speed-dial position="bottom right" direction="up"
-:visible="spdVisible"
-:open.sync="spdOpen"
->
-<v-ons-fab>
-  <v-ons-icon icon="md-face"></v-ons-icon>
-</v-ons-fab>
+        <v-ons-speed-dial position="bottom right" direction="up"
+              :visible="spdVisible"
+              :open.sync="spdOpen"
+        >
+        <v-ons-fab>
+            <v-ons-icon icon="md-face"></v-ons-icon>
+        </v-ons-fab>
 
-<v-ons-speed-dial-item v-for="(icon, name) in shareItems"
-@click="$ons.notification.confirm(`Share on ${name}?`)"
->
-<v-ons-icon :icon="icon"></v-ons-icon>
-</v-ons-speed-dial-item>
+        <v-ons-speed-dial-item v-for="(icon, name) in shareItems"
+            @click="$ons.notification.confirm(`Share on ${name}?`)"
+        >
+        <v-ons-icon :icon="icon"></v-ons-icon>
+        </v-ons-speed-dial-item>
 
-</v-ons-speed-dial>
+        </v-ons-speed-dial>
 
-</v-ons-page>
+      </v-ons-page>
 </template>
 
 

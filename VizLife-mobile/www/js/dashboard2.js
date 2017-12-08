@@ -1,171 +1,121 @@
 var dashboard2 = (function () {
 
     "use strict";
-
-    // Currently selected dashboard values
-    var chart1,
+    /* hardcode, assuming there are at most 10 metrics selected*/
+    var chart0,
+        chart1,
         chart2,
-        selectedDay = 1611;
+        chart3,
+        chart4,
+        chart5,
+        chart6,
+        chart7,
+        chart8,
+        chart9;
+    /* colors:  hardcode, assuming there are at most 10 colors/labels in a chart*/
+    var colorSet = ['rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(103,80,85, 1)',
+                        'rgba(59,144,107,1)',
+                        'rgba(206,187,110,1)',
+                        'rgba(161,159,151,1)'
+                        ];
+    /* json files/obj goes here */
+    var goal;
+    var actual;
+    var chartNums;
 
-    /* Functions to create the individual charts involved in the dashboard */
-
-    function createSummaryChart(selector, dataset) {
-
-        var data = {
-                "xScale": "ordinal",
-                "yScale": "linear",
-                "main": dataset
-            },
-
-            options = {
-                "axisPaddingLeft": 0,
-                "paddingLeft": 20,
-                "paddingRight": 0,
-                "axisPaddingRight": 0,
-                "axisPaddingTop": 5,
-                "yMin": 9,
-                "yMax": 40,
-                "interpolation": "linear",
-                "click": DaySelectionHandler
-            },
-
-            legend = d3.select(selector).append("svg")
-                .attr("class", "legend")
-                .selectAll("g")
-                .data(dataset)
-                .enter()
-                .append("g")
-                .attr("transform", function (d, i) {
-                    return "translate(" + (64 + (i * 84)) + ", 0)";
-                });
-
-        legend.append("rect")
-            .attr("width", 18)
-            .attr("height", 18)
-            .attr("class", function (d, i) {
-                return 'color' + i;
-            });
-
-        legend.append("text")
-            .attr("x", 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .text(function (d, i) {
-                return dataset[i].Goal;
-            });
-
-        return new xChart('line-dotted', data, selector + " .graph", options);
+    /* read in json files and gross process*/
+    function init(inputGoal, inputActual) {
+        goal = inputGoal;
+        actual = inputActual;
+        chartNums = Object.keys(inputGoal).length;
     }
 
-    function createGoalBreakdownChart(selector, dataset) {
+    /* create metricIdx-th chart*/
+    function createChart(metricIdx) {
+       if(metricIdx >= chartNums) {
+            return null;
+       }
+       var ctx = document.getElementById("myChart2" + metricIdx.toString());
+       var metricName = Object.keys(goal)[metricIdx];//string
+       var curMetricGoal = Object.values(goal)[metricIdx];
+       var curMetricActual = Object.values(actual)[metricIdx];
+       var labels = Object.keys(curMetricGoal);
+       var dataGoal = Object.values(curMetricGoal);
+       var dataActual = Object.values(curMetricActual);
+       var backgroundColor = [];
+       var i;
+       for (i = 0; i < labels.length; i++) {
+           backgroundColor.push(colorSet[i]);
+       }
 
-        var width = 490,
-            height = 450,
-            radius = Math.min(width, height) / 2,
+var marksData = {
+  labels,
+  datasets: [{
+    label:"Goal",
+    backgroundColor:'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgba(255, 99, 132, 0.8)',
+    data:dataGoal
+  }, {
+    label:"Actual",
+    backgroundColor:'rgba(161,159,151,0.2)',
+    borderColor: 'rgba(161,159,151,0.8)',
+    data:dataActual
+  }]
+};
 
-            color = d3.scale.category10(),
+       var chartOfMetric = new Chart(ctx, {
+                                     type: labels.length <= 2 ? 'bar' : 'radar',
+                                     data: marksData
+                                     });
 
-            pie = d3.layout.pie()
-                .value(function (d) {
-                    return d.Total;
-                })
-                .sort(null),
-
-            arc = d3.svg.arc()
-                .innerRadius(radius - 120)
-                .outerRadius(radius - 20),
-
-            svg = d3.select(selector + " .graph").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
-
-            path = svg.datum(dataset).selectAll("path")
-                .data(pie)
-                .enter().append("path")
-                .attr("fill", function (d, i) {
-                    return color(i);
-                })
-                .attr("d", arc)
-                .each(function (d) {
-                    this._selected = d;
-                }),  // store the initial angles
-
-            legend = d3.select(selector).append("svg")
-                .attr("class", "vertical-legend")
-                .attr("width", 400)
-                .attr("height", 100)
-                .selectAll("g")
-                .data(color.domain().slice())
-                .enter().append("g")
-                .attr("transform", function (d, i) {
-                    return "translate(80, " + i * 30 + ")";
-                });
-
-        legend.append("rect")
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", color);
-
-        legend.append("text")
-            .attr("x", 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .text(function (d) {
-                return dataset[d].Goal + ' (' + dataset[d].Total + ')';
-            });
-
-        function change(dataset) {
-            svg.datum(dataset);
-            path = path.data(pie); // compute the new angles
-            path.transition().duration(500).attrTween("d", arcTween); // redraw the arcs
-            legend.select('text').text(function (d) {
-                return dataset[d].Goal + ' (' + dataset[d].Total + ')';
-            });
-        }
-
-        function arcTween(a) {
-            var i = d3.interpolate(this._selected, a);
-            this._selected = i(0);
-            return function (t) {
-                return arc(i(t));
-            };
-        }
-
-        return {
-            change: change
-        };
-
+        return chartOfMetric;
     }
 
-    /* Data selection handlers */
-
-    function DaySelectionHandler(d, i) {
-        selectedDay = d.x;
-        $('#chart2>.title').html('Total Medals by Goal in ' + selectedDay);
-        chart2.change(results[selectedDay]);
+    /* get html */
+    function generateHtml() {
+        var html = '';
+        var chartIdx = 0;
+        var chartName;
+        for(chartIdx = 0; chartIdx < chartNums; chartIdx++) {
+            chartName = Object.keys(goal)[chartIdx];
+            html = html +
+                              '<div id="chart2' +
+                              chartIdx.toString() +
+                              '" class="chart chart2">' +
+                              '<div class="title">'+
+                              chartName +
+                              '</div>' +
+                              '</div>' +
+                              '<canvas id="myChart2' +
+                              chartIdx.toString() +
+                              '" width="300" height="300"></canvas>';
+        }
+        return html;
     }
 
     /* Render the dashboard */
+    function render(inputGoal,inputActual) {
+        init(inputGoal, inputActual);
 
-    function render() {
+        var html = generateHtml();
+        $("#content2").html(html);
 
-        var html =
-            '<div id="chart1" class="chart chart2">' +
-                '<div class="title">Peformance by Goal</div>' +
-                '<div class="graph"></div>' +
-                '</div>' +
-
-                '<div id="chart2" class="chart chart2">' +
-                '<div class="title">Goal Breakdown</div>' +
-                '<div class="graph"></div>' +
-                '</div>';
-
-        $("#content").html(html);
-
-        chart1 = createSummaryChart('#chart1', summary);
-        chart2 = createGoalBreakdownChart('#chart2', results[selectedDay]);
+        chart0 = createChart(0);
+        chart1 = createChart(1);
+        chart2 = createChart(2);
+        chart3 = createChart(3);
+        chart4 = createChart(4);
+        chart5 = createChart(5);
+        chart6 = createChart(6);
+        chart7 = createChart(7);
+        chart8 = createChart(8);
+        chart9 = createChart(9);
     }
 
     return {

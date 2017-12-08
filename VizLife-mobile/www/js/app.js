@@ -21,7 +21,15 @@
     // Basic view routing
     $(window).on('hashchange', route);
 
-    var inputData = {
+    $('.tabular.menu .item').tab();
+    $('.dynamic.example .menu .item')
+      .tab({
+        context : '.dynamic.example',
+        auto    : true,
+        path    : '/modules/tab.html'
+      })
+    ;
+    var inputDataActual = {
                              "working out": {
                                "running": 200,
                                "sitting": 500,
@@ -42,6 +50,27 @@
                                  "drink": 20
                               }
      };
+     var inputDataGoal = {
+                                  "working out": {
+                                    "running": 100,
+                                    "sitting": 600,
+                                    "sleeping": 1000,
+                                    "reading": 500
+                                  },
+                                  "dining habit": {
+                                     "green tea": 300,
+                                     "brown rice": 300,
+                                     "fruit": 200,
+                                     "whole weat bread": 200,
+                                     "beef": 400,
+                                     "chicken": 600,
+                                     "sea food": 630
+                                  },
+                                  "whatever": {
+                                      "showing": 120,
+                                      "drink": 220
+                                   }
+          };
     function route() {
         var hash = window.location.hash;
         if (hash === "#dashboard/1") {
@@ -52,7 +81,7 @@
             dashboard3.render(inputData);
         }
     }
-
-    dashboard1.render(inputData);
+    dashboard1.render(inputDataActual);
+    dashboard2.render(inputDataGoal, inputDataActual);
 
 }());

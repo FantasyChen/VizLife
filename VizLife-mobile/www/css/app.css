@@ -74,11 +74,28 @@
     position: absolute;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    top: 8px;
+    top: 43px;
     right: 0px;
     bottom: 0px;
     left: 0px;
     background: #ffffff;
+}
+
+#content2 {
+    position: absolute;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    top: 43px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: #ffffff;
+}
+
+.customerTab {
+    position: relative;
+    width: 50%;
+    height: 43px;
 }
 
 .chart {

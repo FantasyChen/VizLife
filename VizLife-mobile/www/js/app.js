@@ -94,5 +94,4 @@
     }
     dashboard1.render(inputDataActual);
     dashboard2.render(inputDataGoal, inputDataActual);
-
 }());

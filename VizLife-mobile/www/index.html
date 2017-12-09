@@ -290,7 +290,16 @@ under the License.
     <v-ons-toolbar>
       <div class="center">Reflection/Motivation</div>
     </v-ons-toolbar>
+    <div class="ui tabular menu">
+      <div id="tab1" class="active item  customerTab" data-tab="tab1">My Activity Reflection</div>
+      <div id="tab2" class="item  customerTab" data-tab="tab2">Compare With My Goals</div>
+    </div>
     <div id="content"></div>
+    <div class="ui tab" data-tab="tab1">
+    </div>
+    <div class="ui tab" data-tab="tab2">
+      <div id="content2"></div>
+    </div>
 
     <v-ons-speed-dial position="bottom right" direction="up"
     :visible="spdVisible"

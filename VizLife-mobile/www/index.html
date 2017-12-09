@@ -166,7 +166,7 @@ under the License.
       <!-- goal Create page -->
       <template id="goalCreatePage">
         <v-ons-page>
-        <v-ons-modal :visible="!dataLoaded">
+        <v-ons-modal :visible="activitySetList.length==0">
           <p style="text-align: center">
             Loading goal categories... <v-ons-icon icon="fa-spinner" spin></v-ons-icon>
           </p>

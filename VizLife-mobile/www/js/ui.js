@@ -199,8 +199,9 @@ const goalCreatePage = {
   methods: {
     getData(){
       var thisWindow = this;
-      if(!this.goalCategories){
+      if(this.activitySetList.length == 0){
         getGoalCategories(function(res){
+          console.log("here");
           thisWindow.activitySetList = JSON.parse(res);
         });
       }
@@ -296,7 +297,8 @@ const goalsDashboard = {
         data() {
           return {
           goalList: goalList,
-          activitySetList: sharedData.goalCategories
+          activitySetList: sharedData.goalCategories,
+          dataLoaded: false
           }
         }
       });

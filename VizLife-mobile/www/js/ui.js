@@ -123,7 +123,7 @@ const loginPage = {
     signout() {
       localStorage.setItem("loggedIn", false)
       vm.loggedIn = false;
-    },
+    }
   }
 };
 
@@ -265,7 +265,7 @@ const goalsDashboard = {
     }
   },
   created: function(){
-		this.init();
+		// this.init();
 	},
   methods: {
     init(){
@@ -391,11 +391,16 @@ var vm = new Vue({
     return {
       unsynced_files: 0,
       permission: false,
-      loggedIn: JSON.parse(localStorage.getItem("loggedIn")),
+      loggedIn: JSON.parse(localStorage.getItem("loggedIn")) || false,
       notification: true,
       location: true,
-      pageStack: localStorage.getItem("loggedIn") == "true" ? [tabsDashboard] : [tabsDashboard, loginPage]
+      pageStack: [tabsDashboard]
     };
+  },
+  created() {
+    if (this.loggedIn == false) {
+      this.pageStack.push(loginPage)
+    }
   },
   methods: {
     profile() {

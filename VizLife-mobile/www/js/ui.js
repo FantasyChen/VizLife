@@ -181,8 +181,8 @@ const sharedData = {
       "comparisonSet": ["At school"],
     }
   ], */
-  goalList: Array,
-  goalCategories: Array
+  goalList: [],
+  goalCategories: []
 }
 
 const goalDetailPage = {
@@ -193,28 +193,24 @@ const goalDetailPage = {
 const goalCreatePage = {
   key: 'goalCreatePage',
   template: '#goalCreatePage',
-  data() {
-    return {
-      activitySetList: null
-    }
-  },
   created() {
     this.getData();
   },
   methods: {
     getData(){
       var thisWindow = this;
-      getGoalCategories(function(res){
-        thisWindow.activitySetList = JSON.parse(res);
+      if(!this.goalCategories){
+        getGoalCategories(function(res){
+          thisWindow.activitySetList = JSON.parse(res);
         });
+      }
     },
-    pushGoalDetailPage(activitySet, event) {
-      console.log("add a new goal detail: " + activitySet.category_name);
+    pushGoalDetailPage(activitySet, goalList, event) {
       this.$emit('push-page',{
         extends: goalDetailPage,
         data(){
           return {
-            goalList: sharedData.goalList,
+            goalList: goalList,
             goalName: null,
             activities: activitySet.act,
             goalCategory : activitySet.category_name,
@@ -224,7 +220,6 @@ const goalCreatePage = {
         },
         methods: {
           getBack() {
-            console.log("goalName: "+ this.goalName);
             vm.pageStack.pop();
           },
           createGoal(goalName, categoryName, selectedSet, desiredValue, event){
@@ -234,7 +229,6 @@ const goalCreatePage = {
                 selectedAct.push(this.activities[i]);
               }
             };
-            console.log(goalName + categoryName + selectedAct + desiredValue);
             addGoal(goalName, categoryName, selectedAct, desiredValue,
               function(){
                 // goalsDashboard.getData();
@@ -245,7 +239,6 @@ const goalCreatePage = {
                 act: selectedAct,
                 desired_value: desiredValue
               };
-              console.log(this.goalList);
               this.goalList.push(newGoal);
               vm.pageStack.pop();
               vm.pageStack.pop();
@@ -257,11 +250,6 @@ const goalCreatePage = {
       });
     }
   },
-  computed: {
-    goalList(){
-      return getGoal();
-    },
-  }
 };
 
 const goalsDashboard = {
@@ -269,7 +257,8 @@ const goalsDashboard = {
   data() {
     return {
       goalCategories: sharedData.goalCategories,
-      goalList: sharedData.goalList
+      goalList: sharedData.goalList,
+      dataLoaded: false
       // activitySetList: sharedData.activitySetList,
       // goalList: sharedData.goalList
     }
@@ -284,27 +273,36 @@ const goalsDashboard = {
     },
     getData(){
       var thisWindow = this;
+      this.dataLoaded = false;
       getGoal(function(res){
         console.log(thisWindow.goalList);
         thisWindow.goalList = JSON.parse(res);
+        thisWindow.dataLoaded = true;
         console.log(thisWindow.goalList);
       });
-      getGoalCategories(function(res){
-        thisWindow.goalCategories = JSON.parse(res);
-        console.log(thisWindow.goalCategories);
-      });
+      if(!this.goalCategories){
+        getGoalCategories(function(res){
+          thisWindow.goalCategories = JSON.parse(res);
+        });
+      }
     },
     pushGoal(newGoal){
-      console.log(this);
-      console.log(this.goalList);
       goalsDashboard.goalList.push(newGoal);
     },
     deleteGoal(goalName, index, event){
       removeGoal(goalName);
       Vue.delete(this.goalList, index);
     },
-    pushAddGoalPage() {
-      this.$emit('push-page', goalCreatePage);
+    pushAddGoalPage(goalList) {
+      this.$emit('push-page', {
+        extends: goalCreatePage,
+        data() {
+          return {
+          goalList: goalList,
+          activitySetList: sharedData.goalCategories
+          }
+        }
+      });
     },
     pushEditGoalPage(goal, goalCategories, event){
       this.$emit('push-page',
@@ -314,12 +312,6 @@ const goalsDashboard = {
           return {
             goal: goal,
             goalCategories: goalCategories,
-            // activitySetList: sharedData.activitySetList,
-            // goalList: sharedData.goalList,
-            /*
-            metrics: sharedData.metrics,
-            selectedMetrics: sharedData.selectedMetrics
-            */
           }
         },
         methods: {
@@ -327,8 +319,6 @@ const goalsDashboard = {
             vm.pageStack.pop();
           },
           editGoal(goalName, categoryName, activitiesAndSelected, desiredValue, event) {
-            console.log(goalName + categoryName + activitiesAndSelected, desiredValue );
-
             selectedAct = [];
             for(var i = 0; i < activitiesAndSelected.selectedSet.length; i ++) {
               if(activitiesAndSelected.selectedSet[i]) {
@@ -411,7 +401,6 @@ var vm = new Vue({
   methods: {
     profile() {
       ajax("GET", "profile", null, function(res) {
-        console.log(res)
       });
     },
     sync() {

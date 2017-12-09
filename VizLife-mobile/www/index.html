@@ -113,6 +113,11 @@ under the License.
 
       <template id="goalsDashboard">
         <v-ons-page>
+          <v-ons-modal :visible="!dataLoaded">
+            <p style="text-align: center">
+              Loading your goal list... <v-ons-icon icon="fa-spinner" spin></v-ons-icon>
+            </p>
+          </v-ons-modal>
           <v-ons-toolbar>
             <div class="center">Goals</div>
           </v-ons-toolbar>
@@ -135,17 +140,17 @@ under the License.
                 <div class="ui two buttons">
                   <div class="ui basic green button" tappable @click = "pushEditGoalPage(goal, goalCategories, $event)">
                     <i class="configure icon icon"></i>
-                    Edit
                   </div>
-                  <div class="ui basic red button" tappable @click = "deleteGoal(goal.goal_name, $index, $event)">
+                  <div class="ui basic red button" tappable @click="$ons.notification.confirm('Are you sure to delete the goal?').then((response) => {
+                    deleteGoal(goal.goalName, $index);
+                  })">
                     <i class="remove circle icon"></i>
-                    Remove
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="card" tappable @click = "pushAddGoalPage">
+            <div class="card" tappable @click = "pushAddGoalPage(goalList)">
               <div class="ui vertical animated button" tabindex="0">
                 <div class="hidden content">Select goal template</div>
                 <div class="visible content">
@@ -161,6 +166,11 @@ under the License.
       <!-- goal Create page -->
       <template id="goalCreatePage">
         <v-ons-page>
+        <v-ons-modal :visible="!dataLoaded">
+          <p style="text-align: center">
+            Loading goal categories... <v-ons-icon icon="fa-spinner" spin></v-ons-icon>
+          </p>
+        </v-ons-modal>
           <v-ons-toolbar>
             <div class="left">
               <v-ons-back-button> Back </v-ons-back-button>
@@ -172,7 +182,7 @@ under the License.
               <div class="ui large middle aligned selection list">
                 <div class="item" v-for="(activitySet, index) in activitySetList" :key="activitySet.category_name" tappable>
                   <div class="right floated content">
-                    <div class="ui button" @click="pushGoalDetailPage(activitySet, $event)">Add</div>
+                    <div class="ui button" @click="pushGoalDetailPage(activitySet, goalList, $event)">Add</div>
                   </div>
 
                   <div class="content">
@@ -247,7 +257,7 @@ under the License.
       <div class="content">
         <v-ons-list-item>
             <div class="center">
-              <v-ons-input placeholder={{goal.goal_name}} float v-model="goal.goal_name">
+              <v-ons-input :placeholder="goal.goal_name" float v-model="goal.goal_name">
               </v-ons-input>
             </div>
         </v-ons-list-item>

@@ -264,7 +264,6 @@ const goalsDashboard = {
     }
   },
   created: function(){
-    console.log("created");
 		this.init();
 	},
   methods: {
@@ -275,10 +274,8 @@ const goalsDashboard = {
       var thisWindow = this;
       this.dataLoaded = false;
       getGoal(function(res){
-        console.log(thisWindow.goalList);
         thisWindow.goalList = JSON.parse(res);
         thisWindow.dataLoaded = true;
-        console.log(thisWindow.goalList);
       });
       if(!this.goalCategories){
         getGoalCategories(function(res){

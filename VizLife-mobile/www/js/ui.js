@@ -582,18 +582,21 @@ const dailyDashboard = {
   },
   watch: {
     // items: function(val) {
-    //
+    //   console.log(val)
     // }
   },
   created() {
+    var thisComponent = this;
     $(document).ready(function() {
-      $('.ui.accordion').accordion();
-      $('.ui.accordion > .title.hidden').transition({
-        animation: 'slide left',
-        duration  : 300,
-        interval  : 100
+      thisComponent.$nextTick(() => {
+        $('.ui.accordion').accordion('refresh');
+        $('.ui.accordion > .title.hidden').transition({
+          animation: 'slide left',
+          duration  : 300,
+          interval  : 100
+        });
+        $('.ui.rating').rating('disable');
       });
-      $('.ui.rating').rating('disable');
     })
   }
 };

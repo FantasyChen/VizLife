@@ -616,7 +616,6 @@ function updateGoal(goalName, categoryName, selectedAct, desiredValue, callback,
 }
 
 function removeGoal(goalName) {
-  console.log("removing goal" + goalName);
   var payload = {
     name: goalName,
     act: [],

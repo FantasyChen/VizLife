@@ -217,12 +217,14 @@ under the License.
         </v-ons-toolbar>
 
         <div class="content">
+          <v-ons-list-header>GOAL NAME</v-ons-list-header>
           <v-ons-list-item>
             <div class="center">
-              <v-ons-input placeholder="Input the goal name" float v-model="goalName">
+              <v-ons-input placeholder="Input a goal name" float v-model="goalName">
               </v-ons-input>
             </div>
           </v-ons-list-item>
+          <v-ons-list-header>SELECT ACTIVITIES FOR YOUR GOAL</v-ons-list-header>
           <v-ons-list-item v-for="(activity, index) in activities" :key="activity" tappable>
             <label class="left">
               <v-ons-checkbox
@@ -234,18 +236,32 @@ under the License.
             <label class="center" :for="'checkbox-' + index">
             {{ activity }}
             </label>
-          </v-ons-list-item>
+        </v-ons-list-item>
+        <v-ons-list-header>SET A DESIRED VALUE FOR YOUR GOAL</v-ons-list-header>
         <v-ons-list-item>
           <div class="center" style="width: 60%">
             Value: {{ goalValue }}
             <v-ons-range v-model="goalValue" style="width: 100%;"></v-ons-range>
           </div>
         </v-ons-list-item>
+        <v-ons-list-header>SELECT ACTIVITIES FOR COMPARISON</v-ons-list-header>
+        <v-ons-list-item v-for="(activity, index) in comparedAct" :key="activity" tappable>
+          <label class="left">
+            <v-ons-checkbox
+            :input-id="'checkbox-' + index"
+            :value="activity"
+            v-model="compared[index]">
+            </v-ons-checkbox>
+          </label>
+          <label class="center" :for="'checkbox-' + index">
+          {{ activity }}
+          </label>
+      </v-ons-list-item>
         <v-ons-list-item>
           <div class="ui big buttons" style="margin-left: 20%">
             <button class="ui button" @click="getBack">Cancel</button>
             <div class="or"></div>
-            <button class="ui positive button" :disabled="!goalName" @click="createGoal(goalName, goalCategory, selectedSet, goalValue, $event)">Save</button>
+            <button class="ui positive button" :disabled="!goalName" @click="createGoal(goalName, goalCategory, selectedSet, goalValue, compared, $event)">Save</button>
           </div>
         </v-ons-list-item>
 
@@ -264,12 +280,14 @@ under the License.
       </v-ons-toolbar>
 
       <div class="content">
+        <v-ons-list-header>EDIT GOAL NAME</v-ons-list-header>
         <v-ons-list-item>
             <div class="center">
               <v-ons-input :placeholder="goal.goal_name" float v-model="goal.goal_name">
               </v-ons-input>
             </div>
         </v-ons-list-item>
+        <v-ons-list-header>EDIT ACTIVITIES FOR THE GOAL</v-ons-list-header>
         <v-ons-list-item v-for="(activity, index) in activitiesAndSelected.activities" :key="activity" tappable>
           <label class="left">
             <v-ons-checkbox
@@ -282,18 +300,33 @@ under the License.
           {{ activity }}
         </label>
       </v-ons-list-item>
+      <v-ons-list-header>EDIT DESIRED VALUE FOR THE GOAL</v-ons-list-header>
       <v-ons-list-item>
         <div class="center" style="width: 60%">
           Value: {{ goal.desired_value }}
           <v-ons-range v-model="goal.desired_value" style="width: 100%;"></v-ons-range>
         </div>
       </v-ons-list-item>
+      <v-ons-list-header>EDIT COMPARING ACTIVITIES</v-ons-list-header>
+      <v-ons-list-item v-for="(activity, index) in comparisonAndSelected.activities" :key="activity" tappable>
+        <label class="left">
+          <v-ons-checkbox
+          :input-id="'checkbox-' + index"
+          :value="activity"
+          v-model="comparisonAndSelected.selectedSet[index]">
+        </v-ons-checkbox>
+      </label>
+
+      <label class="center" :for="'checkbox-' + index">
+        {{ activity }}
+      </label>
+      </v-ons-list-item>
 
       <v-ons-list-item>
         <div class="ui big buttons" style="margin-left: 20%">
           <button class="ui button" @click="getBack">Cancel</button>
           <div class="or"></div>
-          <button class="ui positive button" @click="editGoal(goal.goal_name, goal.category_name, activitiesAndSelected, goal.desired_value, $event)">Save</button>
+          <button class="ui positive button" @click="editGoal(goal.goal_name, goal.category_name, activitiesAndSelected, comparisonAndSelected, $event)">Save</button>
         </div>
       </v-ons-list-item>
 

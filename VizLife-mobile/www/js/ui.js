@@ -207,6 +207,8 @@ const goalCreatePage = {
       }
     },
     pushGoalDetailPage(activitySet, goalList, event) {
+      console.log(activitySet);
+      console.log(goalList);
       this.$emit('push-page',{
         extends: goalDetailPage,
         data(){
@@ -214,8 +216,10 @@ const goalCreatePage = {
             goalList: goalList,
             goalName: null,
             activities: activitySet.act,
+            comparedAct: activitySet.comp_act,
             goalCategory : activitySet.category_name,
-            selectedSet: Array,
+            // selectedSet: Array,
+            // compared: Array,
             goalValue: 100
           }
         },
@@ -223,22 +227,29 @@ const goalCreatePage = {
           getBack() {
             vm.pageStack.pop();
           },
-          createGoal(goalName, categoryName, selectedSet, desiredValue, event){
+          createGoal(goalName, categoryName, selectedSet, desiredValue, compared, event){
             var selectedAct = [];
             for(var i = 0; i < this.activities.length; i ++) {
               if(selectedSet[i]) {
                 selectedAct.push(this.activities[i]);
               }
             };
+            var comparedSet = [];
+            for(var i = 0; i < this.comparedAct.length; i ++) {
+              if(compared[i]) {
+                comparedSet.push(this.comparedAct[i]);
+              }
+            };
             addGoal(goalName, categoryName, selectedAct, desiredValue,
               function(){
                 // goalsDashboard.getData();
-              });
+              }, compareAct= comparedSet);
               var newGoal = {
                 goal_name: goalName,
                 category_name: categoryName,
                 act: selectedAct,
-                desired_value: desiredValue
+                desired_value: desiredValue,
+                comp_act: comparedSet
               };
               this.goalList.push(newGoal);
               vm.pageStack.pop();
@@ -247,6 +258,20 @@ const goalCreatePage = {
         },
 
         computed: {
+          selectedSet(){
+            var array = [];
+            for(var i = 0; i < this.activities.length; i ++) {
+              array.push(false);
+            };
+            return array;
+          },
+          compared(){
+            var array = [];
+            for(var i = 0; i < this.comparedAct.length; i ++){
+              array.push(true);
+            };
+            return array;
+          }
         }
       });
     }
@@ -375,22 +400,29 @@ const goalsDashboard = {
           return {
             goal: goal,
             goalCategories: goalCategories,
+            compared: []
           }
         },
         methods: {
           getBack() {
             vm.pageStack.pop();
           },
-          editGoal(goalName, categoryName, activitiesAndSelected, desiredValue, event) {
+          editGoal(goalName, categoryName, activitiesAndSelected, desiredValue, comparisonAndSelected,event) {
             selectedAct = [];
             for(var i = 0; i < activitiesAndSelected.selectedSet.length; i ++) {
               if(activitiesAndSelected.selectedSet[i]) {
                 selectedAct.push(activitiesAndSelected.activities[i]);
               }
             };
+            comparedSet = [];
+            for(var i = 0; i < comparisonAndSelected.selectedSet.length; i ++) {
+              if(comparisonAndSelected.selectedSet[i]) {
+                comparedSet.push(comparisonAndSelected.activities[i]);
+              }
+            };
             updateGoal(goalName, categoryName, selectedAct, desiredValue, function(){
               // pass
-            });
+            }, compareAct= comparedSet);
             vm.pageStack.pop();
           }
         },
@@ -416,6 +448,24 @@ const goalsDashboard = {
             result.selectedSet = selected;
             return result;
           },
+
+          comparisonAndSelected(){
+            var result = {};
+            var activities = [];
+            for(var i = 0; i < this.goalCategories.length; i ++) {
+              if(this.goalCategories[i].category_name == goal.category_name) {
+                activities = this.goalCategories[i].comp_act;
+                result.activities = this.goalCategories[i].comp_act;
+              }
+            }
+            var selected = [];
+            for(var i = 0; i < activities.length; i ++) {
+              selected[i] = true;
+            }
+            result.selectedSet = selected;
+            return result;
+          }
+
 
           /*
           hasActivity() {

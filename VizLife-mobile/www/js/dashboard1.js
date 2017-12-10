@@ -102,6 +102,17 @@ var dashboard1 = (function () {
         var html = generateHtml();
         $("#content").html(html);
 
+        if (chart0) {chart0.destroy()}
+        if (chart1) {chart1.destroy()}
+        if (chart2) {chart2.destroy()}
+        if (chart3) {chart3.destroy()}
+        if (chart4) {chart4.destroy()}
+        if (chart5) {chart5.destroy()}
+        if (chart6) {chart6.destroy()}
+        if (chart7) {chart7.destroy()}
+        if (chart8) {chart8.destroy()}
+        if (chart9) {chart9.destroy()}
+        
         chart0 = createChart(0);
         chart1 = createChart(1);
         chart2 = createChart(2);

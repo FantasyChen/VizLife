@@ -320,8 +320,20 @@ const goalsDashboard = {
       getGoal(function(res){
         thisWindow.goalList = JSON.parse(res);
         thisWindow.dataLoaded = true;
-        dashboard1.render(inputDataActual);
-        dashboard2.render(inputDataGoal, inputDataActual);
+        /*
+          use goalList and other response data here to render TODO
+        */
+        document.getElementById('tab1').onclick = function() {
+          dashboard1.render(inputDataActual);
+        }
+        document.getElementById('reflectionTab').onclick = function() {
+          dashboard1.render(inputDataActual);
+          dashboard2.render(inputDataGoal, inputDataActual);
+        }
+        document.getElementById('tab2').onclick = function() {
+          dashboard2.render(inputDataGoal, inputDataActual);
+        }
+        $('.tabular.menu .item').tab();
       });
       if(!this.goalCategories){
         getGoalCategories(function(res){

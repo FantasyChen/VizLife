@@ -28,6 +28,7 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
       this.receivedEvent('deviceready');
+      FastClick.attach(document.body);
     },
 
     // Update DOM on a Received Event

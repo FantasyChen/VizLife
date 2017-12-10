@@ -135,6 +135,14 @@ const tabsDashboard = {
     },
     md() {
       return this.$ons.platform.isAndroid();
+    },
+    changeTab(event) {
+      console.log(this)
+      if (event.activeIndex == 1) { // changed to reflection page
+        dashboard1.render(inputDataActual);
+        dashboard2.render(inputDataGoal, inputDataActual);
+      }
+      //console.log(event);
     }
   },
   data() {
@@ -324,14 +332,14 @@ const goalsDashboard = {
           use goalList and other response data here to render TODO
         */
         document.getElementById('tab1').onclick = function() {
-          dashboard1.render(inputDataActual);
-        }
-        document.getElementById('reflectionTab').onclick = function() {
-          dashboard1.render(inputDataActual);
-          dashboard2.render(inputDataGoal, inputDataActual);
+          setTimeout(function() {
+            dashboard1.render(inputDataActual);
+          }, 0);
         }
         document.getElementById('tab2').onclick = function() {
-          dashboard2.render(inputDataGoal, inputDataActual);
+          setTimeout(function() {
+            dashboard2.render(inputDataGoal, inputDataActual);
+          }, 0);
         }
         $('.tabular.menu .item').tab();
       });
@@ -441,10 +449,61 @@ const goalsDashboard = {
 
 const dailyDashboard = {
   template: '#dailyDashboard',
+  data() {
+    return {
+      state: 'initial',
+      items: [1, 2, 3, 4, 5]
+    };
+  },
   methods: {
+    loadItem(done) {
+      var thisComponent = this;
+      $('.ui.accordion > .active').accordion('close');
+      $('.ui.accordion > .title.visible').transition({
+        animation: 'scale',
+        duration  : 100,
+        interval  : 50,
+        onComplete : function(e) {
+          if (this == $('.ui.accordion > .title')[0]) {
+            setTimeout(() => {
+              //thisComponent.items = [...thisComponent.items, thisComponent.items.length + 1];
+              thisComponent.$nextTick(() => {
+                $('.ui.accordion').accordion('refresh');
+                $('.ui.accordion > .title.hidden').transition({
+                  animation: 'slide left',
+                  duration  : 300,
+                  interval  : 100
+                });
+                $('.ui.rating').rating('disable');
+              })
+              done();
+            }, 600);
+          }
+        }
+      });
+    },
     pushDailyReportPage(){
       this.$emit('push-page', dailyReportPage);
+    },
+    randomStarValue: function() {
+      return Math.floor(Math.random() * 6);
     }
+  },
+  watch: {
+    // items: function(val) {
+    //
+    // }
+  },
+  created() {
+    $(document).ready(function() {
+      $('.ui.accordion').accordion();
+      $('.ui.accordion > .title.hidden').transition({
+        animation: 'slide left',
+        duration  : 300,
+        interval  : 100
+      });
+      $('.ui.rating').rating('disable');
+    })
   }
 };
 

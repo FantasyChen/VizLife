@@ -27,7 +27,7 @@ under the License.
   * Enable inline JS: add 'unsafe-inline' to default-src
 -->
 <meta charset="utf-8">
-<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; media-src *"> -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://vizlife.herokuapp.com data: gap: https://ssl.gstatic.com https://fonts.gstatic.com/ 'unsafe-eval'; style-src 'self' 'unsafe-inline' http://fonts.googleapis.com; media-src *">
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="viewport" content="initial-scale=1, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -45,6 +45,7 @@ under the License.
 <script src="js/vue.js"></script>
 <script src="js/onsenui.js"></script>
 <script src="js/vue-onsenui.js"></script>
+
 <title>VizLife</title>
 </head>
 
@@ -62,7 +63,7 @@ under the License.
 
 <template id="tabsTemplate">
   <v-ons-page>
-    <v-ons-tabbar swipeable position="auto" :tabs="tabs" @push-page="push($event)" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+    <v-ons-tabbar swipeable position="auto" :tabs="tabs" @postchange="changeTab($event)" @push-page="push($event)" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -346,20 +347,25 @@ under the License.
       <div class="center">Daily Report</div>
     </v-ons-toolbar>
 
-    <v-ons-card @click="pushDailyReportPage">
-      <img src="res/report.png" style="margin:0 auto;display:block;width:50%;"/>
-      <div class="title">
-        My Daily Report
-      </div>
-      <div class="content">
-        <v-ons-list>
-          <v-ons-list-header>Calendar</v-ons-list-header>
-          <v-ons-list-item>Today</v-ons-list-item>
-          <v-ons-list-item>Yesterday</v-ons-list-item>
-        </v-ons-list>
-      </div>
-    </v-ons-card>
+    <v-ons-pull-hook :action="loadItem"  @changestate="state = $event.state">
+      <span v-show="state === 'initial'"> Pull to refresh </span>
+      <!-- <span v-show="state === 'preaction'"> Release </span> -->
+      <!-- <span v-show="state === 'action'"> Loading... </span> -->
+      <span v-show="state === 'action'" class="ui active inline loader"></span>
+    </v-ons-pull-hook>
 
+    <div class="ui styled fluid accordion">
+      <template v-for="(item, index) in items">
+        <div style="padding: 2em 1em;" class="title transition hidden">
+          This will be some date for item #{{item}}
+          <div style="float: right;position: relative; /* bottom: 4px;*/" class="ui large star rating" :data-rating="randomStarValue()" data-max-rating="5"></div>
+        </div>
+        <div class="content">
+          <p class="transition hidden">And this will be some content for item #{{item}}.</p>
+        </div>
+      </template>
+
+    </div>
   </v-ons-page>
 
 </template>

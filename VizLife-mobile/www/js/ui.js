@@ -1,6 +1,8 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
+// const API_URL = "http://localhost:5000/"
+
 const MAX_METRICS = 3;
 
 const settingsPage = {
@@ -636,6 +638,10 @@ function getGoal(callback) {
   ajax("POST", "getGoal", {}, callback);
 }
 
-function knexArrayToList(array){
-  return array.slice(1, -1).split(",");
+function getDataByDateAndActivities(date, activities, callback){
+  var payload = {
+    date: date,
+    targets: activities
+  };
+  ajax("POST", "fetchStats", payload, callback);
 }

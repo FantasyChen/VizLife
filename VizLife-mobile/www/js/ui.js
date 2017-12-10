@@ -139,11 +139,11 @@ const tabsDashboard = {
       return this.$ons.platform.isAndroid();
     },
     changeTab(event) {
-      console.log(this)
-      if (event.activeIndex == 1) { // changed to reflection page
-        dashboard1.render(inputDataAct, inputDataComp);
-        dashboard2.render(inputDataGoal, inputDataAct);
-      }
+      //console.log(this)
+      // if (event.activeIndex == 1) { // changed to reflection page
+      //   dashboard1.render(inputDataAct, inputDataComp);
+      //   dashboard2.render(inputDataGoal, inputDataAct);
+      // }
       //console.log(event);
     }
   },
@@ -400,6 +400,7 @@ const goalsDashboard = {
             dashboard2.render(inputDataGoal, inputDataAct);
           }, 0);
         }
+        dashboard1.render(inputDataAct, inputDataComp);
         $('.tabular.menu .item').tab();
       });
       if(this.goalCategories.length == 0){

@@ -141,9 +141,7 @@ under the License.
                   <div class="ui basic green button" tappable @click = "pushEditGoalPage(goal, goalCategories, $event)">
                     <i class="configure icon icon"></i>
                   </div>
-                  <div class="ui basic red button" tappable @click="$ons.notification.confirm('Are you sure to delete the goal?').then((response) => {
-                    deleteGoal(goal.goal_name, $index);
-                  })">
+                  <div class="ui basic red button" tappable @click="$ons.notification.confirm('Are you sure to delete the goal?').then((response) => {deleteGoal(goal.goal_name, $index, response, $event)})">
                     <i class="remove circle icon"></i>
                   </div>
                 </div>
@@ -225,15 +223,15 @@ under the License.
             </div>
           </v-ons-list-item>
           <v-ons-list-header>SELECT ACTIVITIES FOR YOUR GOAL</v-ons-list-header>
-          <v-ons-list-item v-for="(activity, index) in activities" :key="activity" tappable>
+          <v-ons-list-item v-for="(activity, $index) in activities" :key="activity" tappable>
             <label class="left">
               <v-ons-checkbox
-              :input-id="'checkbox-' + index"
+              :input-id="'checkbox-' + $index"
               :value="activity"
-              v-model="selectedSet[index]">
+              v-model="selectedSet[$index]">
               </v-ons-checkbox>
             </label>
-            <label class="center" :for="'checkbox-' + index">
+            <label class="center" :for="'checkbox-' + $index">
             {{ activity }}
             </label>
         </v-ons-list-item>
@@ -245,15 +243,15 @@ under the License.
           </div>
         </v-ons-list-item>
         <v-ons-list-header>SELECT ACTIVITIES FOR COMPARISON</v-ons-list-header>
-        <v-ons-list-item v-for="(activity, index) in comparedAct" :key="activity" tappable>
+        <v-ons-list-item v-for="(activity, $index) in comparedAct" :key="activity" tappable>
           <label class="left">
             <v-ons-checkbox
-            :input-id="'checkbox-' + index"
+            :input-id="'checkbox-' + $index"
             :value="activity"
-            v-model="compared[index]">
+            v-model="compared[$index]">
             </v-ons-checkbox>
           </label>
-          <label class="center" :for="'checkbox-' + index">
+          <label class="center" :for="'checkbox-' + $index">
           {{ activity }}
           </label>
       </v-ons-list-item>
@@ -280,23 +278,23 @@ under the License.
       </v-ons-toolbar>
 
       <div class="content">
-        <v-ons-list-header>EDIT GOAL NAME</v-ons-list-header>
+        <!-- <v-ons-list-header>EDIT GOAL NAME</v-ons-list-header>
         <v-ons-list-item>
             <div class="center">
               <v-ons-input :placeholder="goal.goal_name" float v-model="goal.goal_name">
               </v-ons-input>
             </div>
-        </v-ons-list-item>
+        </v-ons-list-item> -->
         <v-ons-list-header>EDIT ACTIVITIES FOR THE GOAL</v-ons-list-header>
-        <v-ons-list-item v-for="(activity, index) in activitiesAndSelected.activities" :key="activity" tappable>
+        <v-ons-list-item v-for="(activity, $index) in activitiesAndSelected.activities" :key='activity' tappable>
           <label class="left">
             <v-ons-checkbox
-            :input-id="'checkbox-' + index"
+            :input-id="'checkbox-' + $index"
             :value="activity"
-            v-model="activitiesAndSelected.selectedSet[index]">
+            v-model="activitiesAndSelected.selectedSet[$index]">
           </v-ons-checkbox>
         </label>
-        <label class="center" :for="'checkbox-' + index">
+        <label class="center" :for="'checkbox-' + $index">
           {{ activity }}
         </label>
       </v-ons-list-item>
@@ -308,16 +306,16 @@ under the License.
         </div>
       </v-ons-list-item>
       <v-ons-list-header>EDIT COMPARING ACTIVITIES</v-ons-list-header>
-      <v-ons-list-item v-for="(activity, index) in comparisonAndSelected.activities" :key="activity" tappable>
+      <v-ons-list-item v-for="(activity, $index) in comparisonAndSelected.activities" :key='activity' tappable>
         <label class="left">
           <v-ons-checkbox
-          :input-id="'checkbox-' + index"
+          :input-id="'checkbox-' + $index"
           :value="activity"
-          v-model="comparisonAndSelected.selectedSet[index]">
+          v-model="comparisonAndSelected.selectedSet[$index]">
         </v-ons-checkbox>
       </label>
 
-      <label class="center" :for="'checkbox-' + index">
+      <label class="center" :for="'checkbox-' + $index">
         {{ activity }}
       </label>
       </v-ons-list-item>
@@ -326,7 +324,7 @@ under the License.
         <div class="ui big buttons" style="margin-left: 20%">
           <button class="ui button" @click="getBack">Cancel</button>
           <div class="or"></div>
-          <button class="ui positive button" @click="editGoal(goal.goal_name, goal.category_name, activitiesAndSelected, comparisonAndSelected, $event)">Save</button>
+          <button class="ui positive button" @click="editGoal(goal.goal_name, goal.category_name, activitiesAndSelected, goal.desired_value, comparisonAndSelected, $event)">Save</button>
         </div>
       </v-ons-list-item>
 

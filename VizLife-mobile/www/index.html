@@ -142,7 +142,7 @@ under the License.
                     <i class="configure icon icon"></i>
                   </div>
                   <div class="ui basic red button" tappable @click="$ons.notification.confirm('Are you sure to delete the goal?').then((response) => {
-                    deleteGoal(goal.goalName, $index);
+                    deleteGoal(goal.goal_name, $index);
                   })">
                     <i class="remove circle icon"></i>
                   </div>

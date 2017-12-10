@@ -616,6 +616,7 @@ function updateGoal(goalName, categoryName, selectedAct, desiredValue, callback,
 }
 
 function removeGoal(goalName) {
+  console.log("removing goal" + goalName);
   var payload = {
     name: goalName,
     act: [],
@@ -625,7 +626,6 @@ function removeGoal(goalName) {
     value: 0
   };
   ajax("POST", "updateGoal", payload, function() {
-    // return to the main page;
   });
 }
 

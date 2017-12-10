@@ -348,6 +348,13 @@ const goalsDashboard = {
       removeGoal(goalName);
       Vue.delete(this.goalList, index);
     },
+    clearGoals(){
+      for(var i = 0; i < this.goalList.length; i ++) {
+        removeGoal(this.goalList[i].goal_name);
+        // Vue.delete(this.goalList, i);
+      }
+      this.goalList = [];
+    },
     pushAddGoalPage(goalList) {
       this.$emit('push-page', {
         extends: goalCreatePage,

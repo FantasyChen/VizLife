@@ -159,6 +159,15 @@ under the License.
                 </div>
               </div>
             </div>
+            <div class="card" tappable @click = "clearGoals()">
+              <div class="ui vertical animated button" tabindex="0">
+                <div class="hidden content">Clear</div>
+                <div class="visible content">
+                  <i class="minus icon"></i>
+                  Clear all goals
+                </div>
+              </div>
+            </div>
           </div>
         </v-ons-page>
       </template>
@@ -236,7 +245,7 @@ under the License.
           <div class="ui big buttons" style="margin-left: 20%">
             <button class="ui button" @click="getBack">Cancel</button>
             <div class="or"></div>
-            <button class="ui positive button" @click="createGoal(goalName, goalCategory, selectedSet, goalValue, $event)">Save</button>
+            <button class="ui positive button" :disabled="!goalName" @click="createGoal(goalName, goalCategory, selectedSet, goalValue, $event)">Save</button>
           </div>
         </v-ons-list-item>
 

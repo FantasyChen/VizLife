@@ -1,6 +1,8 @@
 Vue.use(VueOnsen);
 
 const API_URL = "https://vizlife.herokuapp.com/";
+// const API_URL = "http://localhost:5000/"
+
 const MAX_METRICS = 3;
 
 const settingsPage = {
@@ -28,7 +30,7 @@ const dailyReportPage = {
 
 const goalEditPage = {
   key: 'goalEditPage',
-  template: '#goalEditPage',
+  template: '#goalEditPage'
   //props: ['metrics']
 };
 
@@ -139,8 +141,8 @@ const tabsDashboard = {
     changeTab(event) {
       console.log(this)
       if (event.activeIndex == 1) { // changed to reflection page
-        dashboard1.render(inputDataActual);
-        dashboard2.render(inputDataGoal, inputDataActual);
+        dashboard1.render(inputDataAct, inputDataComp);
+        dashboard2.render(inputDataGoal, inputDataAct);
       }
       //console.log(event);
     }
@@ -209,7 +211,6 @@ const goalCreatePage = {
       var thisWindow = this;
       if(this.activitySetList.length == 0){
         getGoalCategories(function(res){
-          console.log("here");
           thisWindow.activitySetList = JSON.parse(res);
         });
       }
@@ -222,8 +223,10 @@ const goalCreatePage = {
             goalList: goalList,
             goalName: null,
             activities: activitySet.act,
+            comparedAct: activitySet.comp_act,
             goalCategory : activitySet.category_name,
-            selectedSet: Array,
+            // selectedSet: Array,
+            // compared: Array,
             goalValue: 100
           }
         },
@@ -231,22 +234,29 @@ const goalCreatePage = {
           getBack() {
             vm.pageStack.pop();
           },
-          createGoal(goalName, categoryName, selectedSet, desiredValue, event){
+          createGoal(goalName, categoryName, selectedSet, desiredValue, compared, event){
             var selectedAct = [];
             for(var i = 0; i < this.activities.length; i ++) {
               if(selectedSet[i]) {
                 selectedAct.push(this.activities[i]);
               }
             };
+            var comparedSet = [];
+            for(var i = 0; i < this.comparedAct.length; i ++) {
+              if(compared[i]) {
+                comparedSet.push(this.comparedAct[i]);
+              }
+            };
             addGoal(goalName, categoryName, selectedAct, desiredValue,
               function(){
                 // goalsDashboard.getData();
-              });
+              }, compareAct= comparedSet);
               var newGoal = {
                 goal_name: goalName,
                 category_name: categoryName,
                 act: selectedAct,
-                desired_value: desiredValue
+                desired_value: desiredValue,
+                comp_act: comparedSet
               };
               this.goalList.push(newGoal);
               vm.pageStack.pop();
@@ -255,11 +265,60 @@ const goalCreatePage = {
         },
 
         computed: {
+          selectedSet(){
+            var array = [];
+            for(var i = 0; i < this.activities.length; i ++) {
+              array.push(false);
+            };
+            return array;
+          },
+          compared(){
+            var array = [];
+            for(var i = 0; i < this.comparedAct.length; i ++){
+              array.push(true);
+            };
+            return array;
+          }
         }
       });
     }
   },
 };
+
+var inputDataAct = {
+                         "Physical State": {
+                           "walking": 200,
+                           "running": 500,
+                           "bicycling": 800
+                         },
+                         "work-life balance": {
+                            "lab work": 200,
+                            "at school": 500,
+                            "at work": 800,
+                            "in class": 700,
+                            "in meeting": 300,
+                         },
+                         "phone active usage": {
+                             "phone in hand": 500,
+                             "phone on table": 1000
+                          }
+                          };
+var inputDataComp = {
+                     "Physical State": {
+                        "lying down": 100,
+                        "sitting" : 200,
+                        "sleeping":900
+                     },
+                     "work-life balance": {
+                        "at home": 200,
+                        "at restaurants": 50,
+                        "with friends":300
+                     },
+                     "phone active usage": {
+                        "phone in bag":200,
+                        "phone in pocket": 50
+                     }
+                     };
 
 var inputDataActual = {
                          "working out": {
@@ -333,17 +392,17 @@ const goalsDashboard = {
         */
         document.getElementById('tab1').onclick = function() {
           setTimeout(function() {
-            dashboard1.render(inputDataActual);
+            dashboard1.render(inputDataAct, inputDataComp);
           }, 0);
         }
         document.getElementById('tab2').onclick = function() {
           setTimeout(function() {
-            dashboard2.render(inputDataGoal, inputDataActual);
+            dashboard2.render(inputDataGoal, inputDataAct);
           }, 0);
         }
         $('.tabular.menu .item').tab();
       });
-      if(!this.goalCategories){
+      if(this.goalCategories.length == 0){
         getGoalCategories(function(res){
           thisWindow.goalCategories = JSON.parse(res);
         });
@@ -352,9 +411,11 @@ const goalsDashboard = {
     pushGoal(newGoal){
       goalsDashboard.goalList.push(newGoal);
     },
-    deleteGoal(goalName, index, event){
-      removeGoal(goalName);
-      Vue.delete(this.goalList, index);
+    deleteGoal(goalName, index, response, event){
+      if(response == 1){
+        removeGoal(goalName);
+        Vue.delete(this.goalList, index);
+      }
     },
     clearGoals(){
       for(var i = 0; i < this.goalList.length; i ++) {
@@ -383,22 +444,31 @@ const goalsDashboard = {
           return {
             goal: goal,
             goalCategories: goalCategories,
+            compared: []
           }
         },
         methods: {
           getBack() {
             vm.pageStack.pop();
           },
-          editGoal(goalName, categoryName, activitiesAndSelected, desiredValue, event) {
+          editGoal(goalName, categoryName, activitiesAndSelected,  desiredValue, comparisonAndSelected,event) {
             selectedAct = [];
             for(var i = 0; i < activitiesAndSelected.selectedSet.length; i ++) {
               if(activitiesAndSelected.selectedSet[i]) {
                 selectedAct.push(activitiesAndSelected.activities[i]);
               }
             };
+            comparedSet = [];
+            for(var i = 0; i < comparisonAndSelected.selectedSet.length; i ++) {
+              if(comparisonAndSelected.selectedSet[i]) {
+                comparedSet.push(comparisonAndSelected.activities[i]);
+              }
+            };
             updateGoal(goalName, categoryName, selectedAct, desiredValue, function(){
               // pass
-            });
+            }, compareAct= comparedSet);
+            goal.act = selectedAct;
+            goal.comp_act = comparedSet;
             vm.pageStack.pop();
           }
         },
@@ -424,6 +494,27 @@ const goalsDashboard = {
             result.selectedSet = selected;
             return result;
           },
+
+          comparisonAndSelected(){
+            var result = {};
+            var activities = [];
+            for(var i = 0; i < this.goalCategories.length; i ++) {
+              if(this.goalCategories[i].category_name == goal.category_name) {
+                activities = this.goalCategories[i].comp_act;
+                result.activities = this.goalCategories[i].comp_act;
+              }
+            }
+            var selected = [];
+            for(var i = 0; i < activities.length; i ++) {
+              for(var j = 0; j < this.goal.comp_act.length; j ++){
+                if(activities[i] == this.goal.comp_act[j]){
+                  selected[i] = true;
+                }
+              }
+            }
+            result.selectedSet = selected;
+            return result;
+          }
 
           /*
           hasActivity() {
@@ -702,6 +793,11 @@ function getGoal(callback) {
   ajax("POST", "getGoal", {}, callback);
 }
 
-function knexArrayToList(array){
-  return array.slice(1, -1).split(",");
+
+function getDataByDateAndActivities(date, activities, callback){
+  var payload = {
+    date: date,  // "2017-12-05"
+    targets: activities   // ["Running", "Exercising"]
+  };
+  ajax("POST", "fetchStats", payload, callback);
 }

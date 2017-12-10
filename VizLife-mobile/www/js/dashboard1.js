@@ -13,25 +13,32 @@ var dashboard1 = (function () {
         chart8,
         chart9;
     /* colors:  hardcode, assuming there are at most 10 colors/labels in a chart*/
-    var colorSet = ['rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(103,80,85, 1)',
-                        'rgba(59,144,107,1)',
-                        'rgba(206,187,110,1)',
-                        'rgba(161,159,151)'
+    var colorSetAct = ['rgba(255, 159, 64, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(238,146,106, 0.5)',
+                        'rgba(249,199,190,0.5)',
+                        'rgba(201,100,100,0.5)',
+                        'rgba(255,221,139,0.5)'
                         ];
+    var colorSetComp = ['rgba(113,118,116, 1)',
+                       'rgba(114,165,125, 1)',
+                       'rgba(114,164,165, 1)',
+                       'rgba(114,130,165, 1)',
+                       'rgba(144,165,114, 1)',
+                       'rgba(14,63,107, 1)'
+                       ];
     /* json files/obj goes here */
-    var activity;
+    //var activity;
+    var inputDataAct;
+    var inputDataComp;
     var chartNums;
 
     /* read in json files and gross process*/
-    function init(inputData) {
-        activity = inputData;
-        chartNums = Object.keys(activity).length;
+    function init(data1, data2) {
+        //activity = inputData;
+        inputDataAct = data1;
+        inputDataComp = data2;
+        chartNums = Object.keys(inputDataAct).length;
     }
 
     /* create metricIdx-th chart*/
@@ -40,14 +47,26 @@ var dashboard1 = (function () {
             return null;
        }
        var ctx = document.getElementById("myChart" + metricIdx.toString());
-       var metricName = Object.keys(activity)[metricIdx];//string
-       var curMetric = Object.values(activity)[metricIdx];
-       var labels = Object.keys(curMetric);
-       var data = Object.values(curMetric);
+       //var metricName = Object.keys(activity)[metricIdx];//string
+       var curMetricAct = Object.values(inputDataAct)[metricIdx];
+       var curMetricComp = Object.values(inputDataComp)[metricIdx];
+       var labelsAct = Object.keys(curMetricAct);
+       var labelsComp = Object.keys(curMetricComp);
+       var dataAct = Object.values(curMetricAct);
+       var dataComp = Object.values(curMetricComp);
        var backgroundColor = [];
+       var labels = [];
+       var data = [];
        var i;
-       for (i = 0; i < labels.length; i++) {
-           backgroundColor.push(colorSet[i]);
+       for (i = 0; i < labelsAct.length; i++) {
+           backgroundColor.push(colorSetAct[i]);
+           labels.push(labelsAct[i]);
+           data.push(dataAct[i]);
+       }
+       for (i = 0; i < labelsComp.length; i++) {
+            backgroundColor.push(colorSetComp[i]);
+            labels.push(labelsComp[i]);
+            data.push(dataComp[i]);
        }
 
        var chartOfMetric = new Chart(ctx, {
@@ -79,7 +98,8 @@ var dashboard1 = (function () {
         var chartIdx = 0;
         var chartName;
         for(chartIdx = 0; chartIdx < chartNums; chartIdx++) {
-            chartName = Object.keys(activity)[chartIdx];
+            console.log(inputDataAct);
+            chartName = Object.keys(inputDataAct)[chartIdx];
             html = html +
                               '<div id="chart' +
                               chartIdx.toString() +
@@ -96,8 +116,8 @@ var dashboard1 = (function () {
     }
 
     /* Render the dashboard */
-    function render(inputData) {
-        init(inputData);
+    function render(data1, data2) {
+        init(data1, data2);
 
         var html = generateHtml();
         $("#content").html(html);

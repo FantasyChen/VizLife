@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="73f5b91f-4c87-4756-b681-1af4d0a7dc32" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/index.html" afterPath="$PROJECT_DIR$/VizLife-mobile/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/app.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +23,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="301" column="10" lean-forward="false" selection-start-line="301" selection-start-column="10" selection-end-line="301" selection-end-column="10" />
+            <state relative-caret-position="2897">
+              <caret line="311" column="10" lean-forward="false" selection-start-line="311" selection-start-column="10" selection-end-line="311" selection-end-column="10" />
               <folding>
                 <element signature="n#template#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#template#2;n#html#0;n#!!top" expanded="false" />
@@ -32,23 +32,6 @@
                 <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#template#3;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#template#4;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#template#5;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#template#6;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#1;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#10;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#11;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-ons-button#0;n#v-ons-page#0;n#template#12;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -87,11 +70,9 @@
       <file leaf-file-name="dashboard1.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="112" column="23" lean-forward="true" selection-start-line="112" selection-start-column="23" selection-end-line="112" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#4129#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="1860">
+              <caret line="124" column="33" lean-forward="false" selection-start-line="124" selection-start-column="33" selection-end-line="124" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -99,28 +80,28 @@
       <file leaf-file-name="dashboard2.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="120" column="12" lean-forward="true" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
+            <state relative-caret-position="1273">
+              <caret line="106" column="34" lean-forward="true" selection-start-line="106" selection-start-column="34" selection-end-line="106" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ui.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="149" column="30" lean-forward="false" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
+            <state relative-caret-position="403">
+              <caret line="383" column="39" lean-forward="true" selection-start-line="383" selection-start-column="39" selection-end-line="383" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/app.js">
+      <file leaf-file-name="Labels.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/Labels.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="87" column="55" lean-forward="true" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -135,12 +116,14 @@
       <find>colors</find>
       <find>color</find>
       <find>data.js</find>
-      <find>metricName</find>
       <find>dashboard1</find>
       <find>dashboard</find>
-      <find>chartNums</find>
-      <find>content</find>
       <find>tabsDashboard</find>
+      <find>getgoal()</find>
+      <find>content</find>
+      <find>metricName</find>
+      <find>input</find>
+      <find>chartNums</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -156,10 +139,10 @@
       <list>
         <option value="$PROJECT_DIR$/VizLife-mobile/www/css/app.css" />
         <option value="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js" />
-        <option value="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" />
-        <option value="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" />
         <option value="$PROJECT_DIR$/VizLife-mobile/www/js/app.js" />
         <option value="$PROJECT_DIR$/VizLife-mobile/www/index.html" />
+        <option value="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" />
+        <option value="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" />
       </list>
     </option>
   </component>
@@ -226,6 +209,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VizLife" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VizLife" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VizLife-mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -578,40 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="112" column="23" lean-forward="true" selection-start-line="112" selection-start-column="23" selection-end-line="112" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#4129#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="120" column="12" lean-forward="true" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="149" column="30" lean-forward="false" selection-start-line="149" selection-start-column="30" selection-end-line="149" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -622,8 +593,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="301" column="10" lean-forward="false" selection-start-line="301" selection-start-column="10" selection-end-line="301" selection-end-column="10" />
+        <state relative-caret-position="2897">
+          <caret line="311" column="10" lean-forward="false" selection-start-line="311" selection-start-column="10" selection-end-line="311" selection-end-column="10" />
           <folding>
             <element signature="n#template#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#template#2;n#html#0;n#!!top" expanded="false" />
@@ -631,23 +602,6 @@
             <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
             <element signature="n#template#3;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#template#4;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#template#5;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#template#6;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#1;n#v-ons-page#0;n#template#9;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#10;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#v-ons-page#0;n#template#11;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-ons-button#0;n#v-ons-page#0;n#template#12;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -656,6 +610,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="87" column="55" lean-forward="true" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/Labels.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1273">
+          <caret line="106" column="34" lean-forward="true" selection-start-line="106" selection-start-column="34" selection-end-line="106" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1860">
+          <caret line="124" column="33" lean-forward="false" selection-start-line="124" selection-start-column="33" selection-end-line="124" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="383" column="39" lean-forward="true" selection-start-line="383" selection-start-column="39" selection-end-line="383" selection-end-column="39" />
           <folding />
         </state>
       </provider>

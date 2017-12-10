@@ -29,48 +29,48 @@
         path    : '/modules/tab.html'
       })
     ;
-    var inputDataActual = {
-                             "working out": {
-                               "running": 200,
-                               "sitting": 500,
-                               "sleeping": 800,
-                               "reading": 240
-                             },
-                             "dining habit": {
-                                "green tea": 200,
-                                "brown rice": 500,
-                                "fruit": 800,
-                                "whole weat bread": 700,
-                                "beef": 300,
-                                "chicken": 500,
-                                "sea food": 430
-                             },
-                             "whatever": {
-                                 "showing": 10,
-                                 "drink": 20
-                              }
-     };
-     var inputDataGoal = {
-                                  "working out": {
-                                    "running": 100,
-                                    "sitting": 600,
-                                    "sleeping": 1000,
-                                    "reading": 500
-                                  },
-                                  "dining habit": {
-                                     "green tea": 300,
-                                     "brown rice": 300,
-                                     "fruit": 200,
-                                     "whole weat bread": 200,
-                                     "beef": 400,
-                                     "chicken": 600,
-                                     "sea food": 630
-                                  },
-                                  "whatever": {
-                                      "showing": 120,
-                                      "drink": 220
-                                   }
-          };
+    // var inputDataActual = {
+    //                          "working out": {
+    //                            "running": 200,
+    //                            "sitting": 500,
+    //                            "sleeping": 800,
+    //                            "reading": 240
+    //                          },
+    //                          "dining habit": {
+    //                             "green tea": 200,
+    //                             "brown rice": 500,
+    //                             "fruit": 800,
+    //                             "whole weat bread": 700,
+    //                             "beef": 300,
+    //                             "chicken": 500,
+    //                             "sea food": 430
+    //                          },
+    //                          "whatever": {
+    //                              "showing": 10,
+    //                              "drink": 20
+    //                           }
+    //  };
+    //  var inputDataGoal = {
+    //                               "working out": {
+    //                                 "running": 100,
+    //                                 "sitting": 600,
+    //                                 "sleeping": 1000,
+    //                                 "reading": 500
+    //                               },
+    //                               "dining habit": {
+    //                                  "green tea": 300,
+    //                                  "brown rice": 300,
+    //                                  "fruit": 200,
+    //                                  "whole weat bread": 200,
+    //                                  "beef": 400,
+    //                                  "chicken": 600,
+    //                                  "sea food": 630
+    //                               },
+    //                               "whatever": {
+    //                                   "showing": 120,
+    //                                   "drink": 220
+    //                                }
+    //       };
     function route() {
         var hash = window.location.hash;
         if (hash === "#dashboard/1") {
@@ -82,16 +82,16 @@
         }
     }
 
-    document.getElementById('tab1').onclick = function() {
+    $('body').on('click', '#tab1', function() {
        dashboard1.render(inputDataActual);
-    }
-    document.getElementById('reflectionTab').onclick = function() {
+    })
+    $('body').on('click', '#reflectionTab', function() {
            dashboard1.render(inputDataActual);
            dashboard2.render(inputDataGoal, inputDataActual);
-    }
-    document.getElementById('tab2').onclick = function() {
+    })
+    $('body').on('click', '#tab2', function() {
            dashboard2.render(inputDataGoal, inputDataActual);
-    }
-    dashboard1.render(inputDataActual);
-    dashboard2.render(inputDataGoal, inputDataActual);
+    })
+    // dashboard1.render(inputDataActual);
+    // dashboard2.render(inputDataGoal, inputDataActual);
 }());

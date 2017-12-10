@@ -7,9 +7,9 @@ const settingsPage = {
   template: '#settings',
   methods: {
     pushLoginPage(){
-          localStorage.setItem("loggedIn", false)
+          localStorage.clear();
           vm.loggedIn = false;
-          this.$emit('push-page', loginPage);
+          //this.$emit('push-page', loginPage);
     },
   },
   data() {
@@ -253,6 +253,49 @@ const goalCreatePage = {
   },
 };
 
+var inputDataActual = {
+                         "working out": {
+                           "running": 200,
+                           "sitting": 500,
+                           "sleeping": 800,
+                           "reading": 240
+                         },
+                         "dining habit": {
+                            "green tea": 200,
+                            "brown rice": 500,
+                            "fruit": 800,
+                            "whole weat bread": 700,
+                            "beef": 300,
+                            "chicken": 500,
+                            "sea food": 430
+                         },
+                         "whatever": {
+                             "showing": 10,
+                             "drink": 20
+                          }
+ };
+ var inputDataGoal = {
+                              "working out": {
+                                "running": 100,
+                                "sitting": 600,
+                                "sleeping": 1000,
+                                "reading": 500
+                              },
+                              "dining habit": {
+                                 "green tea": 300,
+                                 "brown rice": 300,
+                                 "fruit": 200,
+                                 "whole weat bread": 200,
+                                 "beef": 400,
+                                 "chicken": 600,
+                                 "sea food": 630
+                              },
+                              "whatever": {
+                                  "showing": 120,
+                                  "drink": 220
+                               }
+      };
+
 const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
@@ -265,7 +308,7 @@ const goalsDashboard = {
     }
   },
   created: function(){
-		// this.init();
+		this.init();
 	},
   methods: {
     init(){
@@ -277,6 +320,8 @@ const goalsDashboard = {
       getGoal(function(res){
         thisWindow.goalList = JSON.parse(res);
         thisWindow.dataLoaded = true;
+        dashboard1.render(inputDataActual);
+        dashboard2.render(inputDataGoal, inputDataActual);
       });
       if(!this.goalCategories){
         getGoalCategories(function(res){
@@ -394,12 +439,14 @@ var vm = new Vue({
       loggedIn: JSON.parse(localStorage.getItem("loggedIn")) || false,
       notification: true,
       location: true,
-      pageStack: [tabsDashboard]
+      pageStack: []
     };
   },
   created() {
     if (this.loggedIn == false) {
-      this.pageStack.push(loginPage)
+      this.pageStack.push(loginPage);
+    } else {
+      this.pageStack.push(tabsDashboard);
     }
   },
   methods: {
@@ -424,12 +471,17 @@ var vm = new Vue({
   watch: {
     loggedIn: function(val) {
       if (val) {
+        console.log("loggedIn: ", val)
+        this.pageStack.push(tabsDashboard);
         app.checkPermission((hasPermission)=>{
           vm.permission = hasPermission;
           if (hasPermission) {
             readLabels((files) => {console.log(files.length)})
           }
         });
+      } else {
+        this.pageStack = [];
+        this.pageStack.push(loginPage);
       }
     }
   }

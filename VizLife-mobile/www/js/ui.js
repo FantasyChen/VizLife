@@ -253,6 +253,41 @@ const goalCreatePage = {
   },
 };
 
+var inputDataAct = {
+                         "Physical State": {
+                           "walking": 200,
+                           "running": 500,
+                           "bicycling": 800
+                         },
+                         "work-life balance": {
+                            "lab work": 200,
+                            "at school": 500,
+                            "at work": 800,
+                            "in class": 700,
+                            "in meeting": 300,
+                         },
+                         "phone active usage": {
+                             "phone in hand": 500,
+                             "phone on table": 1000
+                          }
+                          };
+var inputDataComp = {
+                     "Physical State": {
+                        "lying down": 100,
+                        "sitting" : 200,
+                        "sleeping":900
+                     },
+                     "work-life balance": {
+                        "at home": 200,
+                        "at restaurants": 50,
+                        "with friends":300
+                     },
+                     "phone active usage": {
+                        "phone in bag":200,
+                        "phone in pocket": 50
+                     }
+                     };
+
 var inputDataActual = {
                          "working out": {
                            "running": 200,
@@ -324,14 +359,14 @@ const goalsDashboard = {
           use goalList and other response data here to render TODO
         */
         document.getElementById('tab1').onclick = function() {
-          dashboard1.render(inputDataActual);
+          dashboard1.render(inputDataAct, inputDataComp);
         }
         document.getElementById('reflectionTab').onclick = function() {
-          dashboard1.render(inputDataActual);
-          dashboard2.render(inputDataGoal, inputDataActual);
+          dashboard1.render(inputDataAct,inputDataComp);
+          dashboard2.render(inputDataGoal, inputDataAct);
         }
         document.getElementById('tab2').onclick = function() {
-          dashboard2.render(inputDataGoal, inputDataActual);
+          dashboard2.render(inputDataGoal, inputDataAct);
         }
         $('.tabular.menu .item').tab();
       });

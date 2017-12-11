@@ -63,7 +63,7 @@ under the License.
 
 <template id="tabsTemplate">
   <v-ons-page>
-    <v-ons-tabbar swipeable position="auto" :tabs="tabs" @postchange="changeTab($event)" @push-page="push($event)" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
+    <v-ons-tabbar swipeable position="bottom" :tabs="tabs" @postchange="changeTab($event)" @push-page="push($event)" :visible="true" :index.sync="activeIndex"></v-ons-tabbar>
   </v-ons-page>
 </template>
 
@@ -389,7 +389,8 @@ under the License.
       <template v-for="(item, index) in items">
         <div style="padding: 2em 1em;" class="title transition hidden">
           This will be some date for item #{{item}}
-          <div style="float: right;position: relative; /* bottom: 4px;*/" class="ui large star rating" :data-rating="randomStarValue()" data-max-rating="5"></div>
+          <!-- <div style="float: right;position: relative; /* bottom: 4px;*/" class="ui large star rating" :data-rating="1" data-max-rating="1"></div>   -->
+          <div data-rating="1" data-max-rating="1" class="ui large star rating disabled" style="float: right; position: relative;"><i style="bottom: -2px;position: relative;" class="icon active"></i>x{{randomStarValue()}}</div>
         </div>
         <div class="content">
           <p class="transition hidden">And this will be some content for item #{{item}}.</p>

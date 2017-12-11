@@ -797,11 +797,42 @@ function getGoal(callback) {
   ajax("POST", "getGoal", {}, callback);
 }
 
-
 function getDataByDateAndActivities(date, activities, callback){
   var payload = {
     date: date,  // "2017-12-05"
     targets: activities   // ["Running", "Exercising"]
   };
   ajax("POST", "fetchStats", payload, callback);
+}
+
+function getDataForVisualization(){
+  getGoal(function(res){
+      var goalList = JSON.parse(res);
+      for(var i = 0; i < goalList.length; i++){
+        var goal = goalList[i];
+        var activities = goal.act.concat(goal.comp_act);
+        getDataByDateAndActivities('2017-12-05', activities, function(data){
+          var data = JSON.parse(data);
+          var dataSum = 0.0;
+          for(var j = 0; j< data.length; j++){
+            var dataItem = data[j];
+            dataSum += dataItem.val;
+          }
+          var act = {};
+          var compAct = {};
+          for(var j = 0; j< data.length; j++){
+            var dataItem = data[j];
+            if(goal.act.includes(dataItem.label)){
+              act[dataItem.label] = dataItem.val * 1.0 / dataSum;
+            }
+            else{
+              compAct[dataItem.label] = dataItem.val * 1.0 / dataSum;
+            }
+          }
+          console.log(act);
+          console.log(compAct);
+        });
+        break;
+      }
+  });
 }

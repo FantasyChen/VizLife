@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73f5b91f-4c87-4756-b681-1af4d0a7dc32" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/index.html" afterPath="$PROJECT_DIR$/VizLife-mobile/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -45,14 +42,9 @@
       <file leaf-file-name="ui.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="396" column="9" lean-forward="true" selection-start-line="396" selection-start-column="9" selection-end-line="396" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#20934#0" expanded="false" />
-                <element signature="e#0#20934#0" expanded="false" />
-                <element signature="e#0#20934#0" expanded="false" />
-                <element signature="e#0#20934#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="430">
+              <caret line="399" column="14" lean-forward="false" selection-start-line="399" selection-start-column="14" selection-end-line="399" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,15 +52,14 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="346" column="31" lean-forward="true" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
+            <state relative-caret-position="1840">
+              <caret line="346" column="31" lean-forward="false" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
               <folding>
-                <element signature="n#template#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#template#2;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#template#3;n#html#0;n#!!top" expanded="false" />
+                <marker date="1513025814000" expanded="false" signature="15404:15422" ph="..." />
+                <marker date="1513025814000" expanded="false" signature="15760:15778" ph="..." />
+                <marker date="1513025814000" expanded="true" signature="16075:16241" ph="..." />
+                <marker date="1513025814000" expanded="true" signature="16264:16415" ph="..." />
+                <marker date="1513025814000" expanded="false" signature="17288:17334" ph="..." />
               </folding>
             </state>
           </provider>
@@ -604,29 +595,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="346" column="31" lean-forward="true" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
+        <state relative-caret-position="1840">
+          <caret line="346" column="31" lean-forward="false" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
           <folding>
-            <element signature="n#template#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#template#2;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#template#3;n#html#0;n#!!top" expanded="false" />
+            <marker date="1513025814000" expanded="false" signature="15404:15422" ph="..." />
+            <marker date="1513025814000" expanded="false" signature="15760:15778" ph="..." />
+            <marker date="1513025814000" expanded="true" signature="16075:16241" ph="..." />
+            <marker date="1513025814000" expanded="true" signature="16264:16415" ph="..." />
+            <marker date="1513025814000" expanded="false" signature="17288:17334" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="396" column="9" lean-forward="true" selection-start-line="396" selection-start-column="9" selection-end-line="396" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#20934#0" expanded="false" />
-            <element signature="e#0#20934#0" expanded="false" />
-            <element signature="e#0#20934#0" expanded="false" />
-            <element signature="e#0#20934#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="430">
+          <caret line="399" column="14" lean-forward="false" selection-start-line="399" selection-start-column="14" selection-end-line="399" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>

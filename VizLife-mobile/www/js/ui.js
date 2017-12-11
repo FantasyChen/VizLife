@@ -387,17 +387,22 @@ const goalsDashboard = {
         /*
           use goalList and other response data here to render TODO
         */
-
         document.getElementById('tab1').onclick = function() {
-          dashboard1.render(inputDataAct, inputDataComp);
-        }
+                  setTimeout(function() {
+                    dashboard1.render(inputDataAct, inputDataComp);
+                  }, 0);
+             }
         document.getElementById('reflectionTab').onclick = function() {
-          dashboard1.render(inputDataAct,inputDataComp);
-          dashboard2.render(inputDataGoal, inputDataAct);
-        }
+                   setTimeout(function() {
+                     dashboard1.render(inputDataAct,inputDataComp);
+                     dashboard2.render(inputDataGoal, inputDataAct);
+                   }, 0);
+              }
         document.getElementById('click').onclick = function() {
-          dashboard2.render(inputDataGoal, inputDataAct);
-        }
+                  setTimeout(function() {
+                    dashboard2.render(inputDataGoal, inputDataAct);
+             }, 0);
+            }
         $('.tabular.menu .item').tab();
       });
       if(!this.goalCategories){

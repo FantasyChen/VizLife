@@ -357,7 +357,9 @@ var inputDataActual = {
                                   "drink": 220
                                }
       };
-
+var Act = new Map();
+var Comp = new Map();
+var goalName;
 const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
@@ -385,6 +387,7 @@ const goalsDashboard = {
         /*
           use goalList and other response data here to render TODO
         */
+
         document.getElementById('tab1').onclick = function() {
           dashboard1.render(inputDataAct, inputDataComp);
         }
@@ -392,7 +395,7 @@ const goalsDashboard = {
           dashboard1.render(inputDataAct,inputDataComp);
           dashboard2.render(inputDataGoal, inputDataAct);
         }
-        document.getElementById('tab2').onclick = function() {
+        document.getElementById('click').onclick = function() {
           dashboard2.render(inputDataGoal, inputDataAct);
         }
         $('.tabular.menu .item').tab();
@@ -732,8 +735,38 @@ function getGoal(callback) {
 
 function getDataByDateAndActivities(date, activities, callback){
   var payload = {
-    date: date,
+    date: date, // 2017-12-05
     targets: activities
   };
   ajax("POST", "fetchStats", payload, callback);
 }
+
+
+//function readData(activities) {
+//    //get Act and Comp
+//    var Act = new Map();
+//    var Comp = new Map();
+//    var Date  = "2017-12-05";
+//    getGoal(function(res) {
+//        var resData = JSON.parse(res);
+//        var i;
+//        for (i=0; i < resData.length; i++) {
+//            if(!Act.has(resData[i]["goal_name"])){
+//                Act.set(resData[i]["goal_name"], new Map());
+//                for(var j in resData[i]["act"]) {
+//                    getDataByDateAndActivities(Date,[j], function(res) {
+//                        Act[resData[i]["goal_name"]].set(j,JSON.parse(res)["val"]);//Act['goal1']{'running',0}
+//                    });
+//                }
+//            }
+//            if(!Comp.has(resData[i]["goal_name"])) {
+//                Comp.set(resData[i]["goal_name"], new Map());
+//                for(var j in resData[i]["comp_act"]) {
+//                    getDataByDateAndActivities(Date,[j], function(res) {
+//                          Comp[resData[i]["goal_name"]].set(j,JSON.parse(res)["val"]);//Act['goal1']{'running',0}
+//                    });
+//                }
+//            }
+//        }
+//    });
+//}

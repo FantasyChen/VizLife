@@ -12,6 +12,7 @@ var dashboard2 = (function () {
         chart7,
         chart8,
         chart9;
+    var charts=[];
     /* colors:  hardcode, assuming there are at most 10 colors/labels in a chart*/
     var colorSet = ['rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -106,27 +107,13 @@ var marksData = {
         var html = generateHtml();
         $("#content2").html(html);
 
-        if (chart0) {chart0.destroy()}
-        if (chart1) {chart1.destroy()}
-        if (chart2) {chart2.destroy()}
-        if (chart3) {chart3.destroy()}
-        if (chart4) {chart4.destroy()}
-        if (chart5) {chart5.destroy()}
-        if (chart6) {chart6.destroy()}
-        if (chart7) {chart7.destroy()}
-        if (chart8) {chart8.destroy()}
-        if (chart9) {chart9.destroy()}
+        for(var i = 0; i < charts.length; i++){
+            charts[i].destroy();
+        }
 
-        chart0 = createChart(0);
-        chart1 = createChart(1);
-        chart2 = createChart(2);
-        chart3 = createChart(3);
-        chart4 = createChart(4);
-        chart5 = createChart(5);
-        chart6 = createChart(6);
-        chart7 = createChart(7);
-        chart8 = createChart(8);
-        chart9 = createChart(9);
+          for(var i = 0; i < chartNums; i++) {
+                  charts.push(createChart(i));
+          }
     }
 
     return {

@@ -362,7 +362,9 @@ var inputDataActual = {
                                   "drink": 220
                                }
       };
-
+var Act = new Map();
+var Comp = new Map();
+var goalName;
 const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
@@ -391,16 +393,21 @@ const goalsDashboard = {
           use goalList and other response data here to render TODO
         */
         document.getElementById('tab1').onclick = function() {
-          setTimeout(function() {
-            dashboard1.render(inputDataAct, inputDataComp);
-          }, 0);
-        }
-        document.getElementById('tab2').onclick = function() {
-          setTimeout(function() {
-            dashboard2.render(inputDataGoal, inputDataAct);
-          }, 0);
-        }
-        dashboard1.render(inputDataAct, inputDataComp);
+                  setTimeout(function() {
+                    dashboard1.render(inputDataAct, inputDataComp);
+                  }, 0);
+             }
+        document.getElementById('reflectionTab').onclick = function() {
+                   setTimeout(function() {
+                     dashboard1.render(inputDataAct,inputDataComp);
+                     dashboard2.render(inputDataGoal, inputDataAct);
+                   }, 0);
+              }
+        document.getElementById('click').onclick = function() {
+                  setTimeout(function() {
+                    dashboard2.render(inputDataGoal, inputDataAct);
+             }, 0);
+            }
         $('.tabular.menu .item').tab();
       });
       if(this.goalCategories.length == 0){
@@ -888,11 +895,42 @@ function getGoal(callback) {
   ajax("POST", "getGoal", {}, callback);
 }
 
-
 function getDataByDateAndActivities(date, activities, callback){
   var payload = {
     date: date,  // "2017-12-05"
     targets: activities   // ["Running", "Exercising"]
   };
   ajax("POST", "fetchStats", payload, callback);
+}
+
+function getDataForVisualization(){
+  getGoal(function(res){
+      var goalList = JSON.parse(res);
+      for(var i = 0; i < goalList.length; i++){
+        var goal = goalList[i];
+        var activities = goal.act.concat(goal.comp_act);
+        getDataByDateAndActivities('2017-12-05', activities, function(data){
+          var data = JSON.parse(data);
+          var dataSum = 0.0;
+          for(var j = 0; j< data.length; j++){
+            var dataItem = data[j];
+            dataSum += dataItem.val;
+          }
+          var act = {};
+          var compAct = {};
+          for(var j = 0; j< data.length; j++){
+            var dataItem = data[j];
+            if(goal.act.includes(dataItem.label)){
+              act[dataItem.label] = dataItem.val * 1.0 / dataSum;
+            }
+            else{
+              compAct[dataItem.label] = dataItem.val * 1.0 / dataSum;
+            }
+          }
+          console.log(act);
+          console.log(compAct);
+        });
+        break;
+      }
+  });
 }

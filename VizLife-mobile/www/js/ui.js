@@ -812,11 +812,14 @@ function getDataByDateAndActivities(date, activities, callback){
   ajax("POST", "fetchStats", payload, callback);
 }
 
-function getDataForVisualization(){
+function updateVisualization(){
   getGoal(function(res){
+      var actList = [];
+      var compActList = [];
       var goalList = JSON.parse(res);
       for(var i = 0; i < goalList.length; i++){
         var goal = goalList[i];
+        console.log(goal);
         var activities = goal.act.concat(goal.comp_act);
         getDataByDateAndActivities('2017-12-05', activities, function(data){
           var data = JSON.parse(data);
@@ -827,6 +830,8 @@ function getDataForVisualization(){
           }
           var act = {};
           var compAct = {};
+          act.name = goal.category_name + ": " + goal.goal_name;
+
           for(var j = 0; j< data.length; j++){
             var dataItem = data[j];
             if(goal.act.includes(dataItem.label)){
@@ -836,10 +841,9 @@ function getDataForVisualization(){
               compAct[dataItem.label] = dataItem.val * 1.0 / dataSum;
             }
           }
-          console.log(act);
-          console.log(compAct);
+          actList.push(act);
+          compActList.push(compAct)
         });
-        break;
       }
   });
 }

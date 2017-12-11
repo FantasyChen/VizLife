@@ -397,17 +397,18 @@ const goalsDashboard = {
                     dashboard1.render(inputDataAct, inputDataComp);
                   }, 0);
              }
-        document.getElementById('reflectionTab').onclick = function() {
-                   setTimeout(function() {
-                     dashboard1.render(inputDataAct,inputDataComp);
-                     dashboard2.render(inputDataGoal, inputDataAct);
-                   }, 0);
-              }
-        document.getElementById('click').onclick = function() {
+        // document.getElementById('reflectionTab').onclick = function() {
+        //            setTimeout(function() {
+        //              dashboard1.render(inputDataAct,inputDataComp);
+        //              dashboard2.render(inputDataGoal, inputDataAct);
+        //            }, 0);
+        //       }
+        document.getElementById('tab2').onclick = function() {
                   setTimeout(function() {
                     dashboard2.render(inputDataGoal, inputDataAct);
              }, 0);
             }
+        dashboard1.render(inputDataAct, inputDataComp);
         $('.tabular.menu .item').tab();
       });
       if(this.goalCategories.length == 0){

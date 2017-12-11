@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73f5b91f-4c87-4756-b681-1af4d0a7dc32" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-server" afterPath="$PROJECT_DIR$/VizLife-server" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/css/app.css" afterPath="$PROJECT_DIR$/VizLife-mobile/www/css/app.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/index.html" afterPath="$PROJECT_DIR$/VizLife-mobile/www/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" afterPath="$PROJECT_DIR$/VizLife-mobile/www/js/ui.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -42,8 +45,8 @@
       <file leaf-file-name="ui.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="399" column="14" lean-forward="false" selection-start-line="399" selection-start-column="14" selection-end-line="399" selection-end-column="14" />
+            <state relative-caret-position="643">
+              <caret line="816" column="0" lean-forward="true" selection-start-line="816" selection-start-column="0" selection-end-line="816" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -52,14 +55,30 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1840">
-              <caret line="346" column="31" lean-forward="false" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
+            <state relative-caret-position="490">
+              <caret line="256" column="18" lean-forward="false" selection-start-line="256" selection-start-column="18" selection-end-line="256" selection-end-column="18" />
               <folding>
-                <marker date="1513025814000" expanded="false" signature="15404:15422" ph="..." />
-                <marker date="1513025814000" expanded="false" signature="15760:15778" ph="..." />
-                <marker date="1513025814000" expanded="true" signature="16075:16241" ph="..." />
-                <marker date="1513025814000" expanded="true" signature="16264:16415" ph="..." />
-                <marker date="1513025814000" expanded="false" signature="17288:17334" ph="..." />
+                <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#v-ons-modal#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#v-ons-modal#0;n#v-ons-page#0;n#template#4;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#v-ons-list-item#4;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+                <marker date="1513026226000" expanded="false" signature="15615:15633" ph="..." />
+                <marker date="1513026226000" expanded="false" signature="15750:15768" ph="..." />
+                <marker date="1513026226000" expanded="false" signature="16193:16211" ph="..." />
+                <marker date="1513026226000" expanded="false" signature="16549:16567" ph="..." />
+                <marker date="1513026226000" expanded="false" signature="18077:18123" ph="..." />
               </folding>
             </state>
           </provider>
@@ -83,8 +102,8 @@
       <find>todo</find>
       <find>categoryName</find>
       <find>res</find>
-      <find>content</find>
       <find>chartNums</find>
+      <find>content</find>
       <find>tab2</find>
     </findStrings>
   </component>
@@ -569,10 +588,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js">
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -585,32 +604,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/index.js">
+    <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/dashboard2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1680">
+          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1840">
-          <caret line="346" column="31" lean-forward="false" selection-start-line="346" selection-start-column="31" selection-end-line="346" selection-end-column="31" />
+        <state relative-caret-position="490">
+          <caret line="256" column="18" lean-forward="false" selection-start-line="256" selection-start-column="18" selection-end-line="256" selection-end-column="18" />
           <folding>
-            <marker date="1513025814000" expanded="false" signature="15404:15422" ph="..." />
-            <marker date="1513025814000" expanded="false" signature="15760:15778" ph="..." />
-            <marker date="1513025814000" expanded="true" signature="16075:16241" ph="..." />
-            <marker date="1513025814000" expanded="true" signature="16264:16415" ph="..." />
-            <marker date="1513025814000" expanded="false" signature="17288:17334" ph="..." />
+            <element signature="n#style#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#v-ons-segment#0;n#section#0;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#section#1;n#v-ons-page#0;n#template#2;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#v-ons-modal#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#v-ons-card#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#v-ons-page#0;n#template#3;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#v-ons-modal#0;n#v-ons-page#0;n#template#4;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#2;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#v-ons-list-item#4;n#div#0;n#v-ons-page#0;n#template#5;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#v-ons-range#0;n#div#0;n#v-ons-list-item#1;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#v-ons-list-item#3;n#div#0;n#v-ons-page#0;n#template#6;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#template#0;n#div#0;n#v-ons-page#0;n#template#8;n#html#0;n#!!top" expanded="true" />
+            <marker date="1513026226000" expanded="false" signature="15615:15633" ph="..." />
+            <marker date="1513026226000" expanded="false" signature="15750:15768" ph="..." />
+            <marker date="1513026226000" expanded="false" signature="16193:16211" ph="..." />
+            <marker date="1513026226000" expanded="false" signature="16549:16567" ph="..." />
+            <marker date="1513026226000" expanded="false" signature="18077:18123" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/VizLife-mobile/www/js/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="399" column="14" lean-forward="false" selection-start-line="399" selection-start-column="14" selection-end-line="399" selection-end-column="14" />
+        <state relative-caret-position="643">
+          <caret line="816" column="0" lean-forward="true" selection-start-line="816" selection-start-column="0" selection-end-line="816" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -30,7 +30,7 @@ const dailyReportPage = {
 
 const goalEditPage = {
   key: 'goalEditPage',
-  template: '#goalEditPage',
+  template: '#goalEditPage'
   //props: ['metrics']
 };
 
@@ -137,6 +137,14 @@ const tabsDashboard = {
     },
     md() {
       return this.$ons.platform.isAndroid();
+    },
+    changeTab(event) {
+      //console.log(this)
+      // if (event.activeIndex == 1) { // changed to reflection page
+      //   dashboard1.render(inputDataAct, inputDataComp);
+      //   dashboard2.render(inputDataGoal, inputDataAct);
+      // }
+      //console.log(event);
     }
   },
   data() {
@@ -203,14 +211,11 @@ const goalCreatePage = {
       var thisWindow = this;
       if(this.activitySetList.length == 0){
         getGoalCategories(function(res){
-          console.log("here");
           thisWindow.activitySetList = JSON.parse(res);
         });
       }
     },
     pushGoalDetailPage(activitySet, goalList, event) {
-      console.log(activitySet);
-      console.log(goalList);
       this.$emit('push-page',{
         extends: goalDetailPage,
         data(){
@@ -405,7 +410,7 @@ const goalsDashboard = {
             }
         $('.tabular.menu .item').tab();
       });
-      if(!this.goalCategories){
+      if(this.goalCategories.length == 0){
         getGoalCategories(function(res){
           thisWindow.goalCategories = JSON.parse(res);
         });
@@ -414,9 +419,11 @@ const goalsDashboard = {
     pushGoal(newGoal){
       goalsDashboard.goalList.push(newGoal);
     },
-    deleteGoal(goalName, index, event){
-      removeGoal(goalName);
-      Vue.delete(this.goalList, index);
+    deleteGoal(goalName, index, response, event){
+      if(response == 1){
+        removeGoal(goalName);
+        Vue.delete(this.goalList, index);
+      }
     },
     clearGoals(){
       for(var i = 0; i < this.goalList.length; i ++) {
@@ -452,7 +459,7 @@ const goalsDashboard = {
           getBack() {
             vm.pageStack.pop();
           },
-          editGoal(goalName, categoryName, activitiesAndSelected, desiredValue, comparisonAndSelected,event) {
+          editGoal(goalName, categoryName, activitiesAndSelected,  desiredValue, comparisonAndSelected,event) {
             selectedAct = [];
             for(var i = 0; i < activitiesAndSelected.selectedSet.length; i ++) {
               if(activitiesAndSelected.selectedSet[i]) {
@@ -468,6 +475,8 @@ const goalsDashboard = {
             updateGoal(goalName, categoryName, selectedAct, desiredValue, function(){
               // pass
             }, compareAct= comparedSet);
+            goal.act = selectedAct;
+            goal.comp_act = comparedSet;
             vm.pageStack.pop();
           }
         },
@@ -505,12 +514,15 @@ const goalsDashboard = {
             }
             var selected = [];
             for(var i = 0; i < activities.length; i ++) {
-              selected[i] = true;
+              for(var j = 0; j < this.goal.comp_act.length; j ++){
+                if(activities[i] == this.goal.comp_act[j]){
+                  selected[i] = true;
+                }
+              }
             }
             result.selectedSet = selected;
             return result;
           }
-
 
           /*
           hasActivity() {
@@ -536,10 +548,64 @@ const goalsDashboard = {
 
 const dailyDashboard = {
   template: '#dailyDashboard',
+  data() {
+    return {
+      state: 'initial',
+      items: [1, 2, 3, 4, 5]
+    };
+  },
   methods: {
+    loadItem(done) {
+      var thisComponent = this;
+      $('.ui.accordion > .active').accordion('close');
+      $('.ui.accordion > .title.visible').transition({
+        animation: 'scale',
+        duration  : 100,
+        interval  : 50,
+        onComplete : function(e) {
+          if (this == $('.ui.accordion > .title')[0]) {
+            setTimeout(() => {
+              //thisComponent.items = [...thisComponent.items, thisComponent.items.length + 1];
+              thisComponent.$nextTick(() => {
+                $('.ui.accordion').accordion('refresh');
+                $('.ui.accordion > .title.hidden').transition({
+                  animation: 'slide left',
+                  duration  : 300,
+                  interval  : 100
+                });
+                $('.ui.rating').rating('disable');
+              })
+              done();
+            }, 600);
+          }
+        }
+      });
+    },
     pushDailyReportPage(){
       this.$emit('push-page', dailyReportPage);
+    },
+    randomStarValue: function() {
+      return Math.floor(Math.random() * 6);
     }
+  },
+  watch: {
+    // items: function(val) {
+    //   console.log(val)
+    // }
+  },
+  created() {
+    var thisComponent = this;
+    $(document).ready(function() {
+      thisComponent.$nextTick(() => {
+        $('.ui.accordion').accordion('refresh');
+        $('.ui.accordion > .title.hidden').transition({
+          animation: 'slide left',
+          duration  : 300,
+          interval  : 100
+        });
+        $('.ui.rating').rating('disable');
+      });
+    })
   }
 };
 
@@ -738,40 +804,14 @@ function getGoal(callback) {
   ajax("POST", "getGoal", {}, callback);
 }
 
+
 function getDataByDateAndActivities(date, activities, callback){
   var payload = {
-    date: date, // 2017-12-05
-    targets: activities
+    date: date,  // "2017-12-05"
+    targets: activities   // ["Running", "Exercising"]
   };
   ajax("POST", "fetchStats", payload, callback);
 }
 
 
-//function readData(activities) {
-//    //get Act and Comp
-//    var Act = new Map();
-//    var Comp = new Map();
-//    var Date  = "2017-12-05";
-//    getGoal(function(res) {
-//        var resData = JSON.parse(res);
-//        var i;
-//        for (i=0; i < resData.length; i++) {
-//            if(!Act.has(resData[i]["goal_name"])){
-//                Act.set(resData[i]["goal_name"], new Map());
-//                for(var j in resData[i]["act"]) {
-//                    getDataByDateAndActivities(Date,[j], function(res) {
-//                        Act[resData[i]["goal_name"]].set(j,JSON.parse(res)["val"]);//Act['goal1']{'running',0}
-//                    });
-//                }
-//            }
-//            if(!Comp.has(resData[i]["goal_name"])) {
-//                Comp.set(resData[i]["goal_name"], new Map());
-//                for(var j in resData[i]["comp_act"]) {
-//                    getDataByDateAndActivities(Date,[j], function(res) {
-//                          Comp[resData[i]["goal_name"]].set(j,JSON.parse(res)["val"]);//Act['goal1']{'running',0}
-//                    });
-//                }
-//            }
-//        }
-//    });
-//}
+

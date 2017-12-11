@@ -386,14 +386,37 @@ under the License.
     </v-ons-pull-hook>
 
     <div class="ui styled fluid accordion">
-      <template v-for="(item, index) in items">
+      <template v-for="(item, index) in computedItems">
         <div style="padding: 2em 1em;" class="title transition hidden">
-          This will be some date for item #{{item}}
+          Click to view report for {{item.date}}
           <!-- <div style="float: right;position: relative; /* bottom: 4px;*/" class="ui large star rating" :data-rating="1" data-max-rating="1"></div>   -->
-          <div data-rating="1" data-max-rating="1" class="ui large star rating disabled" style="float: right; position: relative;"><i style="bottom: -2px;position: relative;" class="icon active"></i>x{{randomStarValue()}}</div>
+          <div data-rating="1" data-max-rating="1" class="ui huge star rating disabled" style="float: right; position: relative;"><i style="bottom: -2px;position: relative;" class="icon active"></i>x{{item.numFinished}}</div>
         </div>
         <div class="content">
-          <p class="transition hidden">And this will be some content for item #{{item}}.</p>
+          <table class="ui very basic table">
+            <!-- <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Notes</th>
+              </tr>
+            </thead> -->
+            <tbody>
+              <tr v-for="(goal, index) in item.goals">
+                <td><b>{{goal.goalName}}</b></td>
+                <td>{{goal.category}}</td>
+                <td>{{goal.finished ? "finished goal!" : "You didn't finish this goal :("}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- <div class="ui clearing divider"></div>
+          <div v-for="(goal, index) in item.goals" class="transition hidden">
+            <b>{{goal.goalName}}</b>
+            {{goal.category}}
+            {{goal.finished ? "finished goal!" : "You didn't finish this goal :("}}
+            <div class="ui clearing divider"></div>
+          </div> -->
         </div>
       </template>
 

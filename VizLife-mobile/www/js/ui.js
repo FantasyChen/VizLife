@@ -362,7 +362,9 @@ var inputDataActual = {
                                   "drink": 220
                                }
       };
-
+var Act = new Map();
+var Comp = new Map();
+var goalName;
 const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
@@ -391,16 +393,21 @@ const goalsDashboard = {
           use goalList and other response data here to render TODO
         */
         document.getElementById('tab1').onclick = function() {
-          setTimeout(function() {
-            dashboard1.render(inputDataAct, inputDataComp);
-          }, 0);
-        }
-        document.getElementById('tab2').onclick = function() {
-          setTimeout(function() {
-            dashboard2.render(inputDataGoal, inputDataAct);
-          }, 0);
-        }
-        dashboard1.render(inputDataAct, inputDataComp);
+                  setTimeout(function() {
+                    dashboard1.render(inputDataAct, inputDataComp);
+                  }, 0);
+             }
+        document.getElementById('reflectionTab').onclick = function() {
+                   setTimeout(function() {
+                     dashboard1.render(inputDataAct,inputDataComp);
+                     dashboard2.render(inputDataGoal, inputDataAct);
+                   }, 0);
+              }
+        document.getElementById('click').onclick = function() {
+                  setTimeout(function() {
+                    dashboard2.render(inputDataGoal, inputDataAct);
+             }, 0);
+            }
         $('.tabular.menu .item').tab();
       });
       if(this.goalCategories.length == 0){

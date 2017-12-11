@@ -12,6 +12,7 @@ var dashboard1 = (function () {
         chart7,
         chart8,
         chart9;
+    var charts = [];
     /* colors:  hardcode, assuming there are at most 10 colors/labels in a chart*/
     var colorSetAct = ['rgba(255, 159, 64, 0.5)',
                         'rgba(255, 206, 86, 0.5)',
@@ -98,10 +99,10 @@ var dashboard1 = (function () {
         var chartIdx = 0;
         var chartName;
         for(chartIdx = 0; chartIdx < chartNums; chartIdx++) {
-            console.log(inputDataAct);
+            //console.log(inputDataAct);
             chartName = Object.keys(inputDataAct)[chartIdx];
             html = html +
-                              '<div id="chart' +
+                              '<div id="c' +
                               chartIdx.toString() +
                               '" class="chart chart2">' +
                               '<div class="title">'+
@@ -121,28 +122,14 @@ var dashboard1 = (function () {
 
         var html = generateHtml();
         $("#content").html(html);
+        for(var i = 0; i < charts.length; i++){
+                    charts[i].destroy();
+        }
 
-        if (chart0) {chart0.destroy()}
-        if (chart1) {chart1.destroy()}
-        if (chart2) {chart2.destroy()}
-        if (chart3) {chart3.destroy()}
-        if (chart4) {chart4.destroy()}
-        if (chart5) {chart5.destroy()}
-        if (chart6) {chart6.destroy()}
-        if (chart7) {chart7.destroy()}
-        if (chart8) {chart8.destroy()}
-        if (chart9) {chart9.destroy()}
-        
-        chart0 = createChart(0);
-        chart1 = createChart(1);
-        chart2 = createChart(2);
-        chart3 = createChart(3);
-        chart4 = createChart(4);
-        chart5 = createChart(5);
-        chart6 = createChart(6);
-        chart7 = createChart(7);
-        chart8 = createChart(8);
-        chart9 = createChart(9);
+        for(var i = 0; i < chartNums; i++) {
+            charts.push(createChart(i));
+        }
+
     }
 
     return {
@@ -150,3 +137,5 @@ var dashboard1 = (function () {
     }
 
 }());
+
+act = [["Running", 0.5], ["Balabala"]]

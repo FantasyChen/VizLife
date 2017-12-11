@@ -551,7 +551,78 @@ const dailyDashboard = {
   data() {
     return {
       state: 'initial',
-      items: [1, 2, 3, 4, 5]
+      items: [
+        {
+          date: "2017-12-06",
+          goals: [
+            {
+              finished: true,
+              goalName: "Exercising",
+              category: "Physical State"
+            },
+            {
+              finished: false,
+              goalName: "Sleep 8 hours",
+              category: "Physical State"
+            },
+            {
+              finished: true,
+              goalName: "Spend most of my day away from home",
+              category: "Work-life balance"
+            }
+          ]
+        },
+        {
+          date: "2017-12-05",
+          goals: [
+            {
+              finished: true,
+              goalName: "Exercising",
+              category: "Physical State"
+            },
+            {
+              finished: true,
+              goalName: "Sleep 8 hours",
+              category: "Physical State"
+            }
+          ]
+        },
+        {
+          date: "2017-12-04",
+          goals: [
+            {
+              finished: true,
+              goalName: "Exercising",
+              category: "Physical State"
+            },
+            {
+              finished: false,
+              goalName: "Sleep 8 hours",
+              category: "Physical State"
+            }
+          ]
+        },
+        {
+          date: "2017-12-03",
+          goals: [
+            {
+              finished: false,
+              goalName: "Sleep 8 hours",
+              category: "Physical State"
+            }
+          ]
+        },
+        {
+          date: "2017-12-02",
+          goals: [
+            {
+              finished: true,
+              goalName: "Sleep 8 hours",
+              category: "Physical State"
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -606,6 +677,26 @@ const dailyDashboard = {
         $('.ui.rating').rating('disable');
       });
     })
+  },
+  computed: {
+    computedItems: function() {
+      var items = [];
+      for (let i = 0; i < this.items.length; i++) {
+        let numFinished = 0;
+
+        for (let j = 0; j < this.items[i].goals.length; j++) {
+          if (this.items[i].goals[j].finished == true) {
+            numFinished++;
+          }
+        }
+        items.push({
+          date: this.items[i].date,
+          numFinished: numFinished,
+          goals: this.items[i].goals
+        });
+      }
+      return items;
+    }
   }
 };
 

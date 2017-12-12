@@ -43,9 +43,9 @@ var dashboard2 = (function () {
             return null;
        }
        var ctx = document.getElementById("myChart2" + metricIdx.toString());
-       var metricName = Object.keys(goal)[metricIdx];//string
-       var curMetricGoal = Object.values(goal)[metricIdx];
-       var curMetricActual = Object.values(actual)[metricIdx];
+       var metricName = actual[metricIdx].name;//string
+       var curMetricGoal = goal[metricIdx];
+       var curMetricActual = actual[metricIdx];
        var labels = Object.keys(curMetricGoal);
        var dataGoal = Object.values(curMetricGoal);
        var dataActual = Object.values(curMetricActual);
@@ -84,7 +84,7 @@ var marksData = {
         var chartIdx = 0;
         var chartName;
         for(chartIdx = 0; chartIdx < chartNums; chartIdx++) {
-            chartName = Object.keys(goal)[chartIdx];
+            chartName = actual[chartIdx].name;
             html = html +
                               '<div id="chart2' +
                               chartIdx.toString() +

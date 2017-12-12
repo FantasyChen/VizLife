@@ -17,8 +17,7 @@ const settingsPage = {
   data() {
     return {
       notification: true,
-      location: true,
-
+      location: true
     }
   }
 };
@@ -300,85 +299,84 @@ const goalCreatePage = {
   },
 };
 
-var inputDataAct = {
-                         "Physical State": {
-                           "walking": 200,
-                           "running": 500,
-                           "bicycling": 800
-                         },
-                         "work-life balance": {
-                            "lab work": 200,
-                            "at school": 500,
-                            "at work": 800,
-                            "in class": 700,
-                            "in meeting": 300,
-                         },
-                         "phone active usage": {
-                             "phone in hand": 500,
-                             "phone on table": 1000
-                          }
-                          };
-var inputDataComp = {
-                     "Physical State": {
-                        "lying down": 100,
-                        "sitting" : 200,
-                        "sleeping":900
-                     },
-                     "work-life balance": {
-                        "at home": 200,
-                        "at restaurants": 50,
-                        "with friends":300
-                     },
-                     "phone active usage": {
-                        "phone in bag":200,
-                        "phone in pocket": 50
-                     }
-                     };
+// var inputDataAct = {
+//                          "Physical State": {
+//                            "walking": 200,
+//                            "running": 500,
+//                            "bicycling": 800
+//                          },
+//                          "work-life balance": {
+//                             "lab work": 200,
+//                             "at school": 500,
+//                             "at work": 800,
+//                             "in class": 700,
+//                             "in meeting": 300,
+//                          },
+//                          "phone active usage": {
+//                              "phone in hand": 500,
+//                              "phone on table": 1000
+//                           }
+//                           };
+// var inputDataComp = {
+//                      "Physical State": {
+//                         "lying down": 100,
+//                         "sitting" : 200,
+//                         "sleeping":900
+//                      },
+//                      "work-life balance": {
+//                         "at home": 200,
+//                         "at restaurants": 50,
+//                         "with friends":300
+//                      },
+//                      "phone active usage": {
+//                         "phone in bag":200,
+//                         "phone in pocket": 50
+//                      }
+//                      };
+//
+// var inputDataActual = {
+//                          "working out": {
+//                            "running": 200,
+//                            "sitting": 500,
+//                            "sleeping": 800,
+//                            "reading": 240
+//                          },
+//                          "dining habit": {
+//                             "green tea": 200,
+//                             "brown rice": 500,
+//                             "fruit": 800,
+//                             "whole weat bread": 700,
+//                             "beef": 300,
+//                             "chicken": 500,
+//                             "sea food": 430
+//                          },
+//                          "whatever": {
+//                              "showing": 10,
+//                              "drink": 20
+//                           }
+//  };
+//  var inputDataGoal = {
+//                               "working out": {
+//                                 "running": 100,
+//                                 "sitting": 600,
+//                                 "sleeping": 1000,
+//                                 "reading": 500
+//                               },
+//                               "dining habit": {
+//                                  "green tea": 300,
+//                                  "brown rice": 300,
+//                                  "fruit": 200,
+//                                  "whole weat bread": 200,
+//                                  "beef": 400,
+//                                  "chicken": 600,
+//                                  "sea food": 630
+//                               },
+//                               "whatever": {
+//                                   "showing": 120,
+//                                   "drink": 220
+//                                }
+//       };
 
-var inputDataActual = {
-                         "working out": {
-                           "running": 200,
-                           "sitting": 500,
-                           "sleeping": 800,
-                           "reading": 240
-                         },
-                         "dining habit": {
-                            "green tea": 200,
-                            "brown rice": 500,
-                            "fruit": 800,
-                            "whole weat bread": 700,
-                            "beef": 300,
-                            "chicken": 500,
-                            "sea food": 430
-                         },
-                         "whatever": {
-                             "showing": 10,
-                             "drink": 20
-                          }
- };
- var inputDataGoal = {
-                              "working out": {
-                                "running": 100,
-                                "sitting": 600,
-                                "sleeping": 1000,
-                                "reading": 500
-                              },
-                              "dining habit": {
-                                 "green tea": 300,
-                                 "brown rice": 300,
-                                 "fruit": 200,
-                                 "whole weat bread": 200,
-                                 "beef": 400,
-                                 "chicken": 600,
-                                 "sea food": 630
-                              },
-                              "whatever": {
-                                  "showing": 120,
-                                  "drink": 220
-                               }
-      };
-var Act = new Map();
-var Comp = new Map();
 var goalName;
 const goalsDashboard = {
   template: '#goalsDashboard',
@@ -393,7 +391,9 @@ const goalsDashboard = {
   },
   created: function(){
 		this.init();
+    this.updateVisualization();
 	},
+
   methods: {
     init(){
       this.getData();
@@ -404,43 +404,90 @@ const goalsDashboard = {
       getGoal(function(res){
         thisWindow.goalList = JSON.parse(res);
         thisWindow.dataLoaded = true;
-        /*
-          use goalList and other response data here to render TODO
-        */
-        document.getElementById('tab1').onclick = function() {
-                  setTimeout(function() {
-                    dashboard1.render(inputDataAct, inputDataComp);
-                  }, 0);
-             }
-        // document.getElementById('reflectionTab').onclick = function() {
-        //            setTimeout(function() {
-        //              dashboard1.render(inputDataAct,inputDataComp);
-        //              dashboard2.render(inputDataGoal, inputDataAct);
-        //            }, 0);
-        //       }
-        document.getElementById('tab2').onclick = function() {
-                  setTimeout(function() {
-                    dashboard2.render(inputDataGoal, inputDataAct);
-             }, 0);
-            }
-        dashboard1.render(inputDataAct, inputDataComp);
-        $('.tabular.menu .item').tab();
+        if(thisWindow.goalCategories.length == 0){
+          getGoalCategories(function(res){
+            thisWindow.goalCategories = JSON.parse(res);
+          });
+        }
       });
-      if(this.goalCategories.length == 0){
-        getGoalCategories(function(res){
-          thisWindow.goalCategories = JSON.parse(res);
-        });
-      }
     },
+    updateVisualization(){
+      getGoal(function(res){
+        var resDataList = [];
+          var goalList = JSON.parse(res);
+          for(var i = 0; i < goalList.length; i++){
+            var goalData = goalList[i];
+            var activities = goalData.act.concat(goalData.comp_act);
+            getDataByDateAndActivities('2017-12-05', activities, function(data){
+              var data = JSON.parse(data);
+              var resData = {};
+              var dataSum = 0.0;
+              for(var j = 0; j< data.length; j++){
+                var dataItem = data[j];
+                dataSum += dataItem.val;
+              }
+
+              for(var j = 0; j < data.length; j++){
+                var dataItem = data[j];
+                resData[dataItem.label] = dataItem.val * 1.0 / dataSum;
+              }
+
+              resDataList.push(resData);
+              if(resDataList.length == goalList.length){
+                var actList = [];
+                var compActList = [];
+                var inputGoalList = [];
+                for(var j=0; j < resDataList.length; j++){
+                  var curData = resDataList[j];
+                  var curAct = {};
+                  var curCompAct = {};
+                  var curGoalAct = {};
+                  for(var k in curData){
+                    if(goalList[j].act.includes(k)){
+                      curAct[k] = curData[k];
+                      curGoalAct[k] = goalList[j].desired_value * 1.0 / 100 / goalList[j].act.length;
+                    }
+                    else{
+                      curCompAct[k] = curData[k];
+                    }
+                  }
+                  curAct.name = goalList[j].category_name + ": " + goalList[j].goal_name;
+                  actList.push(curAct);
+                  compActList.push(curCompAct);
+                  inputGoalList.push(curGoalAct);
+                }
+
+                document.getElementById('tab1').onclick = function() {
+                          setTimeout(function() {
+                            dashboard1.render(actList, compActList);
+                          }, 0);
+                };
+
+                document.getElementById('click').onclick = function() {
+                          setTimeout(function() {
+                            dashboard2.render(inputGoalList, actList);
+                     }, 0);
+                };
+                $('.tabular.menu .item').tab();
+                dashboard1.render(actList, compActList);
+                dashboard2.render(inputGoalList, actList)
+             }
+          });
+        }
+      });
+    },
+
     pushGoal(newGoal){
       goalsDashboard.goalList.push(newGoal);
     },
+
     deleteGoal(goalName, index, response, event){
       if(response == 1){
         removeGoal(goalName);
         Vue.delete(this.goalList, index);
       }
     },
+
     clearGoals(){
       for(var i = 0; i < this.goalList.length; i ++) {
         removeGoal(this.goalList[i].goal_name);
@@ -448,6 +495,7 @@ const goalsDashboard = {
       }
       this.goalList = [];
     },
+
     pushAddGoalPage(goalList) {
       this.$emit('push-page', {
         extends: goalCreatePage,
@@ -917,40 +965,4 @@ function getDataByDateAndActivities(date, activities, callback){
     targets: activities   // ["Running", "Exercising"]
   };
   ajax("POST", "fetchStats", payload, callback);
-}
-
-function updateVisualization(){
-  getGoal(function(res){
-      var actList = [];
-      var compActList = [];
-      var goalList = JSON.parse(res);
-      for(var i = 0; i < goalList.length; i++){
-        var goal = goalList[i];
-        console.log(goal);
-        var activities = goal.act.concat(goal.comp_act);
-        getDataByDateAndActivities('2017-12-05', activities, function(data){
-          var data = JSON.parse(data);
-          var dataSum = 0.0;
-          for(var j = 0; j< data.length; j++){
-            var dataItem = data[j];
-            dataSum += dataItem.val;
-          }
-          var act = {};
-          var compAct = {};
-          act.name = goal.category_name + ": " + goal.goal_name;
-
-          for(var j = 0; j< data.length; j++){
-            var dataItem = data[j];
-            if(goal.act.includes(dataItem.label)){
-              act[dataItem.label] = dataItem.val * 1.0 / dataSum;
-            }
-            else{
-              compAct[dataItem.label] = dataItem.val * 1.0 / dataSum;
-            }
-          }
-          actList.push(act);
-          compActList.push(compAct)
-        });
-      }
-  });
 }

@@ -49,15 +49,30 @@ const reflectionDashboard = {
   methods: {
     pushReflectionPage(){
       this.$emit('push-page', {template: '#reflectionPage'})
+    },
+    shareToFacebook() {
+      ons.notification.confirm("Share via Facebook?", {
+        callback: function(confirm) {
+          if (confirm)  {
+      		  window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null /* img */, null /* url */, function() {
+              console.log('share ok')
+            }, function(errormsg) {
+              console.log(errormsg);
+            });
+      	  } else {
+    		    console.log("cancel")
+          }
+        }
+      })
     }
   },
   data() {
     return {
       spdVisible: true,
-      spdOpen: true,
+      spdOpen: false,
       shareItems: {
-        'Twitter': 'md-twitter',
-        'Google+': 'md-google-plus',
+        // 'Twitter': 'md-twitter',
+        // 'Google+': 'md-google-plus',
         'Facebook': 'md-facebook'
       }
     }

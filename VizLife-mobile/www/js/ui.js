@@ -53,7 +53,13 @@ const reflectionDashboard = {
       ons.notification.confirm("Share via Facebook?", {
         callback: function(confirm) {
           if (confirm)  {
-      		  window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null /* img */, null /* url */, function() {
+            images = [];
+            var myActivityPageActive = $('#tab1').hasClass('active');
+            var canvases = myActivityPageActive ? $('#content canvas') : $('#content2 canvas');
+            for (var i = 0; i < canvases.length; i++) {
+              images.push(canvases[i].toDataURL("image/png"));
+            }
+      		  window.plugins.socialsharing.shareViaFacebook('Message via Facebook', images, null /* url */, function() {
               console.log('share ok')
             }, function(errormsg) {
               console.log(errormsg);

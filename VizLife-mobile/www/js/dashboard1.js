@@ -49,8 +49,8 @@ var dashboard1 = (function () {
        }
        var ctx = document.getElementById("myChart" + metricIdx.toString());
        //var metricName = Object.keys(activity)[metricIdx];//string
-       var curMetricAct = Object.values(inputDataAct)[metricIdx];
-       var curMetricComp = Object.values(inputDataComp)[metricIdx];
+       var curMetricAct = inputDataAct[metricIdx];
+       var curMetricComp = inputDataComp[metricIdx];
        var labelsAct = Object.keys(curMetricAct);
        var labelsComp = Object.keys(curMetricComp);
        var dataAct = Object.values(curMetricAct);
@@ -60,6 +60,9 @@ var dashboard1 = (function () {
        var data = [];
        var i;
        for (i = 0; i < labelsAct.length; i++) {
+           if(labelsAct[i] == "name"){
+             continue;
+           }
            backgroundColor.push(colorSetAct[i]);
            labels.push(labelsAct[i]);
            data.push(dataAct[i]);
@@ -100,7 +103,7 @@ var dashboard1 = (function () {
         var chartName;
         for(chartIdx = 0; chartIdx < chartNums; chartIdx++) {
             //console.log(inputDataAct);
-            chartName = Object.keys(inputDataAct)[chartIdx];
+            chartName = inputDataAct[chartIdx].name;
             html = html +
                               '<div id="c' +
                               chartIdx.toString() +
@@ -137,5 +140,3 @@ var dashboard1 = (function () {
     }
 
 }());
-
-act = [["Running", 0.5], ["Balabala"]]

@@ -396,11 +396,9 @@ const goalsDashboard = {
         }
       });
     },
-
     updateVisualization(){
       getGoal(function(res){
         var resDataList = [];
-
           var goalList = JSON.parse(res);
           for(var i = 0; i < goalList.length; i++){
             var goalData = goalList[i];
@@ -420,7 +418,6 @@ const goalsDashboard = {
               }
 
               resDataList.push(resData);
-
               if(resDataList.length == goalList.length){
                 var actList = [];
                 var compActList = [];
@@ -451,12 +448,6 @@ const goalsDashboard = {
                           }, 0);
                 };
 
-                // document.getElementById('reflectionTab').onclick = function() {
-                //            setTimeout(function() {
-                //              dashboard1.render(inputDataAct,inputDataComp);
-                //              dashboard2.render(inputDataGoal, inputDataAct);
-                //            }, 0);
-                //       }
                 document.getElementById('click').onclick = function() {
                           setTimeout(function() {
                             dashboard2.render(inputGoalList, actList);

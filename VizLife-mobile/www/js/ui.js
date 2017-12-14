@@ -384,6 +384,8 @@ const goalCreatePage = {
 //       };
 
 var goalName;
+var globalUpdate;
+var updateVis;
 const goalsDashboard = {
   template: '#goalsDashboard',
   data() {
@@ -398,8 +400,18 @@ const goalsDashboard = {
   created: function(){
 		this.init();
     this.updateVisualization();
+    updateVis = this.updateVisualization;
+    globalUpdate = function() {
+      Vue.nextTick(() => {
+        updateVis();
+      })
+    }
 	},
-
+  watch: {
+    goalList: function() {
+      globalUpdate();
+    }
+  },
   methods: {
     init(){
       this.getData();
